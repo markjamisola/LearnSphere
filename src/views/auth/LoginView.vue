@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <v-responsive class="border rounded" max-height="300">
+  <v-responsive class="border rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-3">
         <v-spacer></v-spacer>
@@ -24,7 +24,7 @@
 
       <v-main>
         <v-container>
-          <h1>Main Content</h1>
+          <h1>Bayot</h1>
         </v-container>
       </v-main>
     </v-app>
