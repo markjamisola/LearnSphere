@@ -1,5 +1,5 @@
 <script setup>
-import LoginForm from '@/components/auth/LoginForm.vue'
+import RegisterForm from '@/components/auth/RegisterForm.vue'
 </script>
 
 <template>
@@ -7,8 +7,10 @@ import LoginForm from '@/components/auth/LoginForm.vue'
     <v-app class="background-color">
       <!-- Apply background color here -->
       <v-container>
+        <!-- Vuetify logo -->
         <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/public/logo5.png"></v-img>
 
+        <!-- Sign-Up Form Card -->
         <v-card
           class="mx-auto pa-8 pb-5"
           elevation="8"
@@ -16,15 +18,18 @@ import LoginForm from '@/components/auth/LoginForm.vue'
           rounded="lg"
           color="blue-grey-darken-1"
         >
+          <!-- Title -->
           <template v-slot:title>
-            <h3 class="font-weight-black text-center">Log In</h3>
+            <h3 class="font-weight-black text-center">Sign Up</h3>
           </template>
           <!-- Form Field -->
-          <LoginForm></LoginForm>
 
+          <RegisterForm></RegisterForm>
+
+          <!-- Already Have an Account link -->
           <v-card-text class="text-center pt-0">
-            <RouterLink class="text-black text-decoration-none" to="/register">
-              Sign Up Now
+            <RouterLink class="text-black text-decoration-none" to="/login">
+              Already have an account? Log in
             </RouterLink>
             <v-icon icon="mdi-chevron-right"></v-icon>
           </v-card-text>
