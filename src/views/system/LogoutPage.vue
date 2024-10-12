@@ -6,7 +6,7 @@
         <v-list-item-group>
           <!-- Centered Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="/public/syslogo.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="/public/1.png" alt="Logo"></v-img>
           </v-list-item>
 
           <!-- Navigation icons with links -->
@@ -55,7 +55,7 @@
     <v-main class="d-flex">
       <!-- Content -->
       <v-container>
-        <v-img class="mx-auto my-15" max-width="228" src="/public/logo5.png"></v-img>
+        <v-img class="mx-auto my-15" max-width="150" src="/public/logo6.png"></v-img>
         <v-card
           class="mx-auto pa-8 pb-5 align-self-center"
           elevation="8"

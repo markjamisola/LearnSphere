@@ -6,7 +6,7 @@
         <v-list-item-group>
           <!-- Centered Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="/public/syslogo.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="/public/1.png" alt="Logo"></v-img>
           </v-list-item>
 
           <!-- Navigation icons with links -->
@@ -55,9 +55,59 @@
     <v-main>
       <!-- Content -->
       <v-container fluid>
-        <v-row class="mt-8">
+        <v-row class="mt-15">
           <v-col cols="12" class="text-center">
             <h1 class="text-white">About Us</h1>
+          </v-col>
+        </v-row>
+
+        <v-col cols="12">
+          <v-row class="mx-4">
+            <v-card class="mx-auto pa-5 " elevation="8" rounded="lg" color="blue-grey-darken-1">
+              <v-card-text class="text-justify">
+                <span>
+                  The LearnSphere is designed to help students conveniently access course materials
+                  and video tutorials. Our goal is to create an efficient learning environment where
+                  students can easily find the resources they need. Students can log in, select
+                  their college, search for a subject, and the website will automatically display
+                  relevant video tutorials and PDFs, saving time and effort. The goal is to make
+                  learning more convenient by offering direct access to curated video content,
+                  tailored to the students' academic needs.
+                </span>
+              </v-card-text>
+            </v-card>
+          </v-row>
+        </v-col>
+
+        <!-- Mission and Vision Cards -->
+
+        <v-row class="mx-4 mt-8" justify="center">
+          <v-col cols="12" md="6">
+            <h1 class="text-white">Mission</h1>
+            <v-card class="pa-5 " elevation="8" rounded="lg" color="blue-grey-darken-1">
+              <v-card-text class="text-justify white--text">
+                <span>
+                  Our mission is to empower students by offering a centralized platform where they
+                  can easily find the courses and tutorials they need to excel in their studies. We
+                  understand that students often face challenges finding quality resources, and our
+                  platform aims to bridge that gap.
+                </span>
+              </v-card-text>
+            </v-card>
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <h1 class="text-white">Vision</h1>
+            <v-card class="pa-5 " elevation="8" rounded="lg" color="blue-grey-darken-1">
+              <v-card-text class="text-justify white--text">
+                <span>
+                  Our vision is to continue expanding the portal to include more programs and
+                  course, making it a valuable resource for all CSUan students who aims to be successful. We aim to integrate more
+                  advanced features like personalized learning plans and interactive study tools in
+                  the near future. 
+                </span>
+              </v-card-text>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
