@@ -28,15 +28,15 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/info')" class="text-center">
+          <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/info' ? 'black' : 'white'">mdi-information</v-icon>
+              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'">mdi-information</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/login')" class="text-center">
+          <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/login' ? 'black' : 'white'">mdi-logout</v-icon>
+              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
