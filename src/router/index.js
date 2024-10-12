@@ -1,17 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import LoadingPage from '@/views/auth/LoadingPage.vue'
 import LoginView from '@/views/auth/LoginView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
+import ForgotView from '@/views/auth/ForgotView.vue'
 import HomePage from '@/views/system/HomePage.vue'
 import ProfilePage from '@/views/system/ProfilePage.vue'
-import ForgotView from '@/views/auth/ForgotView.vue'
 import HistoryPage from '@/views/system/HistoryPage.vue'
 import AboutPage from '@/views/system/AboutPage.vue'
 import LogoutPage from '@/views/system/LogoutPage.vue'
 import IT109Page from '@/views/system/IT109Page.vue'
 
-const router = createRouter({ 
+const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      redirect: '/load'
+    },
+    {
+      path: '/load',
+      name: 'load',
+      component: LoadingPage 
+    },
     {
       path: '/login',
       name: 'login',
@@ -56,8 +66,7 @@ const router = createRouter({
       path: '/it-109',
       name: 'it-109',
       component: IT109Page
-    },
-
+    }
   ]
 })
 

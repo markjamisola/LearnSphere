@@ -6,7 +6,7 @@
         <v-list-item-group>
           <!-- Centered Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="/public/syslogo.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="/public/1.png" alt="Logo"></v-img>
           </v-list-item>
 
           <!-- Navigation icons with links -->
