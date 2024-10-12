@@ -13,15 +13,6 @@
 
     <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
       <h4 class="text-white">Password</h4>
-
-      <a
-        class="text-caption text-decoration-none text-black"
-        href="#"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Forgot login password?
-      </a>
     </div>
 
     <v-text-field
@@ -33,11 +24,12 @@
       variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
+    <RouterLink class="text-black text-decoration-none" to="/forgot"> Reset Password </RouterLink>
 
     <v-card class="mb-7" color="surface-variant" variant="tonal">
       <v-card-text class="text-justify text-white text-caption">
         Warning: After 3 consecutive failed login attempts, your account will be temporarily locked
-        for three hours. If you must log in now, you can also click "Forgot login password?" to
+        for three hours. If you must log in now, you can also click "Reset Password" to
         reset the login password.
       </v-card-text>
     </v-card>

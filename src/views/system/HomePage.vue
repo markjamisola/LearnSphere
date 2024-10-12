@@ -28,13 +28,13 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/info')" class="text-center">
+          <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/info' ? 'black' : 'white'">mdi-information</v-icon>
+              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'">mdi-information</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/login')" class="text-center">
+          <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
               <v-icon large :color="$route.path === '/login' ? 'black' : 'white'">mdi-logout</v-icon>
             </v-list-item-icon>
@@ -49,7 +49,7 @@
       <v-container fluid>
         <v-row class="mt-8">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white">Welcome Back Ferson</h1>
+            <h1 class="text-white">Welcome Back Fersonability</h1>
           </v-col>
         </v-row>
 
@@ -87,7 +87,7 @@
               color="blue-grey-darken-1"
               block
               height="150px"
-              @click="$router.push('/course/it-109')"
+              @click="$router.push('/it-109')"
             >
               <h1 class="text-center">IT - 109</h1>
             </v-btn>
@@ -100,9 +100,9 @@
               color="blue-grey-darken-1"
               block
               height="150px"
-              @click="$router.push('/course/it-110')"
+              @click="$router.push('/it-109')"
             >
-              <h1 class="text-center">IT - 110</h1>
+              <h1 class="text-center">IT - 109</h1>
             </v-btn>
           </v-col>
 
@@ -114,9 +114,9 @@
               color="blue-grey-darken-1"
               block
               height="150px"
-              @click="$router.push('/course/it-108')"
+              @click="$router.push('/it-109')"
             >
-              <h1 class="text-center">IT - 108</h1>
+              <h1 class="text-center">IT - 109</h1>
             </v-btn>
           </v-col>
         </v-row>
