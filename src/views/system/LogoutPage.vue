@@ -10,23 +10,23 @@
       width="80"
       app
     >
-      <v-list class="d-flex flex-column align-center justify-center fill-height">
-        <v-list-item-group>
-          <!-- Centered Navigation icons with links -->
-          <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
-          </v-list-item>
+      <v-list class="d-flex flex-column justify-space-between fill-height">
+        <!-- Logo at the Top -->
+        <v-list-item class="text-center">
+          <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+        </v-list-item>
 
+        <v-list-item-group>
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -34,7 +34,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -42,20 +42,19 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
           </v-list-item>
-
-          <v-list-item @click="$router.push('/logout')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-                >mdi-logout</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
         </v-list-item-group>
+
+        <!-- Log Out Button at the Bottom -->
+        <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item-icon>
+            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'">mdi-logout</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -79,13 +78,13 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -93,7 +92,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -101,7 +100,7 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
@@ -109,7 +108,7 @@
 
           <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
+              <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-logout</v-icon
               >
             </v-list-item-icon>
@@ -119,10 +118,11 @@
     </v-navigation-drawer>
 
     <!-- App bar with toggle button only for mobile screens -->
-    <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" flat>
+    <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
       <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white">LearnSphere</v-toolbar-title>
+      <v-toolbar-title class="text-white font-weight-black ">LearnSphere</v-toolbar-title>
     </v-app-bar>
+
     <!-- Main content area -->
     <v-main class="d-flex">
       <v-container>
@@ -132,7 +132,7 @@
           elevation="8"
           max-width="448"
           rounded="lg"
-          color="blue-grey-darken-1"
+          color="deep-purple-darken-3"
         >
           <template v-slot:title>
             <div class="text-center">
@@ -166,7 +166,7 @@ const drawer = ref(false) // Drawer state for mobile
 
 <style scoped>
 .background-color {
-  background-color: #243642;
+  background-color: #17153b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

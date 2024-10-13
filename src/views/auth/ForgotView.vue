@@ -14,7 +14,7 @@ import ForgotView from '@/components/auth/ForgotView.vue'
           elevation="8"
           max-width="448"
           rounded="lg"
-          color="blue-grey-darken-1"
+          color="deep-purple-darken-3"
         >
           <template v-slot:title>
             <h3 class="font-weight-black text-center">Reset Password</h3>
@@ -30,12 +30,11 @@ import ForgotView from '@/components/auth/ForgotView.vue'
 <style scoped>
 /* Set the background color for the entire app */
 .background-color {
-  background-color: #243642; /* Your desired background color */
+  background-color: #17153b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 /* Customize other styles if needed */
 </style>

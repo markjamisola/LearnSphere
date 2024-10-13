@@ -1,7 +1,7 @@
 <template>
   <v-app class="background-color">
     <!-- Transparent Navigation Drawer for Mobile and Desktop -->
-     <v-navigation-drawer
+    <v-navigation-drawer
       v-if="$vuetify.display.mdAndUp"
       fixed
       clipped
@@ -10,44 +10,51 @@
       width="80"
       app
     >
-      <v-list class="d-flex flex-column align-center justify-center fill-height">
-        <v-list-item-group>
-          <!-- Centered Navigation icons with links -->
-          <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
-          </v-list-item>
+      <v-list class="d-flex flex-column justify-space-between fill-height">
+        <!-- Logo at the Top -->
+        <v-list-item class="text-center">
+          <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+        </v-list-item>
 
+        <v-list-item-group>
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'">mdi-account</v-icon>
+              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-account</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'">mdi-history</v-icon>
+              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-history</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'">mdi-information</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/logout')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'">mdi-logout</v-icon>
+              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-information</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
+
+        <!-- Log Out Button at the Bottom -->
+        <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item-icon>
+            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'">mdi-logout</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -57,7 +64,7 @@
       v-model="drawer"
       temporary
       app
-       color="transparent mobile-nav-drawer"
+      color="transparent mobile-nav-drawer"
       class="teal-darken-4"
       width="80"
     >
@@ -71,31 +78,39 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'">mdi-account</v-icon>
+              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-account</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'">mdi-history</v-icon>
+              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-history</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'">mdi-information</v-icon>
+              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-information</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'">mdi-logout</v-icon>
+              <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-logout</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -103,9 +118,9 @@
     </v-navigation-drawer>
 
     <!-- App bar with toggle button only for mobile screens -->
-    <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" flat>
-      <v-app-bar-nav-icon @click="drawer = !drawer"  color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white">LearnSphere</v-toolbar-title>
+    <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
+      <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
+      <v-toolbar-title class="text-white font-weight-black ">LearnSphere</v-toolbar-title>
     </v-app-bar>
 
     <!-- Main content area -->
@@ -114,19 +129,43 @@
       <v-container fluid>
         <v-row class="mt-8">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white">Recently Viewed</h1>
+            <h1 class="text-white pb-8 font-weight-black">History</h1>
           </v-col>
         </v-row>
-        <h3 class="text-white text-center">I hope you're hungry for NOTHING!</h3>
+
+        <v-row> </v-row>
+        <!-- Suggested Courses Section -->
+        <v-row>
+          <v-col>
+            <h2 class="text-white font-weight-black">Recently Viewed Course</h2>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <!-- Course Card 1 -->
+          <!-- Course Card 2 -->
+          <v-col cols="12" sm="6" md="4">
+            <v-btn
+              class="pa-0"
+              color="deep-purple-darken-3"
+              block
+              height="150px"
+              @click="$router.push('/it-109')"
+              elevation="10"
+            >
+              <h1 class="text-center">IT - 109</h1>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const drawer = ref(false); // Drawer state for mobile
+const drawer = ref(false) // Drawer state for mobile
 </script>
 
 <style scoped>
@@ -135,7 +174,7 @@ const drawer = ref(false); // Drawer state for mobile
 }
 
 .background-color {
-  background-color: #243642; /* Your desired background color */
+  background-color: #17153b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

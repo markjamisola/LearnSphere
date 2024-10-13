@@ -12,7 +12,7 @@
 
         <!-- Button Link -->
         <RouterLink class="text-decoration-none" to="/login">
-          <h5 class="text-white">
+          <h5 class="text-deep-purple-lighten-3">
             Let's Get Started
             <v-icon icon="mdi-chevron-right"></v-icon><v-icon icon="mdi-chevron-right"></v-icon><v-icon icon="mdi-chevron-right"></v-icon>
           </h5>
@@ -26,11 +26,10 @@
 <style scoped>
 /* Set the background color for the entire app */
 .background-color {
-  background-color: #243642;
-  height: 100vh; /* Make sure the app takes full viewport height */
+  background-color: #17153b; /* Your desired background color */
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 </style>
