@@ -5,7 +5,7 @@
       <!-- Centering the content inside the container -->
       <v-container class=" align-self-center text-center">
         <!-- Logo Image -->
-        <v-img class="mx-auto" max-width="400" src="/public/logo5.png"></v-img>
+        <v-img class="mx-auto" max-width="400" src="../public/logo5.png"></v-img>
 
         <!-- Heading Text -->
         <h3 class="text-white mb-4">Learn Smarter, Succeed Faster</h3>

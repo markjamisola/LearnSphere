@@ -8,7 +8,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
       <!-- Apply background color here -->
       <v-container>
         <!-- Vuetify logo -->
-        <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/public/logo5.png"></v-img>
+        <v-img class="mx-auto mb-0 mt-1" max-width="228" src="../public/logo5.png"></v-img>
 
         <!-- Sign-Up Form Card -->
         <v-card
