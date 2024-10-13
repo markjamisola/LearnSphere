@@ -1,12 +1,20 @@
 <template>
   <v-app class="background-color">
     <!-- Transparent Navigation Drawer for Mobile and Desktop -->
-    <v-navigation-drawer app clipped permanent color="transparent" class="teal-darken-4" width="80">
+  <v-navigation-drawer
+      v-if="$vuetify.display.mdAndUp"
+      fixed
+      clipped
+      color="transparent"
+      class="teal-darken-4"
+      width="80"
+      app
+    >
       <v-list class="d-flex flex-column align-center justify-center fill-height">
         <v-list-item-group>
           <!-- Centered Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="/public/1.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
           </v-list-item>
 
           <!-- Navigation icons with links -->
@@ -18,38 +26,87 @@
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'"
-                >mdi-account</v-icon
-              >
+              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'">mdi-account</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
-                >mdi-history</v-icon
-              >
+              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'">mdi-history</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'"
-                >mdi-information</v-icon
-              >
+              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'">mdi-information</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+
+    <!-- Navigation Drawer for Mobile (overlay and toggleable) -->
+    <v-navigation-drawer
+      v-if="$vuetify.display.smAndDown"
+      v-model="drawer"
+      temporary
+      app
+       color="transparent mobile-nav-drawer"
+      class="teal-darken-4"
+      width="80"
+    >
+      <v-list class="d-flex flex-column align-center justify-center fill-height">
+        <v-list-item-group>
+          <!-- Centered Navigation icons with links -->
+          <v-list-item @click="$router.push('/home')" class="text-center">
+            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+          </v-list-item>
+
+          <!-- Navigation icons with links -->
+          <v-list-item @click="$router.push('/home')" class="text-center">
+            <v-list-item-icon>
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+
+          <v-list-item @click="$router.push('/profile')" class="text-center">
+            <v-list-item-icon>
+              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'">mdi-account</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+
+          <v-list-item @click="$router.push('/history')" class="text-center">
+            <v-list-item-icon>
+              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'">mdi-history</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+
+          <v-list-item @click="$router.push('/about')" class="text-center">
+            <v-list-item-icon>
+              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'">mdi-information</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+
+          <v-list-item @click="$router.push('/logout')" class="text-center">
+            <v-list-item-icon>
+              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'">mdi-logout</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- App bar with toggle button only for mobile screens -->
+    <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" flat>
+      <v-app-bar-nav-icon @click="drawer = !drawer"  color="white"></v-app-bar-nav-icon>
+      <v-toolbar-title class="text-white">LearnSphere</v-toolbar-title>
+    </v-app-bar>
 
     <!-- Main content area -->
     <v-main>
@@ -83,7 +140,7 @@
 
         <v-row class="mx-4 mt-8" justify="center">
           <v-col cols="12" md="6">
-            <h1 class="text-white">Mission</h1>
+            <h1 class="text-white text-center">Mission</h1>
             <v-card class="pa-5 " elevation="8" rounded="lg" color="blue-grey-darken-1">
               <v-card-text class="text-justify white--text">
                 <span>
@@ -97,7 +154,7 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <h1 class="text-white">Vision</h1>
+            <h1 class="text-white text-center">Vision</h1>
             <v-card class="pa-5 " elevation="8" rounded="lg" color="blue-grey-darken-1">
               <v-card-text class="text-justify white--text">
                 <span>
@@ -116,8 +173,11 @@
 </template>
 
 <script setup>
-// No CSS needed for now, just using Vuetify components and positioning
+import { ref } from 'vue';
+
+const drawer = ref(false); // Drawer state for mobile
 </script>
+
 
 <style scoped>
 .fill-height {
@@ -130,5 +190,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.mobile-nav-drawer {
+  backdrop-filter: blur(15px);
 }
 </style>
