@@ -14,7 +14,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
           elevation="8"
           max-width="448"
           rounded="lg"
-          color="blue-grey-darken-1"
+          color="deep-purple-darken-3"
         >
           <template v-slot:title>
             <h3 class="font-weight-black text-center">Log In</h3>
@@ -23,7 +23,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
           <LoginForm></LoginForm>
 
           <v-card-text class="text-center pt-0">
-            <RouterLink class="text-black text-decoration-none" to="/register">
+            <RouterLink class="text-black text-decoration-none text-deep-purple-lighten-3" to="/register">
               Sign Up Now
             </RouterLink>
             <v-icon icon="mdi-chevron-right"></v-icon>
@@ -37,7 +37,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 <style scoped>
 /* Set the background color for the entire app */
 .background-color {
-  background-color: #243642; /* Your desired background color */
+  background-color: #17153b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

@@ -24,7 +24,7 @@
       variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
-    <RouterLink class="text-black text-decoration-none" to="/forgot"> Reset Password </RouterLink>
+    <RouterLink class="text-black text-decoration-none text-deep-purple-lighten-3" to="/forgot"> Reset Password </RouterLink>
 
     <v-card class="mb-7" color="surface-variant" variant="tonal">
       <v-card-text class="text-justify text-white text-caption">
