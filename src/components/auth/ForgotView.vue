@@ -9,7 +9,7 @@
 
     <v-card class="mb-7" color="surface-variant" variant="tonal">
       <v-card-text class="text-center text-white text-caption">
-       You will receive instructions for reseting your password.
+        Instructions to reset your password will be sent to your registered email.
       </v-card-text>
     </v-card>
 
