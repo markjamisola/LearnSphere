@@ -6,7 +6,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
   <v-responsive>
     <v-app class="background-color">
       <!-- Apply background color here -->
-      <v-container>
+      <v-container fluid>
         <!-- Vuetify logo -->
         <v-img class="mx-auto mb-0 mt-1" max-width="200" src="/logo5.png"></v-img>
 

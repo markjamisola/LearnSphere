@@ -1,3 +1,9 @@
+<script setup>
+import { ref } from 'vue'
+
+// For toggling visibility of password fields
+const visible = ref(false)
+</script>
 <template>
   <v-form>
     <div class="text-subtitle-1 text-medium-emphasis">
