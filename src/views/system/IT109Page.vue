@@ -13,15 +13,20 @@
       <v-list class="d-flex flex-column justify-space-between fill-height">
         <!-- Logo at the Top -->
         <v-list-item class="text-center">
-          <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+          <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
         </v-list-item>
 
         <v-list-item-group>
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
-                >mdi-home</v-icon
+              <v-icon
+                large
+                :color="
+                  ['/home', '/it-109'].includes($route.path) ? 'deep-purple-darken-3' : 'white'
+                "
               >
+                mdi-home
+              </v-icon>
             </v-list-item-icon>
           </v-list-item>
 
@@ -72,7 +77,7 @@
       <v-list class="d-flex flex-column align-center justify-center fill-height">
         <v-list-item-group>
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
           </v-list-item>
 
           <v-list-item @click="$router.push('/home')" class="text-center">
@@ -134,13 +139,33 @@
         <h3 class="text-white text-center">SYSTEMS INTEGRATION AND ARCHITECTURE 1</h3>
       </v-container>
 
+      <!-- Search for Topics -->
+      <v-row class="justify-center mb-8 mx-auto">
+        <v-col cols="12" sm="8" md="6">
+          <v-text-field
+            :loading="loading"
+            append-inner-icon="mdi-magnify"
+            prepend-inner-icon="mdi-lightbulb-on"
+            density="comfortable"
+            label="Search Topics"
+            variant="solo"
+            hide-details
+            single-line
+            elevation="10"
+            color="deep-purple-darken-3"
+            outlined
+            @click:append-inner="onClick"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
       <!-- Video and PDF columns -->
       <v-container fluid>
         <v-row>
           <!-- Videos column -->
           <v-col cols="12" md="6">
-            <v-card class="mb-5" color="deep-purple-darken-3" dark>
-              <v-card-title class="text-center font-weight-black pb-10"
+            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
+              <v-card-title class="text-center font-weight-black pb-10" 
                 >Modeling Requirements</v-card-title
               >
               <v-card-text>
@@ -156,7 +181,7 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="mb-5" color="deep-purple-darken-3" dark>
+            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10"
                 >Web Services and their Components</v-card-title
               >
@@ -176,7 +201,7 @@
 
           <!-- PDFs column -->
           <v-col cols="12" md="6">
-            <v-card class="mb-5" color="deep-purple-darken-3" dark>
+            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10">C4 Model</v-card-title>
               <v-card-text>
                 <v-btn
@@ -189,7 +214,7 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="mb-5" color="deep-purple-darken-3" dark>
+            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10"
                 >System Architecture Overview</v-card-title
               >
@@ -255,13 +280,36 @@ function showVideo(url) {
 }
 
 function showPdf(url) {
-  dialogContent.value = url
-  dialogTitle.value = ''
-  isVideo.value = false
-  dialog.value = true
+  if (window.innerWidth <= 600) {
+    // Mobile screen
+    window.open(url, '_blank') // Open PDF in a new tab
+  } else {
+    dialogContent.value = url
+    dialogTitle.value = ''
+    isVideo.value = false
+    dialog.value = true
+  }
 }
 </script>
+<script>
+export default {
+  data: () => ({
+    loaded: false,
+    loading: false
+  }),
 
+  methods: {
+    onClick() {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+        this.loaded = true
+      }, 2000)
+    }
+  }
+}
+</script>
 <style scoped>
 .background-color {
   background-color: #17153b; /* Your desired background color */

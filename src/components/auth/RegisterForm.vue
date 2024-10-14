@@ -14,7 +14,7 @@ const visible = ref(false)
           density="compact"
           placeholder="Name"
           prepend-inner-icon="mdi-account-outline"
-          variant="outlined"
+          variant="solo"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -22,7 +22,7 @@ const visible = ref(false)
           density="compact"
           placeholder="ID Number"
           prepend-inner-icon="mdi-card-account-details-outline"
-          variant="outlined"
+         variant="solo"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -34,7 +34,7 @@ const visible = ref(false)
           :items="['CCIS']"
           placeholder="College"
           prepend-inner-icon="mdi-school-outline"
-          variant="outlined"
+          variant="solo"
           density="compact"
         ></v-select>
       </v-col>
@@ -43,7 +43,7 @@ const visible = ref(false)
           :items="['Information Technology', 'Computer Science', 'Information System']"
           placeholder="Program"
           prepend-inner-icon="mdi-laptop"
-          variant="outlined"
+          variant="solo"
           density="compact"
         ></v-select>
       </v-col>
@@ -54,7 +54,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Email address"
       prepend-inner-icon="mdi-email-outline"
-      variant="outlined"
+      variant="solo"
     ></v-text-field>
 
     <!-- Password and Verify Password fields -->
@@ -64,7 +64,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Password"
       prepend-inner-icon="mdi-lock-outline"
-      variant="outlined"
+      variant="solo"
       @click:append-inner="visible = !visible"
     ></v-text-field>
 
@@ -74,7 +74,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Verify Password"
       prepend-inner-icon="mdi-lock-outline"
-      variant="outlined"
+      variant="solo"
       @click:append-inner="visible = !visible"
     ></v-text-field>
 

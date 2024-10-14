@@ -13,14 +13,16 @@
       <v-list class="d-flex flex-column justify-space-between fill-height">
         <!-- Logo at the Top -->
         <v-list-item class="text-center">
-          <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+          <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
         </v-list-item>
 
         <v-list-item-group>
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-home</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
@@ -52,7 +54,9 @@
         <!-- Log Out Button at the Bottom -->
         <v-list-item @click="$router.push('/logout')" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'">mdi-logout</v-icon>
+            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
+              >mdi-logout</v-icon
+            >
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -72,13 +76,15 @@
         <v-list-item-group>
           <!-- Centered Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
           </v-list-item>
 
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
+                >mdi-home</v-icon
+              >
             </v-list-item-icon>
           </v-list-item>
 
@@ -120,7 +126,7 @@
     <!-- App bar with toggle button only for mobile screens -->
     <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
       <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white font-weight-black ">LearnSphere</v-toolbar-title>
+      <v-toolbar-title class="text-white font-weight-black">LearnSphere</v-toolbar-title>
     </v-app-bar>
 
     <!-- Main content area -->
@@ -137,17 +143,18 @@
         <v-row class="justify-center mb-8 mx-auto">
           <v-col cols="12" sm="8" md="6">
             <v-text-field
-              class="search-bar"
-              placeholder="Search Course"
+              :loading="loading"
               append-inner-icon="mdi-magnify"
-              single-line
-              hide-details
-              solo
-              color="deep-purple-darken-3"
-              background-color="deep-purple-darken-3"
-              outlined
+              prepend-inner-icon="mdi-cast-education"
+              density="comfortable"
+              label="Search Course"
               variant="solo"
+              hide-details
+              single-line
               elevation="10"
+              color="deep-purple-darken-3"
+              outlined
+              @click:append-inner="onClick"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -213,6 +220,25 @@
 import { ref } from 'vue'
 
 const drawer = ref(false) // Drawer state for mobile
+</script>
+<script>
+export default {
+  data: () => ({
+    loaded: false,
+    loading: false
+  }),
+
+  methods: {
+    onClick() {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+        this.loaded = true
+      }, 2000)
+    }
+  }
+}
 </script>
 
 <style scoped>
