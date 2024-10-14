@@ -208,7 +208,7 @@
                   elevation="10"
                   color="deep-purple-lighten-4"
                   block
-                  @click="showPdf('/public/pdfs/C4-Model.pdf')"
+                  @click="showPdf('/pdfs/C4-Model.pdf')"
                   >Open PDF</v-btn
                 >
               </v-card-text>
@@ -223,7 +223,7 @@
                   elevation="10"
                   color="deep-purple-lighten-4"
                   block
-                  @click="showPdf('/public/pdfs/System-architecture_overview.pdf')"
+                  @click="showPdf('/pdfs/System-architecture_overview.pdf')"
                   >Open PDF</v-btn
                 >
               </v-card-text>
