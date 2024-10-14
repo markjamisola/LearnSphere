@@ -158,7 +158,7 @@
 
             <v-card class="mb-5" color="deep-purple-darken-3" dark>
               <v-card-title class="text-center font-weight-black pb-10"
-                >Web Services and Their Components</v-card-title
+                >Web Services and their Components</v-card-title
               >
               <v-card-text>
                 <v-btn
