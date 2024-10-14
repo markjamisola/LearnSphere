@@ -6,9 +6,9 @@
 
     <v-text-field
       density="compact"
-      placeholder="Email address"
+      placeholder="Email or ID Number"
       prepend-inner-icon="mdi-email-outline"
-      variant="outlined"
+      variant="solo"
     ></v-text-field>
 
     <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -21,7 +21,7 @@
       density="compact"
       placeholder="Enter your password"
       prepend-inner-icon="mdi-lock-outline"
-      variant="outlined"
+      variant="solo"
       @click:append-inner="visible = !visible"
     ></v-text-field>
     <RouterLink class="text-black text-decoration-none text-deep-purple-lighten-3" to="/forgot"> Reset Password </RouterLink>

@@ -13,7 +13,7 @@
       <v-list class="d-flex flex-column justify-space-between fill-height">
         <!-- Logo at the Top -->
         <v-list-item class="text-center">
-          <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+          <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
         </v-list-item>
 
         <v-list-item-group>
@@ -72,7 +72,7 @@
         <v-list-item-group>
           <!-- Centered Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="../public/1.png" alt="Logo"></v-img>
+            <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
           </v-list-item>
 
           <!-- Navigation icons with links -->
@@ -126,7 +126,7 @@
     <!-- Main content area -->
     <v-main class="d-flex">
       <v-container>
-        <v-img class="mx-auto my-15" max-width="150" src="../public/logo6.png"></v-img>
+        <v-img class="mx-auto my-15" max-width="150" src="/logo6.png"></v-img>
         <v-card
           class="mx-auto pa-8 pb-5 align-self-center"
           elevation="8"

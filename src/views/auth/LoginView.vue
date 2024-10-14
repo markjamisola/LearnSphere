@@ -7,7 +7,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
     <v-app class="background-color">
      
       <v-container>
-        <v-img class="mx-auto mb-0 mt-1" max-width="228" src="../public/logo5.png"></v-img>
+        <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
 
         <v-card
           class="mx-auto pa-8 pb-5"
