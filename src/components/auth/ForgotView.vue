@@ -4,7 +4,7 @@
       density="compact"
       placeholder="Registered Email Address"
       prepend-inner-icon="mdi-email-outline"
-      variant="outlined"
+      variant="solo"
     ></v-text-field>
 
     <v-card class="mb-7" color="surface-variant" variant="tonal">
