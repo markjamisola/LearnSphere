@@ -245,7 +245,7 @@ const teamMembers = ref([
     socialLinks: [
       { icon: 'mdi-facebook', url: 'https://www.facebook.com/mdjamisola/' },
       { icon: 'mdi-instagram', url: 'https://www.instagram.com/markjamisola/' },
-      { icon: 'mdi-account-question', url: 'https://markjamisola.github.io/' }
+      { icon: 'mdi-github', url: 'https://markjamisola.github.io/' }
     ]
   },
   {
@@ -253,7 +253,7 @@ const teamMembers = ref([
     socialLinks: [
       { icon: 'mdi-facebook', url: 'https://www.facebook.com/profile.php?id=100006277218725' },
       { icon: 'mdi-instagram', url: 'https://www.instagram.com/uesclamado/' },
-      { icon: 'mdi-account-question', url: 'https://uesclamado.github.io/' }
+      { icon: 'mdi-github', url: 'https://uesclamado.github.io/' }
     ]
   },
   {
@@ -261,7 +261,7 @@ const teamMembers = ref([
     socialLinks: [
       { icon: 'mdi-facebook', url: 'https://www.facebook.com/jusalyn.gimao' },
       { icon: 'mdi-instagram', url: 'https://www.instagram.com/jusalyn_/' },
-      { icon: 'mdi-account-question', url: 'https://jusalyngimao.github.io/' }
+      { icon: 'mdi-github', url: 'https://jusalyngimao.github.io/' }
     ]
   }
 ])
