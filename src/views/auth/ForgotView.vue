@@ -29,10 +29,10 @@ const goToLogin = () => {
 
         <v-card
           class="mx-auto pa-8 pb-5"
-          elevation="8"
+          elevation="15"
           max-width="448"
           rounded="lg"
-          color="deep-purple-darken-3"
+          color="#FAEED1"
         >
           <template v-slot:title>
             <h3 class="font-weight-black text-center">Reset Password</h3>

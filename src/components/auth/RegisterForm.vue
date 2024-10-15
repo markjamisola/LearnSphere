@@ -22,7 +22,7 @@ const visible = ref(false)
           density="compact"
           placeholder="ID Number"
           prepend-inner-icon="mdi-card-account-details-outline"
-         variant="solo"
+          variant="solo"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -79,8 +79,8 @@ const visible = ref(false)
     ></v-text-field>
 
     <!-- Warning message -->
-    <v-card class="mb-8" color="surface-variant" variant="tonal">
-      <v-card-text class="text-caption text-justify text-white">
+    <v-card class="mb-3" color="surface-variant" variant="outlined">
+      <v-card-text class="text-caption text-justify text-black">
         Ensure that all information is correct before signing up. In case of issues, please contact
         support.
       </v-card-text>
@@ -89,9 +89,10 @@ const visible = ref(false)
     <!-- Sign Up Button -->
     <v-btn
       class="mb-8"
-      color="white"
+      color="#803d3b"
       size="large"
-      variant="tonal"
+      variant="elevated"
+      elevation="15"
       block
       @click="$router.push('/home')"
     >

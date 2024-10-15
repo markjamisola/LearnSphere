@@ -20,13 +20,13 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? '#000' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -34,7 +34,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? '#000' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -42,7 +42,7 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? '#000' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
@@ -50,9 +50,9 @@
         </v-list-item-group>
 
         <!-- Log Out Button at the Bottom -->
-        <v-list-item @click="$router.push('/logout')" class="text-center">
+        <v-list-item @click="openLogoutModal" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'">mdi-logout</v-icon>
+            <v-icon large color="white">mdi-logout</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -65,7 +65,7 @@
       temporary
       app
       color="transparent mobile-nav-drawer"
-      class="teal-darken-4"
+      class="#803D3B"
       width="80"
     >
       <v-list class="d-flex flex-column align-center justify-center fill-height">
@@ -78,13 +78,13 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? '#000' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -92,7 +92,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? '#000' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -100,17 +100,15 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? '#000' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large color="white">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -120,7 +118,7 @@
     <!-- App bar with toggle button only for mobile screens -->
     <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
       <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white font-weight-black ">LearnSphere</v-toolbar-title>
+      <v-toolbar-title class="text-white font-weight-black">LearnSphere</v-toolbar-title>
     </v-app-bar>
 
     <!-- Main content area -->
@@ -151,19 +149,26 @@
               block
               height="150px"
               @click="$router.push('/it-109')"
-              elevation="10"
+              elevation="15"
             >
               <h1 class="text-center">IT - 109</h1>
             </v-btn>
           </v-col>
         </v-row>
       </v-container>
+      <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+
+import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
 
 const drawer = ref(false) // Drawer state for mobile
 </script>
@@ -174,7 +179,7 @@ const drawer = ref(false) // Drawer state for mobile
 }
 
 .background-color {
-  background-color: #803D3B; /* Your desired background color */
+  background-color: #803d3b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

@@ -7,21 +7,32 @@
       variant="solo"
     ></v-text-field>
 
-    <v-card class="mb-7" color="surface-variant" variant="tonal">
-      <v-card-text class="text-center text-white text-caption">
+    <v-card class="mb-7" color="surface-variant" variant="outlined">
+      <v-card-text class="text-center text-black text-caption">
         Instructions to reset your password will be sent to your registered email.
       </v-card-text>
     </v-card>
-
-    <v-btn
-      class="mb-8"
-      color="white"
-      size="large"
-      variant="tonal"
-      block
-      @click="$router.push('/login')"
-    >
-      Send
-    </v-btn>
+    <v-row class="justify-space-evenly mt-3">
+      <v-btn
+        class="mb-8"
+        color="#803d3b"
+        size="large"
+        variant="elevated"
+        elevation="15"
+        @click="$router.push('/login')"
+      >
+        Send
+      </v-btn>
+      <v-btn
+        class="mb-8"
+        color="#803d3b"
+        size="large"
+        variant="elevated"
+        elevation="15"
+        @click="$router.push('/login')"
+      >
+        Cancel
+      </v-btn>
+    </v-row>
   </v-form>
 </template>

@@ -14,7 +14,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
             <!-- Card for Login Form -->
             <v-card
               class="mx-auto pa-8 pb-5 align-center"
-              elevation="8"
+              elevation="15"
               rounded="lg"
               color="#FAEED1"
             >
@@ -28,7 +28,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               <!-- Sign Up Link -->
               <v-card-text class="text-center pt-0">
                 <RouterLink
-                  class="text-black text-decoration-none text-deep-purple-lighten-3"
+                  class="text-black text-decoration-none text-black"
                   to="/register"
                 >
                   Sign Up Now

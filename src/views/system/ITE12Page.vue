@@ -19,12 +19,7 @@
         <v-list-item-group>
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon
-                large
-                :color="
-                  ['/home', '/it-109'].includes($route.path) ? 'black' : 'white'
-                "
-              >
+              <v-icon large :color="['/home', '/ite12'].includes($route.path) ? 'black' : 'white'">
                 mdi-home
               </v-icon>
             </v-list-item-icon>
@@ -56,10 +51,10 @@
         </v-list-item-group>
 
         <v-list-item @click="openLogoutModal" class="text-center">
-            <v-list-item-icon>
-              <v-icon large color="white">mdi-logout</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
+          <v-list-item-icon>
+            <v-icon large color="white">mdi-logout</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -80,9 +75,7 @@
 
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'"
-                >mdi-home</v-icon
-              >
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
@@ -109,7 +102,6 @@
               >
             </v-list-item-icon>
           </v-list-item>
-
           <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
               <v-icon large color="white">mdi-logout</v-icon>
@@ -129,10 +121,10 @@
       <v-container fluid>
         <v-row class="mt-8">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">IT-109</h1>
+            <h1 class="text-white font-weight-black">ITE-12</h1>
           </v-col>
         </v-row>
-        <h3 class="text-white text-center">SYSTEMS INTEGRATION AND ARCHITECTURE 1</h3>
+        <h3 class="text-white text-center">FUNDAMENTALS OF PROGRAMMING</h3>
       </v-container>
 
       <!-- Search for Topics -->
@@ -161,8 +153,8 @@
           <!-- Videos column -->
           <v-col cols="12" md="6">
             <v-card class="mb-5" color="#FAEED1" dark elevation="10">
-              <v-card-title class="text-center font-weight-black pb-10" 
-                >Modeling Requirements</v-card-title
+              <v-card-title class="text-center font-weight-black pb-10"
+                >Fundamentals of Problem Solving and Programming</v-card-title
               >
               <v-card-text>
                 <v-btn
@@ -170,7 +162,7 @@
                   color="#803D3B"
                   block
                   @click="
-                    showVideo('https://www.youtube.com/embed/qs4Z3PayuVQ?si=lPk7bRXFLmj1r0sd')
+                    showVideo('https://www.youtube.com/embed/JgQs1AgMU00?si=JH1-ZiMV92PXhrKl')
                   "
                   >Watch Video</v-btn
                 >
@@ -179,7 +171,7 @@
 
             <v-card class="mb-5" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10"
-                >Web Services and their Components</v-card-title
+                >Selection Control Structures</v-card-title
               >
               <v-card-text>
                 <v-btn
@@ -187,7 +179,7 @@
                   color="#803D3B"
                   block
                   @click="
-                    showVideo('https://www.youtube.com/embed/RluytloEiaM?si=YskRsQCE0_q_qyTC')
+                    showVideo('https://www.youtube.com/embed/-33idp61W2w?si=_xtMyJ6__Ut6Ju43')
                   "
                   >Watch Video</v-btn
                 >
@@ -198,13 +190,15 @@
           <!-- PDFs column -->
           <v-col cols="12" md="6">
             <v-card class="mb-5" color="#FAEED1" dark elevation="10">
-              <v-card-title class="text-center font-weight-black pb-10">C4 Model</v-card-title>
+              <v-card-title class="text-center font-weight-black pb-10"
+                >Selection Structures</v-card-title
+              >
               <v-card-text>
                 <v-btn
                   elevation="10"
                   color="#803D3B"
                   block
-                  @click="showPdf('/pdfs/C4-Model.pdf')"
+                  @click="showPdf('/pdfs/Selection-Structure.pdf')"
                   >Open PDF</v-btn
                 >
               </v-card-text>
@@ -212,14 +206,14 @@
 
             <v-card class="mb-5" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10"
-                >System Architecture Overview</v-card-title
+                >Computer Programming</v-card-title
               >
               <v-card-text>
                 <v-btn
                   elevation="10"
                   color="#803D3B"
                   block
-                  @click="showPdf('/pdfs/System-architecture_overview.pdf')"
+                  @click="showPdf('/pdfs/Computer-Programming.pdf')"
                   >Open PDF</v-btn
                 >
               </v-card-text>
@@ -256,7 +250,6 @@
         </v-card>
       </v-dialog>
       <LogoutModal ref="logoutModalRef" />
-
     </v-main>
   </v-app>
 </template>
@@ -314,7 +307,7 @@ export default {
 </script>
 <style scoped>
 .background-color {
-  background-color: #803D3B; /* Your desired background color */
+  background-color: #803d3b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;
