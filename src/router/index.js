@@ -10,6 +10,7 @@ import AboutPage from '@/views/system/AboutPage.vue'
 import LogoutPage from '@/views/system/LogoutPage.vue'
 import IT109Page from '@/views/system/IT109Page.vue'
 import ITE12Page from '@/views/system/ITE12Page.vue'
+import CSC102Page from '@/views/system/CSC102Page.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +73,11 @@ const router = createRouter({
       path: '/ite12', 
       name: 'ite12',
       component: ITE12Page
+    },
+    {
+      path: '/csc102', 
+      name: 'csc102',
+      component: CSC102Page
     }
   ]
 })

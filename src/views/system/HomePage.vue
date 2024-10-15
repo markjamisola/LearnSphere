@@ -202,10 +202,10 @@
               color="#FAEED1"
               block
               height="150px"
-              @click="$router.push('/it-109')"
+              @click="$router.push('/csc102')"
               elevation="10"
             >
-              <h1 class="text-center">IT - 109</h1>
+              <h1 class="text-center">CSC - 102</h1>
             </v-btn>
           </v-col>
         </v-row>
