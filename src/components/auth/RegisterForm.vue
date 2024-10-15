@@ -3,6 +3,9 @@ import { ref } from 'vue'
 
 // For toggling visibility of password fields
 const visible = ref(false)
+
+// State for the Contact Support dialog/modal
+const contactDialog = ref(false)
 </script>
 
 <template>
@@ -69,11 +72,13 @@ const visible = ref(false)
       @click:append-inner="visible = !visible"
     ></v-text-field>
 
-    <!-- Warning message -->
+    <!-- Contact Support Link -->
     <v-card class="mb-3" color="surface-variant" variant="outlined">
       <v-card-text class="text-caption text-justify text-black">
-        Ensure that all information is correct before signing up. In case of issues, please contact
-        support.
+        Ensure that all information is correct before signing up. If you need assistance, please
+        <a @click.prevent="contactDialog = true" class="text-decoration-underline font-weight-bold">
+          contact support.
+        </a>
       </v-card-text>
     </v-card>
 
@@ -89,5 +94,63 @@ const visible = ref(false)
     >
       Sign Up
     </v-btn>
+
+    <!-- Dialog/Modal for Contact Support -->
+    <v-dialog v-model="contactDialog" persistent max-width="400">
+      <v-card class="pa-0" color="#803d3b" block elevation="10">
+        <v-card-title class="headline text-center font-weight-black">Contact Us</v-card-title>
+
+        <v-card-text class="justify-content">
+          <p class="mb-3">
+            If you have any questions or need assistance, please contact us using the details below:
+          </p>
+
+          <p>
+            <strong>MJ:</strong>
+            <a
+              class="text-decoration-none text-white"
+              href="mailto:markdaniel.jamisola@carsu.edu.ph"
+              > markdaniel.jamisola@carsu.edu.ph</a
+            >
+          </p>
+          <p>
+            <strong>UE:</strong>
+            <a class="text-decoration-none text-white" href="mailto:ushyne.esclamadado.carsu.edu.ph"
+              > ushyne.esclamadado.carsu.edu.ph</a
+            >
+          </p>
+          <p>
+            <strong>JG:</strong>
+            <a class="text-decoration-none text-white" href="mailto:jusalyn.gimao@carsu.edu.ph"
+              > jusalyn.gimao@carsu.edu.ph</a
+            >
+          </p>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="#FAEED1"
+            block
+            variant="elevated"
+            elevation="15"
+            size="large"
+            class="mb-3"
+            @click="contactDialog = false"
+            >Close</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-form>
 </template>
+
+<style scoped>
+.text-decoration-underline {
+  text-decoration: underline;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+</style>
