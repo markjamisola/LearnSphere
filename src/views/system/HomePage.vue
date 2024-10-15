@@ -20,7 +20,7 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'"
                 >mdi-home</v-icon
               >
             </v-list-item-icon>
@@ -28,7 +28,7 @@
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -36,7 +36,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -44,7 +44,7 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
@@ -54,7 +54,7 @@
         <!-- Log Out Button at the Bottom -->
         <v-list-item @click="$router.push('/logout')" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
+            <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
               >mdi-logout</v-icon
             >
           </v-list-item-icon>
@@ -82,7 +82,7 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'"
                 >mdi-home</v-icon
               >
             </v-list-item-icon>
@@ -90,7 +90,7 @@
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -98,7 +98,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -106,7 +106,7 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? 'black' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
@@ -114,7 +114,7 @@
 
           <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
                 >mdi-logout</v-icon
               >
             </v-list-item-icon>
@@ -159,6 +159,33 @@
           </v-col>
         </v-row>
 
+        <v-row class="mb-8 justify-center">
+          <v-btn class="mx-1 mt-2"
+            :color="selectedCategory === 'all' ? 'white' : '#FAEED1'"
+            @click="selectedCategory = 'all'"
+          >
+            All
+          </v-btn>
+          <v-btn class="mx-1 mt-2"
+            :color="selectedCategory === 'it' ? 'white' : '#FAEED1'"
+            @click="selectedCategory = 'it'"
+          >
+            IT Courses
+          </v-btn>
+          <v-btn class="mx-1 mt-2"
+            :color="selectedCategory === 'ite' ? 'white' : '#FAEED1'"
+            @click="selectedCategory = 'ite'"
+          >
+            ITE Courses
+          </v-btn>
+          <v-btn class="mx-1 mt-2"
+            :color="selectedCategory === 'csc' ? 'white' : '#FAEED1'"
+            @click="selectedCategory = 'csc'"
+          >
+            CSC Courses
+          </v-btn>
+        </v-row>
+
         <!-- Suggested Courses Section -->
         <v-row>
           <v-col>
@@ -167,47 +194,24 @@
         </v-row>
 
         <v-row>
+          <!-- Loop through the filteredCourses and display them -->
+          <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
+            <v-btn
+              class="pa-0"
+              color="#FAEED1"
+              block
+              height="150px"
+              @click="$router.push(course.route)"
+              elevation="10"
+            >
+              <h1 class="text-center">{{ course.name }}</h1>
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row>
           <!-- Course Card 1 -->
-          <v-col cols="12" sm="6" md="4">
-            <v-btn
-              class="pa-0"
-              color="#FAEED1"
-              block
-              height="150px"
-              @click="$router.push('/it-109')"
-              elevation="10"
-            >
-              <h1 class="text-center">IT - 109</h1>
-            </v-btn>
-          </v-col>
-
-          <!-- Course Card 2 -->
-          <v-col cols="12" sm="6" md="4">
-            <v-btn
-              class="pa-0"
-              color="#FAEED1"
-              block
-              height="150px"
-              @click="$router.push('/ite12')"
-              elevation="10"
-            >
-              <h1 class="text-center">ITE - 12</h1>
-            </v-btn>
-          </v-col>
-
-          <!-- Course Card 3 -->
-          <v-col cols="12" sm="6" md="4">
-            <v-btn
-              class="pa-0"
-              color="#FAEED1"
-              block
-              height="150px"
-              @click="$router.push('/csc102')"
-              elevation="10"
-            >
-              <h1 class="text-center">CSC - 102</h1>
-            </v-btn>
-          </v-col>
+        
         </v-row>
       </v-container>
     </v-main>
@@ -215,7 +219,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const drawer = ref(false) // Drawer state for mobile
 </script>
@@ -237,7 +241,29 @@ export default {
     }
   }
 }
+
+
+// The selected category
+const selectedCategory = ref('all')
+
+// The courses data
+const courses = ref([
+  { id: 1, name: 'IT - 109', category: 'it', route: '/it-109' },
+  { id: 2, name: 'ITE - 12', category: 'ite', route: '/ite12' },
+  { id: 3, name: 'CSC - 102', category: 'csc', route: '/csc102' },
+  // Add more courses here...
+])
+
+// Computed property to filter courses based on the selected category
+const filteredCourses = computed(() => {
+  if (selectedCategory.value === 'all') {
+    return courses.value // Show all courses if 'all' is selected
+  }
+  return courses.value.filter(course => course.category === selectedCategory.value)
+})
 </script>
+
+
 
 <style scoped>
 .fill-height {
@@ -245,7 +271,7 @@ export default {
 }
 
 .background-color {
-  background-color: #803D3B; /* Your desired background color */
+  background-color: #803d3b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

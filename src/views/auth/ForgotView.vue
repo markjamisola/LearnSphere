@@ -32,7 +32,7 @@ const goToLogin = () => {
           elevation="8"
           max-width="448"
           rounded="lg"
-          color="deep-purple-darken-3"
+          color="#FAEED1"
         >
           <template v-slot:title>
             <h3 class="font-weight-black text-center">Reset Password</h3>
