@@ -6,7 +6,7 @@
       fixed
       clipped
       color="transparent"
-      class="teal-darken-4"
+      class="#803D3B"
       width="80"
       app
     >
@@ -20,13 +20,13 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? '#000' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -34,7 +34,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? '#000' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -42,7 +42,7 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? '#000' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
@@ -52,7 +52,7 @@
         <!-- Log Out Button at the Bottom -->
         <v-list-item @click="$router.push('/logout')" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'">mdi-logout</v-icon>
+            <v-icon large :color="$route.path === '/logout' ? '#000' : 'white'">mdi-logout</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -78,13 +78,13 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'">mdi-home</v-icon>
+              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
           <v-list-item @click="$router.push('/profile')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/profile' ? '#000' : 'white'"
                 >mdi-account</v-icon
               >
             </v-list-item-icon>
@@ -92,7 +92,7 @@
 
           <v-list-item @click="$router.push('/history')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/history' ? '#000' : 'white'"
                 >mdi-history</v-icon
               >
             </v-list-item-icon>
@@ -100,7 +100,7 @@
 
           <v-list-item @click="$router.push('/about')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/about' ? '#000' : 'white'"
                 >mdi-information</v-icon
               >
             </v-list-item-icon>
@@ -108,7 +108,7 @@
 
           <v-list-item @click="$router.push('/logout')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/logout' ? '#000' : 'white'"
                 >mdi-logout</v-icon
               >
             </v-list-item-icon>

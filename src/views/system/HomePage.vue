@@ -20,7 +20,7 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
+              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'"
                 >mdi-home</v-icon
               >
             </v-list-item-icon>
