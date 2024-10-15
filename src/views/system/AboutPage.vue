@@ -139,7 +139,7 @@
                   The LearnSphere is designed to help students conveniently access course materials
                   and video tutorials. Our goal is to create an efficient learning environment where
                   students can easily find the resources they need. Students can log in, select
-                  their college, search for a subject, and the website will automatically display
+                  their program, search for a course, and the website will automatically display
                   relevant video tutorials and PDFs, saving time and effort. The goal is to make
                   learning more convenient by offering direct access to curated video content,
                   tailored to the students' academic needs.
