@@ -12,7 +12,7 @@
 
         <!-- Button Link -->
         <RouterLink class="text-decoration-none" to="/login">
-          <h5 class="text-deep-purple-lighten-3">
+          <h5 class="text-white">
             Let's Get Started
             <v-icon icon="mdi-chevron-right"></v-icon><v-icon icon="mdi-chevron-right"></v-icon><v-icon icon="mdi-chevron-right"></v-icon>
           </h5>
