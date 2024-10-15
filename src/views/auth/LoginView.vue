@@ -28,7 +28,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               <!-- Sign Up Link -->
               <v-card-text class="text-center pt-0">
                 <RouterLink
-                  class="text-black text-decoration-none text-deep-purple-lighten-3"
+                  class="text-black text-decoration-none text-black"
                   to="/register"
                 >
                   Sign Up Now
