@@ -79,8 +79,8 @@ const visible = ref(false)
     ></v-text-field>
 
     <!-- Warning message -->
-    <v-card class="mb-8" color="surface-variant" variant="tonal">
-      <v-card-text class="text-caption text-justify text-white">
+    <v-card class="mb-8" color="surface-variant" variant="outlinedgit">
+      <v-card-text class="text-caption text-justify text-black">
         Ensure that all information is correct before signing up. In case of issues, please contact
         support.
       </v-card-text>
@@ -89,9 +89,9 @@ const visible = ref(false)
     <!-- Sign Up Button -->
     <v-btn
       class="mb-8"
-      color="white"
+      color="black"
       size="large"
-      variant="tonal"
+      variant="outlined"
       block
       @click="$router.push('/home')"
     >

@@ -16,11 +16,11 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
           elevation="8"
           max-width="448"
           rounded="lg"
-          color="deep-purple-darken-3"
+          color="#FAEED1"
         >
           <!-- Title -->
           <template v-slot:title>
-            <h3 class="font-weight-black text-center">Sign Up</h3>
+            <h3 class="font-weight-black text-center-black">Sign Up</h3>
           </template>
           <!-- Form Field -->
 
@@ -28,7 +28,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
 
           <!-- Already Have an Account link -->
           <v-card-text class="text-center pt-0">
-            <RouterLink class="text-black text-decoration-none text-deep-purple-lighten-3" to="/login">
+            <RouterLink class="text-black text-decoration-none text-black" to="/login">
               Already have an account? Log in
             </RouterLink>
             <v-icon icon="mdi-chevron-right"></v-icon>
