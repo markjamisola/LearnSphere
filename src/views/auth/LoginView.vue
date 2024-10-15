@@ -16,7 +16,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               class="mx-auto pa-8 pb-5 align-center"
               elevation="8"
               rounded="lg"
-              color="deep-purple-darken-3"
+              color="#FAEED1"
             >
               <template v-slot:title>
                 <h3 class="font-weight-black text-center">Log In</h3>
@@ -45,7 +45,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 <style scoped>
 /* Set the background color for the entire app */
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;
