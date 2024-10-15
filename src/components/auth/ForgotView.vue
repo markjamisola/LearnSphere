@@ -12,9 +12,9 @@
         Instructions to reset your password will be sent to your registered email.
       </v-card-text>
     </v-card>
-    <v-row class="justify-space-evenly mt-3">
+    <v-row class="justify-space-between mt-3">
       <v-btn
-        class="mb-8"
+        class="mx-3 mb-6"
         color="#803d3b"
         size="large"
         variant="elevated"
@@ -24,7 +24,7 @@
         Send
       </v-btn>
       <v-btn
-        class="mb-8"
+        class="mx-3 mb-6"
         color="#803d3b"
         size="large"
         variant="elevated"
