@@ -170,18 +170,7 @@
           </v-col>
         </v-row>
 
-        <!-- College Row -->
-        <v-row class="justify-center">
-          <v-col cols="12" sm="8" md="4">
-            <v-select
-              :items="['CCIS']"
-              placeholder="College"
-              prepend-inner-icon="mdi-school-outline"
-              variant="solo"
-            ></v-select>
-            <v-btn color="#FAEED1" class="mt-0" block elevation="15">Update</v-btn>
-          </v-col>
-        </v-row>
+      
 
         <!-- Program Row -->
         <v-row class="justify-center">
