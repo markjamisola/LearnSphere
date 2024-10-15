@@ -14,7 +14,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
             <!-- Card for Login Form -->
             <v-card
               class="mx-auto pa-8 pb-5 align-center"
-              elevation="8"
+              elevation="15"
               rounded="lg"
               color="#FAEED1"
             >

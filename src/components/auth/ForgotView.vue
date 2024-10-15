@@ -12,16 +12,27 @@
         Instructions to reset your password will be sent to your registered email.
       </v-card-text>
     </v-card>
-
-    <v-btn
-      class="mb-8"
-      color="black"
-      size="large"
-      variant="outlined"
-      block
-      @click="$router.push('/login')"
-    >
-      Send
-    </v-btn>
+    <v-row class="justify-space-evenly mt-3">
+      <v-btn
+        class="mb-8"
+        color="#803d3b"
+        size="large"
+        variant="elevated"
+        elevation="15"
+        @click="$router.push('/login')"
+      >
+        Send
+      </v-btn>
+      <v-btn
+        class="mb-8"
+        color="#803d3b"
+        size="large"
+        variant="elevated"
+        elevation="15"
+        @click="$router.push('/login')"
+      >
+        Cancel
+      </v-btn>
+    </v-row>
   </v-form>
 </template>

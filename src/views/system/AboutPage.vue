@@ -133,7 +133,7 @@
 
         <v-col cols="12">
           <v-row class="mx-4">
-            <v-card class="mx-auto pa-5" elevation="8" rounded="lg" color="#FAEED1">
+            <v-card class="mx-auto pa-5" elevation="15" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify">
                 <span>
                   The LearnSphere is designed to help students conveniently access course materials
@@ -154,7 +154,7 @@
         <v-row class="mx-4 mt-8" justify="center">
           <v-col cols="12" md="6">
             <h1 class="text-white text-center font-weight-black">Mission</h1>
-            <v-card class="pa-5" elevation="8" rounded="lg" color="#FAEED1">
+            <v-card class="pa-5" elevation="15" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify white--text">
                 <span>
                   Our mission is to empower students by offering a centralized platform where they
@@ -168,7 +168,7 @@
 
           <v-col cols="12" md="6">
             <h1 class="text-white text-center font-weight-black">Vision</h1>
-            <v-card class="pa-5" elevation="8" rounded="lg" color="#FAEED1">
+            <v-card class="pa-5" elevation="15" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify white--text">
                 <span>
                   Our vision is to continue expanding the portal to include more programs and

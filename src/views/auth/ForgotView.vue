@@ -29,7 +29,7 @@ const goToLogin = () => {
 
         <v-card
           class="mx-auto pa-8 pb-5"
-          elevation="8"
+          elevation="15"
           max-width="448"
           rounded="lg"
           color="#FAEED1"

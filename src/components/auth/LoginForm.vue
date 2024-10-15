@@ -30,19 +30,24 @@ const visible = ref(false)
       variant="solo"
       @click:append-inner="visible = !visible"
     ></v-text-field>
-    <RouterLink class="text-black text-decoration-none text-black" to="/forgot"><h4>Reset Password</h4></RouterLink>
+    <RouterLink class="text-deep-orange-darken-4 text-decoration-none" to="/forgot"
+      ><h4>Reset Password</h4></RouterLink
+    >
 
     <v-card class="mb-7" color="surface-variant" variant="outlined">
       <v-card-text class="text-justify text-black text-caption">
-        Warning: If you try to log in with the wrong password three times, your account will be locked for three hours. To regain access, you can either wait for the lock to expire or click "Reset Password" to create a new password and log in right away.
+        Warning: If you try to log in with the wrong password three times, your account will be
+        locked for three hours. To regain access, you can either wait for the lock to expire or
+        click "Reset Password" to create a new password and log in right away.
       </v-card-text>
     </v-card>
 
     <v-btn
       class="mb-8"
-      color="black"
+      color="#803d3b"
       size="large"
-      variant="outlined"
+      variant="elevated"
+      elevation="15"
       block
       @click="$router.push('/home')"
     >

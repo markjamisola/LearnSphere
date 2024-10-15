@@ -143,7 +143,7 @@
               variant="solo"
               hide-details
               single-line
-              elevation="10"
+              elevation="15"
               color="deep-purple-darken-3"
               outlined
               @click:append-inner="onClick"
@@ -153,6 +153,7 @@
 
         <v-row class="mb-8 justify-center">
           <v-btn
+            elevation="15"
             class="mx-1 mt-2"
             :color="selectedCategory === 'all' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'all'"
@@ -160,6 +161,7 @@
             All
           </v-btn>
           <v-btn
+            elevation="15"
             class="mx-1 mt-2"
             :color="selectedCategory === 'it' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'it'"
@@ -167,6 +169,7 @@
             IT Courses
           </v-btn>
           <v-btn
+            elevation="15"
             class="mx-1 mt-2"
             :color="selectedCategory === 'ite' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'ite'"
@@ -174,6 +177,7 @@
             ITE Courses
           </v-btn>
           <v-btn
+            elevation="15"
             class="mx-1 mt-2"
             :color="selectedCategory === 'csc' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'csc'"
