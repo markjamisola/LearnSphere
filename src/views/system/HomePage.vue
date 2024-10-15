@@ -20,7 +20,7 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'"
+              <v-icon large :color="$route.path === '/home' ? 'deep-purple-darken-3' : 'white'"
                 >mdi-home</v-icon
               >
             </v-list-item-icon>
@@ -152,7 +152,7 @@
               hide-details
               single-line
               elevation="10"
-              color="#803D3B"
+              color="deep-purple-darken-3"
               outlined
               @click:append-inner="onClick"
             ></v-text-field>
@@ -168,7 +168,6 @@
 
         <v-row>
           <!-- Course Card 1 -->
-          <!-- Course Card 2 -->
           <v-col cols="12" sm="6" md="4">
             <v-btn
               class="pa-0"
@@ -197,7 +196,6 @@
           </v-col>
 
           <!-- Course Card 3 -->
-          <!-- Course Card 2 -->
           <v-col cols="12" sm="6" md="4">
             <v-btn
               class="pa-0"
