@@ -14,7 +14,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Email or ID Number"
       prepend-inner-icon="mdi-email-outline"
-      variant="solo"
+      variant="outlined"
     ></v-text-field>
 
     <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -27,7 +27,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Enter your password"
       prepend-inner-icon="mdi-lock-outline"
-      variant="solo"
+      variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
     <RouterLink class="text-deep-orange-darken-4 text-decoration-none" to="/forgot"

@@ -6,7 +6,7 @@
       fixed
       clipped
       color="transparent"
-      class="teal-darken-4"
+      class="#803D3B"
       width="80"
       app
     >

@@ -134,12 +134,12 @@
         <v-col cols="12">
           <v-row class="mx-4">
             <v-card class="mx-auto pa-5" elevation="15" rounded="lg" color="#FAEED1">
-              <v-card-text class="text-justify">
+              <v-card-text class="text-center">
                 <span>
                   The LearnSphere is designed to help students conveniently access course materials
                   and video tutorials. Our goal is to create an efficient learning environment where
                   students can easily find the resources they need. Students can log in, select
-                  their college, search for a subject, and the website will automatically display
+                  their program, search for a course, and the website will automatically display
                   relevant video tutorials and PDFs, saving time and effort. The goal is to make
                   learning more convenient by offering direct access to curated video content,
                   tailored to the students' academic needs.
@@ -242,8 +242,8 @@ const teamMembers = ref([
     name: 'Mark Jamisola',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/mdjamisola/' },
-      { icon: 'mdi-email-edit-outline', url: 'mailto:markdaniel.jamisola@carsu.edu.ph' },
-      { icon: 'mdi-laptop', url: 'https://markjamisola.github.io/' }
+      { icon: 'mdi-email-arrow-right', url: 'mailto:markdaniel.jamisola@carsu.edu.ph' },
+      { icon: 'mdi-account-arrow-right', url: 'https://markjamisola.github.io/' }
     ]
   },
   {
@@ -253,16 +253,16 @@ const teamMembers = ref([
         icon: 'mdi-facebook-messenger',
         url: 'https://www.facebook.com/profile.php?id=100006277218725'
       },
-      { icon: 'mdi-email-edit-outline', url: 'mailto:ushyne.esclamadado.carsu.edu.ph' },
-      { icon: 'mdi-laptop', url: 'https://uesclamado.github.io/' }
+      { icon: 'mdi-email-arrow-right', url: 'mailto:ushyne.esclamadado.carsu.edu.ph' },
+      { icon: 'mdi-account-arrow-right', url: 'https://uesclamado.github.io/' }
     ]
   },
   {
     name: 'Jusalyn Gimao',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/jusalyn.gimao' },
-      { icon: 'mdi-email-edit-outline', url: 'mailto:jusalyn.gimao@carsu.edu.ph' },
-      { icon: 'mdi-laptop', url: 'https://jusalyngimao.github.io/' }
+      { icon: 'mdi-email-arrow-right', url: 'mailto:jusalyn.gimao@carsu.edu.ph' },
+      { icon: 'mdi-account-arrow-right', url: 'https://jusalyngimao.github.io/' }
     ]
   }
 ])
