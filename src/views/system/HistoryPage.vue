@@ -147,7 +147,7 @@
           <v-col cols="12" sm="6" md="4">
             <v-btn
               class="pa-0"
-              color="deep-purple-darken-3"
+              color="#FAEED1"
               block
               height="150px"
               @click="$router.push('/it-109')"
@@ -174,7 +174,7 @@ const drawer = ref(false) // Drawer state for mobile
 }
 
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

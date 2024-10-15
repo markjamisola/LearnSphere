@@ -151,7 +151,7 @@
               prepend-inner-icon="mdi-account-outline"
             >
               <template v-slot:append-inner>
-                <v-btn color="deep-purple-darken-3" small>Update</v-btn>
+                <v-btn color="#803D3B" small>Update</v-btn>
               </template>
             </v-text-field>
           </v-col>
@@ -166,7 +166,7 @@
               prepend-inner-icon="mdi-card-account-details-outline"
             >
               <template v-slot:append-inner>
-                <v-btn color="deep-purple-darken-3" small>Update</v-btn>
+                <v-btn color="#803D3B" small>Update</v-btn>
               </template>
             </v-text-field>
           </v-col>
@@ -181,7 +181,7 @@
               prepend-inner-icon="mdi-school-outline"
               variant="solo"
             ></v-select>
-            <v-btn color="deep-purple-darken-3" class="mt-0" block>Update</v-btn>
+            <v-btn color="#FAEED1" class="mt-0" block>Update</v-btn>
           </v-col>
         </v-row>
 
@@ -194,7 +194,7 @@
               prepend-inner-icon="mdi-laptop"
               variant="solo"
             ></v-select>
-            <v-btn color="deep-purple-darken-3" class="mt-0" block>Update</v-btn>
+            <v-btn color="#FAEED1" class="mt-0" block>Update</v-btn>
           </v-col>
         </v-row>
         <!-- Update Password Section -->
@@ -209,7 +209,7 @@
               prepend-inner-icon="mdi-lock-outline"
             >
               <template v-slot:append-inner>
-                <v-btn color="deep-purple-darken-3" small>Update</v-btn>
+                <v-btn color="#803D3B" small>Update</v-btn>
               </template>
             </v-text-field>
           </v-col>
@@ -231,7 +231,7 @@ const drawer = ref(false) // Drawer state for mobile
 }
 
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

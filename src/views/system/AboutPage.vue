@@ -136,7 +136,7 @@
 
         <v-col cols="12">
           <v-row class="mx-4">
-            <v-card class="mx-auto pa-5" elevation="8" rounded="lg" color="deep-purple-darken-3">
+            <v-card class="mx-auto pa-5" elevation="8" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify">
                 <span>
                   The LearnSphere is designed to help students conveniently access course materials
@@ -157,7 +157,7 @@
         <v-row class="mx-4 mt-8" justify="center">
           <v-col cols="12" md="6">
             <h1 class="text-white text-center font-weight-black ">Mission</h1>
-            <v-card class="pa-5" elevation="8" rounded="lg" color="deep-purple-darken-3">
+            <v-card class="pa-5" elevation="8" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify white--text">
                 <span>
                   Our mission is to empower students by offering a centralized platform where they
@@ -171,7 +171,7 @@
 
           <v-col cols="12" md="6">
             <h1 class="text-white text-center font-weight-black ">Vision</h1>
-            <v-card class="pa-5" elevation="8" rounded="lg" color="deep-purple-darken-3">
+            <v-card class="pa-5" elevation="8" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify white--text">
                 <span>
                   Our vision is to continue expanding the portal to include more programs and
@@ -243,29 +243,28 @@ const teamMembers = ref([
   {
     name: 'Mark Jamisola',
     socialLinks: [
-      { icon: 'mdi-facebook', url: 'https://www.facebook.com/mdjamisola/' },
-      { icon: 'mdi-instagram', url: 'https://www.instagram.com/markjamisola/' },
-      { icon: 'mdi-account-question', url: 'https://markjamisola.github.io/' }
+      { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/mdjamisola/' },
+      { icon: 'mdi-email-edit-outline', url: 'mailto:markdaniel.jamisola@carsu.edu.ph' },
+      { icon: 'mdi-laptop', url: 'https://markjamisola.github.io/' }
     ]
   },
   {
     name: 'Ushyne Esclamado',
     socialLinks: [
-      { icon: 'mdi-facebook', url: 'https://www.facebook.com/profile.php?id=100006277218725' },
-      { icon: 'mdi-instagram', url: 'https://www.instagram.com/uesclamado/' },
-      { icon: 'mdi-account-question', url: 'https://uesclamado.github.io/' }
+      { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/profile.php?id=100006277218725' },
+      { icon: 'mdi-email-edit-outline', url: 'mailto:ushyne.esclamadado.carsu.edu.ph' },
+      { icon: 'mdi-laptop', url: 'https://uesclamado.github.io/' }
     ]
   },
   {
     name: 'Jusalyn Gimao',
     socialLinks: [
-      { icon: 'mdi-facebook', url: 'https://www.facebook.com/jusalyn.gimao' },
-      { icon: 'mdi-instagram', url: 'https://www.instagram.com/jusalyn_/' },
-      { icon: 'mdi-account-question', url: 'https://jusalyngimao.github.io/' }
+      { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/jusalyn.gimao' },
+      { icon: 'mdi-email-edit-outline', url: 'mailto:jusalyn.gimao@carsu.edu.ph' },
+      { icon: 'mdi-laptop', url: 'https://jusalyngimao.github.io/' }
     ]
   }
 ])
-
 
 </script>
 
@@ -275,7 +274,7 @@ const teamMembers = ref([
 }
 
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

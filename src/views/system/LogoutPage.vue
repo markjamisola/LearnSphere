@@ -132,7 +132,7 @@
           elevation="8"
           max-width="448"
           rounded="lg"
-          color="deep-purple-darken-3"
+          color="#FAEED1"
         >
           <template v-slot:title>
             <div class="text-center">
@@ -144,9 +144,9 @@
 
           <v-btn
             class="mb-8"
-            color="white"
+            color="black"
             size="large"
-            variant="tonal"
+            variant="outlined"
             block
             @click="$router.push('/login')"
           >
@@ -166,7 +166,7 @@ const drawer = ref(false) // Drawer state for mobile
 
 <style scoped>
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

@@ -164,14 +164,14 @@
         <v-row>
           <!-- Videos column -->
           <v-col cols="12" md="6">
-            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
+            <v-card class="mb-5" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10" 
                 >Modeling Requirements</v-card-title
               >
               <v-card-text>
                 <v-btn
                   elevation="10"
-                  color="deep-purple-lighten-4"
+                  color="#803D3B"
                   block
                   @click="
                     showVideo('https://www.youtube.com/embed/qs4Z3PayuVQ?si=lPk7bRXFLmj1r0sd')
@@ -181,14 +181,14 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
+            <v-card class="mb-5" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10"
                 >Web Services and their Components</v-card-title
               >
               <v-card-text>
                 <v-btn
                   elevation="10"
-                  color="deep-purple-lighten-4"
+                  color="#803D3B"
                   block
                   @click="
                     showVideo('https://www.youtube.com/embed/RluytloEiaM?si=YskRsQCE0_q_qyTC')
@@ -201,12 +201,12 @@
 
           <!-- PDFs column -->
           <v-col cols="12" md="6">
-            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
+            <v-card class="mb-5" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10">C4 Model</v-card-title>
               <v-card-text>
                 <v-btn
                   elevation="10"
-                  color="deep-purple-lighten-4"
+                  color="#803D3B"
                   block
                   @click="showPdf('/pdfs/C4-Model.pdf')"
                   >Open PDF</v-btn
@@ -214,14 +214,14 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="mb-5" color="deep-purple-darken-3" dark elevation="10">
+            <v-card class="mb-5" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black pb-10"
                 >System Architecture Overview</v-card-title
               >
               <v-card-text>
                 <v-btn
                   elevation="10"
-                  color="deep-purple-lighten-4"
+                  color="#803D3B"
                   block
                   @click="showPdf('/pdfs/System-architecture_overview.pdf')"
                   >Open PDF</v-btn
@@ -234,7 +234,7 @@
 
       <!-- Video and PDF Modal -->
       <v-dialog v-model="dialog" max-width="800px">
-        <v-card color="deep-purple-darken-3">
+        <v-card color="#FAEED1">
           <v-card-title>
             <span class="headline">{{ dialogTitle }}</span>
           </v-card-title>
@@ -253,7 +253,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <!-- This will push the button to the center -->
-            <v-btn color="deep-purple-lighten-4" @click="dialog = false">Close</v-btn>
+            <v-btn color="#803D3B" @click="dialog = false">Close</v-btn>
             <v-spacer></v-spacer>
             <!-- Another spacer to balance the button -->
           </v-card-actions>
@@ -312,7 +312,7 @@ export default {
 </script>
 <style scoped>
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;
