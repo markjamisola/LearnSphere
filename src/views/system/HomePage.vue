@@ -188,10 +188,10 @@
               color="#FAEED1"
               block
               height="150px"
-              @click="$router.push('/it-109')"
+              @click="$router.push('/ite12')"
               elevation="10"
             >
-              <h1 class="text-center">IT - 109</h1>
+              <h1 class="text-center">ITE - 12</h1>
             </v-btn>
           </v-col>
 
