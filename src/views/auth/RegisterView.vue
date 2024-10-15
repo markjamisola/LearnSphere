@@ -42,7 +42,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
 <style scoped>
 /* Set the background color for the entire app */
 .background-color {
-  background-color: #17153b; /* Your desired background color */
+  background-color: #803D3B; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;
