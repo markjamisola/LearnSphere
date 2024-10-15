@@ -152,7 +152,7 @@
               hide-details
               single-line
               elevation="10"
-              color="deep-purple-darken-3"
+              color="#803D3B"
               outlined
               @click:append-inner="onClick"
             ></v-text-field>
