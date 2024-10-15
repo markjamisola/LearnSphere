@@ -244,24 +244,24 @@ const teamMembers = ref([
     name: 'Mark Jamisola',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/mdjamisola/' },
-      { icon: 'mdi-email-edit-outline', url: 'mailto:markdaniel.jamisola@carsu.edu.ph' },
-      { icon: 'mdi-github', url: 'https://markjamisola.github.io/' }
+      { icon: 'mdi-email-edit-outline', url: 'markdaniel.jamisola@carsu.edu.ph' },
+      { icon: 'mdi-laptop', url: 'https://markjamisola.github.io/' }
     ]
   },
   {
     name: 'Ushyne Esclamado',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/profile.php?id=100006277218725' },
-      { icon: 'mdi-email-edit-outline', url: 'mailto:ushyne.esclamadado.carsu.edu.ph' },
-      { icon: 'mdi-github', url: 'https://uesclamado.github.io/' }
+      { icon: 'mdi-email-edit-outline', url: 'ushyneesclamadado.carsu.edu.ph' },
+      { icon: 'mdi-laptop', url: 'https://uesclamado.github.io/' }
     ]
   },
   {
     name: 'Jusalyn Gimao',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/jusalyn.gimao' },
-      { icon: 'mdi-email-edit-outline', url: 'mailto:jusalyn.gimao@carsu.edu.ph' },
-      { icon: 'mdi-github', url: 'https://jusalyngimao.github.io/' }
+      { icon: 'mdi-email-edit-outline', url: 'jusalyn.gimao@carsu.edu.ph' },
+      { icon: 'mdi-laptop', url: 'https://jusalyngimao.github.io/' }
     ]
   }
 ])
