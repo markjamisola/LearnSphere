@@ -254,12 +254,12 @@ const selectedCategory = ref('all')
 
 // The courses data
 const courses = ref([
-  { id: 1, name: 'IT - 109', category: 'it', route: '/it-109' },
-  { id: 2, name: 'ITE - 12', category: 'ite', route: '/ite12' },
-  { id: 3, name: 'CSC - 102', category: 'csc', route: '/csc102' },
-  { id: 4, name: 'IT - 108', category: 'it', route: '/csc102' },
-  { id: 5, name: 'ITE - 13', category: 'ite', route: '/csc102' },
-  { id: 6, name: 'CSC - 106', category: 'csc', route: '/csc102' },
+  { id: 1, name: 'IT 109', category: 'it', route: '/it-109' },
+  { id: 2, name: 'ITE  12', category: 'ite', route: '/ite12' },
+  { id: 3, name: 'CSC 102', category: 'csc', route: '/csc102' },
+  { id: 4, name: 'IT 108', category: 'it', route: '/csc102' },
+  { id: 5, name: 'ITE 13', category: 'ite', route: '/csc102' },
+  { id: 6, name: 'CSC 106', category: 'csc', route: '/csc102' },
   // Add more courses here...
 ])
 
