@@ -8,13 +8,13 @@ const visible = ref(false)
 <template>
   <v-form>
     <!-- Reduced spacing between rows -->
-    <v-row dense>
+    <v-row dense class="gb-0">
       <v-col cols="12" sm="6">
         <v-text-field
           density="compact"
           placeholder="Name"
           prepend-inner-icon="mdi-account-outline"
-          variant="solo"
+          variant="outlined"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -22,28 +22,19 @@ const visible = ref(false)
           density="compact"
           placeholder="ID Number"
           prepend-inner-icon="mdi-card-account-details-outline"
-          variant="solo"
+          variant="outlined"
         ></v-text-field>
       </v-col>
     </v-row>
 
     <!-- College and Program dropdowns -->
-    <v-row dense>
-      <v-col cols="12" sm="6">
-        <v-select
-          :items="['CCIS']"
-          placeholder="College"
-          prepend-inner-icon="mdi-school-outline"
-          variant="solo"
-          density="compact"
-        ></v-select>
-      </v-col>
-      <v-col cols="12" sm="6">
+    <v-row class="mt-0">
+      <v-col cols="12" lg="12" sm="6" md="12">
         <v-select
           :items="['Information Technology', 'Computer Science', 'Information System']"
           placeholder="Program"
           prepend-inner-icon="mdi-laptop"
-          variant="solo"
+          variant="outlined"
           density="compact"
         ></v-select>
       </v-col>
@@ -54,7 +45,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Email address"
       prepend-inner-icon="mdi-email-outline"
-      variant="solo"
+      variant="outlined"
     ></v-text-field>
 
     <!-- Password and Verify Password fields -->
@@ -64,7 +55,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Password"
       prepend-inner-icon="mdi-lock-outline"
-      variant="solo"
+      variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
 
@@ -74,7 +65,7 @@ const visible = ref(false)
       density="compact"
       placeholder="Verify Password"
       prepend-inner-icon="mdi-lock-outline"
-      variant="solo"
+      variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
 

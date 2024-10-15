@@ -135,6 +135,7 @@
         <v-row class="justify-center mb-8 mx-auto">
           <v-col cols="12" sm="8" md="6">
             <v-text-field
+              v-model="searchQuery"
               :loading="loading"
               append-inner-icon="mdi-magnify"
               prepend-inner-icon="mdi-cast-education"
@@ -189,7 +190,7 @@
         <!-- Suggested Courses Section -->
         <v-row>
           <v-col>
-            <h2 class="text-white">Suggested Course</h2>
+            <h2 class="text-white">Course List</h2>
           </v-col>
         </v-row>
 
@@ -220,15 +221,63 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-
-// Function to open the modal
 import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+
+// Reference for the Logout Modal
 const logoutModalRef = ref(null)
 const openLogoutModal = () => {
   logoutModalRef.value.open()
 }
 
-const drawer = ref(false) // Drawer state for mobile
+// Drawer state for mobile
+const drawer = ref(false)
+
+// Selected category (for category buttons)
+const selectedCategory = ref('all')
+
+// Search query (for search bar)
+const searchQuery = ref('')
+
+// Courses data
+const courses = ref([
+  { id: 1, name: 'IT 109', category: 'it', route: '/it-109' },
+  { id: 2, name: 'ITE 12', category: 'ite', route: '/ite12' },
+  { id: 3, name: 'CSC 102', category: 'csc', route: '/csc102' },
+  { id: 4, name: 'IT 108', category: 'it', route: '/it-108' },
+  { id: 5, name: 'ITE 13', category: 'ite', route: '/ite13' },
+  { id: 6, name: 'CSC 106', category: 'csc', route: '/csc106' }
+  // Add more courses here...
+])
+
+// Computed property to filter courses based on the selected category and search query
+const filteredCourses = computed(() => {
+  let filtered = courses.value
+
+  // Filter by category
+  if (selectedCategory.value !== 'all') {
+    filtered = filtered.filter((course) => course.category === selectedCategory.value)
+  }
+
+  // Filter by search query
+  if (searchQuery.value) {
+    filtered = filtered.filter((course) =>
+      course.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  }
+
+  return filtered
+})
+
+// Loading state for the search field
+const loading = ref(false)
+const onClick = () => {
+  loading.value = true
+
+  // Simulate search delay
+  setTimeout(() => {
+    loading.value = false
+  }, 1000)
+}
 </script>
 <script>
 export default {
@@ -248,28 +297,6 @@ export default {
     }
   }
 }
-
-// The selected category
-const selectedCategory = ref('all')
-
-// The courses data
-const courses = ref([
-  { id: 1, name: 'IT 109', category: 'it', route: '/it-109' },
-  { id: 2, name: 'ITE  12', category: 'ite', route: '/ite12' },
-  { id: 3, name: 'CSC 102', category: 'csc', route: '/csc102' },
-  { id: 4, name: 'IT 108', category: 'it', route: '/csc102' },
-  { id: 5, name: 'ITE 13', category: 'ite', route: '/csc102' },
-  { id: 6, name: 'CSC 106', category: 'csc', route: '/csc102' },
-  // Add more courses here...
-])
-
-// Computed property to filter courses based on the selected category
-const filteredCourses = computed(() => {
-  if (selectedCategory.value === 'all') {
-    return courses.value // Show all courses if 'all' is selected
-  }
-  return courses.value.filter((course) => course.category === selectedCategory.value)
-})
 </script>
 
 <style scoped>
