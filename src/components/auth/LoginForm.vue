@@ -34,9 +34,7 @@ const visible = ref(false)
 
     <v-card class="mb-7" color="surface-variant" variant="tonal">
       <v-card-text class="text-justify text-white text-caption">
-        Warning: After 3 consecutive failed login attempts, your account will be temporarily locked
-        for three hours. If you must log in now, you can also click "Reset Password" to
-        reset the login password.
+        Warning: If you try to log in with the wrong password three times, your account will be locked for three hours. To regain access, you can either wait for the lock to expire or click "Reset Password" to create a new password and log in right away.
       </v-card-text>
     </v-card>
 
