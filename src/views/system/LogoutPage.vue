@@ -150,7 +150,7 @@
             block
             @click="$router.push('/login')"
           >
-            Yes
+            Log Out
           </v-btn>
         </v-card>
       </v-container>
