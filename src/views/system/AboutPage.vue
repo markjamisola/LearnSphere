@@ -1,7 +1,7 @@
 <template>
   <v-app class="background-color">
     <!-- Transparent Navigation Drawer for Mobile and Desktop -->
-     <v-navigation-drawer
+    <v-navigation-drawer
       v-if="$vuetify.display.mdAndUp"
       fixed
       clipped
@@ -50,9 +50,9 @@
         </v-list-item-group>
 
         <!-- Log Out Button at the Bottom -->
-        <v-list-item @click="$router.push('/logout')" class="text-center">
+        <v-list-item @click="openLogoutModal" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? '#000' : 'white'">mdi-logout</v-icon>
+            <v-icon large color="white">mdi-logout</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -106,11 +106,9 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large color="white">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -120,9 +118,8 @@
     <!-- App bar with toggle button only for mobile screens -->
     <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
       <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white font-weight-black ">LearnSphere</v-toolbar-title>
+      <v-toolbar-title class="text-white font-weight-black">LearnSphere</v-toolbar-title>
     </v-app-bar>
-    
 
     <!-- Main content area -->
     <v-main>
@@ -130,7 +127,7 @@
       <v-container fluid>
         <v-row class="mt-10">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black ">About Us</h1>
+            <h1 class="text-white font-weight-black">About Us</h1>
           </v-col>
         </v-row>
 
@@ -156,7 +153,7 @@
 
         <v-row class="mx-4 mt-8" justify="center">
           <v-col cols="12" md="6">
-            <h1 class="text-white text-center font-weight-black ">Mission</h1>
+            <h1 class="text-white text-center font-weight-black">Mission</h1>
             <v-card class="pa-5" elevation="8" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify white--text">
                 <span>
@@ -170,7 +167,7 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <h1 class="text-white text-center font-weight-black ">Vision</h1>
+            <h1 class="text-white text-center font-weight-black">Vision</h1>
             <v-card class="pa-5" elevation="8" rounded="lg" color="#FAEED1">
               <v-card-text class="text-justify white--text">
                 <span>
@@ -184,7 +181,7 @@
           </v-col>
         </v-row>
 
-        <v-row class="mt-4" >
+        <v-row class="mt-4">
           <v-col cols="12" class="text-center">
             <h1 class="text-white"></h1>
           </v-col>
@@ -193,14 +190,7 @@
         <v-col cols="12">
           <v-row class="mx-4">
             <!-- Remove horizontal margins -->
-            <v-card
-              class="mx-auto pa-3"
-
-              rounded="lg"
-              color="transparent"
-              width="100%"
-              flat
-            >
+            <v-card class="mx-auto pa-3" rounded="lg" color="transparent" width="100%" flat>
               <template v-slot:title>
                 <h3 class="font-weight-black text-white text-center">Contact Us</h3>
               </template>
@@ -232,12 +222,20 @@
           </v-row>
         </v-col>
       </v-container>
+      <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+
+import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
+
 const drawer = ref(false) // Drawer state for mobile
 const teamMembers = ref([
   {
@@ -251,7 +249,10 @@ const teamMembers = ref([
   {
     name: 'Ushyne Esclamado',
     socialLinks: [
-      { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/profile.php?id=100006277218725' },
+      {
+        icon: 'mdi-facebook-messenger',
+        url: 'https://www.facebook.com/profile.php?id=100006277218725'
+      },
       { icon: 'mdi-email-edit-outline', url: 'mailto:ushyne.esclamadado.carsu.edu.ph' },
       { icon: 'mdi-laptop', url: 'https://uesclamado.github.io/' }
     ]
@@ -265,7 +266,6 @@ const teamMembers = ref([
     ]
   }
 ])
-
 </script>
 
 <style scoped>
@@ -274,7 +274,7 @@ const teamMembers = ref([
 }
 
 .background-color {
-  background-color: #803D3B; /* Your desired background color */
+  background-color: #803d3b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

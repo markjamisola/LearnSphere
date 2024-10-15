@@ -19,12 +19,7 @@
         <v-list-item-group>
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon
-                large
-                :color="
-                  ['/home', '/ite12'].includes($route.path) ? 'black' : 'white'
-                "
-              >
+              <v-icon large :color="['/home', '/ite12'].includes($route.path) ? 'black' : 'white'">
                 mdi-home
               </v-icon>
             </v-list-item-icon>
@@ -55,11 +50,9 @@
           </v-list-item>
         </v-list-item-group>
 
-        <v-list-item @click="$router.push('/logout')" class="text-center">
+        <v-list-item @click="openLogoutModal" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-              >mdi-logout</v-icon
-            >
+            <v-icon large color="white">mdi-logout</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -82,9 +75,7 @@
 
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'"
-                >mdi-home</v-icon
-              >
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
@@ -111,12 +102,9 @@
               >
             </v-list-item-icon>
           </v-list-item>
-
-          <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large color="white">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -158,7 +146,6 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      
 
       <!-- Video and PDF columns -->
       <v-container fluid>
@@ -174,7 +161,9 @@
                   elevation="10"
                   color="#803D3B"
                   block
-                  @click="showVideo('https://www.youtube.com/embed/JgQs1AgMU00?si=JH1-ZiMV92PXhrKl')"
+                  @click="
+                    showVideo('https://www.youtube.com/embed/JgQs1AgMU00?si=JH1-ZiMV92PXhrKl')
+                  "
                   >Watch Video</v-btn
                 >
               </v-card-text>
@@ -189,7 +178,9 @@
                   elevation="10"
                   color="#803D3B"
                   block
-                  @click="showVideo('https://www.youtube.com/embed/-33idp61W2w?si=_xtMyJ6__Ut6Ju43')"
+                  @click="
+                    showVideo('https://www.youtube.com/embed/-33idp61W2w?si=_xtMyJ6__Ut6Ju43')
+                  "
                   >Watch Video</v-btn
                 >
               </v-card-text>
@@ -258,13 +249,18 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-
+import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
 const drawer = ref(false) // Drawer state for mobile
 const dialog = ref(false) // Dialog state for video/pdf modal
 const dialogContent = ref('') // Content for the dialog

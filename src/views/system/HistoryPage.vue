@@ -50,9 +50,9 @@
         </v-list-item-group>
 
         <!-- Log Out Button at the Bottom -->
-        <v-list-item @click="$router.push('/logout')" class="text-center">
+        <v-list-item @click="openLogoutModal" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? '#000' : 'white'">mdi-logout</v-icon>
+            <v-icon large color="white">mdi-logout</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -106,11 +106,9 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? '#000' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large color="white">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -120,7 +118,7 @@
     <!-- App bar with toggle button only for mobile screens -->
     <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
       <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white font-weight-black ">LearnSphere</v-toolbar-title>
+      <v-toolbar-title class="text-white font-weight-black">LearnSphere</v-toolbar-title>
     </v-app-bar>
 
     <!-- Main content area -->
@@ -158,12 +156,19 @@
           </v-col>
         </v-row>
       </v-container>
+      <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+
+import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
 
 const drawer = ref(false) // Drawer state for mobile
 </script>
@@ -174,7 +179,7 @@ const drawer = ref(false) // Drawer state for mobile
 }
 
 .background-color {
-  background-color: #803D3B; /* Your desired background color */
+  background-color: #803d3b; /* Your desired background color */
   height: 100%;
   display: flex;
   justify-content: center;

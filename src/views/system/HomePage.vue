@@ -20,9 +20,7 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'"
-                >mdi-home</v-icon
-              >
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
@@ -52,11 +50,9 @@
         </v-list-item-group>
 
         <!-- Log Out Button at the Bottom -->
-        <v-list-item @click="$router.push('/logout')" class="text-center">
+        <v-list-item @click="openLogoutModal" class="text-center">
           <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-              >mdi-logout</v-icon
-            >
+            <v-icon large color="white">mdi-logout</v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
@@ -82,9 +78,7 @@
           <!-- Navigation icons with links -->
           <v-list-item @click="$router.push('/home')" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'"
-                >mdi-home</v-icon
-              >
+              <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
             </v-list-item-icon>
           </v-list-item>
 
@@ -112,11 +106,9 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large color="white">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -160,25 +152,29 @@
         </v-row>
 
         <v-row class="mb-8 justify-center">
-          <v-btn class="mx-1 mt-2"
+          <v-btn
+            class="mx-1 mt-2"
             :color="selectedCategory === 'all' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'all'"
           >
             All
           </v-btn>
-          <v-btn class="mx-1 mt-2"
+          <v-btn
+            class="mx-1 mt-2"
             :color="selectedCategory === 'it' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'it'"
           >
             IT Courses
           </v-btn>
-          <v-btn class="mx-1 mt-2"
+          <v-btn
+            class="mx-1 mt-2"
             :color="selectedCategory === 'ite' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'ite'"
           >
             ITE Courses
           </v-btn>
-          <v-btn class="mx-1 mt-2"
+          <v-btn
+            class="mx-1 mt-2"
             :color="selectedCategory === 'csc' ? 'white' : '#FAEED1'"
             @click="selectedCategory = 'csc'"
           >
@@ -211,15 +207,22 @@
 
         <v-row>
           <!-- Course Card 1 -->
-        
         </v-row>
       </v-container>
+      <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
+
+// Function to open the modal
+import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
 
 const drawer = ref(false) // Drawer state for mobile
 </script>
@@ -242,7 +245,6 @@ export default {
   }
 }
 
-
 // The selected category
 const selectedCategory = ref('all')
 
@@ -250,7 +252,7 @@ const selectedCategory = ref('all')
 const courses = ref([
   { id: 1, name: 'IT - 109', category: 'it', route: '/it-109' },
   { id: 2, name: 'ITE - 12', category: 'ite', route: '/ite12' },
-  { id: 3, name: 'CSC - 102', category: 'csc', route: '/csc102' },
+  { id: 3, name: 'CSC - 102', category: 'csc', route: '/csc102' }
   // Add more courses here...
 ])
 
@@ -259,11 +261,9 @@ const filteredCourses = computed(() => {
   if (selectedCategory.value === 'all') {
     return courses.value // Show all courses if 'all' is selected
   }
-  return courses.value.filter(course => course.category === selectedCategory.value)
+  return courses.value.filter((course) => course.category === selectedCategory.value)
 })
 </script>
-
-
 
 <style scoped>
 .fill-height {

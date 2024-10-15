@@ -55,13 +55,11 @@
           </v-list-item>
         </v-list-item-group>
 
-        <v-list-item @click="$router.push('/logout')" class="text-center">
-          <v-list-item-icon>
-            <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-              >mdi-logout</v-icon
-            >
-          </v-list-item-icon>
-        </v-list-item>
+        <v-list-item @click="openLogoutModal" class="text-center">
+            <v-list-item-icon>
+              <v-icon large color="white">mdi-logout</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -112,11 +110,9 @@
             </v-list-item-icon>
           </v-list-item>
 
-          <v-list-item @click="$router.push('/logout')" class="text-center">
+          <v-list-item @click="openLogoutModal" class="text-center">
             <v-list-item-icon>
-              <v-icon large :color="$route.path === '/logout' ? 'black' : 'white'"
-                >mdi-logout</v-icon
-              >
+              <v-icon large color="white">mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list-item-group>
@@ -259,13 +255,19 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <LogoutModal ref="logoutModalRef" />
+
     </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-
+import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
 const drawer = ref(false) // Drawer state for mobile
 const dialog = ref(false) // Dialog state for video/pdf modal
 const dialogContent = ref('') // Content for the dialog
