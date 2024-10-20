@@ -30,7 +30,7 @@ const visible = ref(false)
       variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
-    <RouterLink class="text-deep-orange-darken-4 text-decoration-none" to="/forgot"
+    <RouterLink class="text-deep-orange-darken-4 " to="/forgot"
       ><h4>Reset Password</h4></RouterLink
     >
 
@@ -53,5 +53,9 @@ const visible = ref(false)
     >
       Log In
     </v-btn>
+
+    <RouterLink class="text-deep-orange-darken-4  text-center" to="/adminlogin"
+      ><h4 class="mb-2">Admin Log In</h4></RouterLink
+    >
   </v-form>
 </template>

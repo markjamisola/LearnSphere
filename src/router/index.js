@@ -10,6 +10,8 @@ import AboutPage from '@/views/system/AboutPage.vue'
 import IT109Page from '@/views/system/IT109Page.vue'
 import ITE12Page from '@/views/system/ITE12Page.vue'
 import CSC102Page from '@/views/system/CSC102Page.vue'
+import AdminPage from '@/views/system/AdminPage.vue'
+import AdminLogin from '@/views/auth/AdminLogin.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +74,16 @@ const router = createRouter({
       path: '/csc102',
       name: 'csc102',
       component: CSC102Page
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminPage
+    },
+    {
+     path: '/adminlogin',
+     name: '/adminlogin',
+     component: AdminLogin
     }
   ]
 })

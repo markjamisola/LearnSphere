@@ -21,7 +21,7 @@
         elevation="15"
         @click="$router.push('/login')"
       >
-        Send
+        Cancel
       </v-btn>
       <v-btn
         class="mx-3 mb-6"
@@ -31,7 +31,7 @@
         elevation="15"
         @click="$router.push('/login')"
       >
-        Cancel
+        Send
       </v-btn>
     </v-row>
   </v-form>
