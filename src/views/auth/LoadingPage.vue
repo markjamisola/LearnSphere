@@ -1,6 +1,6 @@
 <template>
   <v-responsive>
-    <v-app class="background-color">
+    <v-app class="animated-background">
      <v-main class="d-flex">
       <!-- Centering the content inside the container -->
       <v-container class=" align-self-center text-center">
@@ -23,13 +23,30 @@
   </v-responsive>
 </template>
 
+
 <style scoped>
-/* Set the background color for the entire app */
-.background-color {
-  background-color: #803D3B; /* Your desired background color */
-  height: 100%;
+/* Background animation */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-background {
+  background: linear-gradient(270deg, #803d3b, #faeed1, #aa7154, #b54646);
+  background-size: 800% 800%;
+  animation: gradientBackground 15s ease infinite;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/* Customize other styles if needed */
 </style>
