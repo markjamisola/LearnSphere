@@ -13,7 +13,7 @@ const formDataDefault = {
   firstname: '',
   lastname: '',
   idnumber: '',
-  program: '',
+  program: null,
   email: '',
   password: '',
   password_confirmation: ''
@@ -76,15 +76,13 @@ const contactDialog = ref(false)
       </v-col>
       <v-col cols="12" sm="6">
         <v-select
-          :items="[' ','BSIT', 'BSCS', 'BSIS']"
-          placeholder="Program"
+          :items="['BSIT', 'BSCS', 'BSIS']"
+          label="Program"
           prepend-inner-icon="mdi-laptop"
           variant="outlined"
           density="compact"
-          item-text=""                            
-          item-value="" 
-          :rules="[requiredValidator]"
           v-model="formData.program"
+          :rules="[requiredValidator]"
         ></v-select>
       </v-col>
     </v-row>
