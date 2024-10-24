@@ -1,20 +1,44 @@
 <script setup>
 import { ref } from 'vue'
+import {requiredValidator, emailValidator } from '@/utils/validators';
 
-// For toggling visibility of password fields
 const visible = ref(false)
+const refVForm = ref()
+
+const formDataDefault = {
+  email: '',
+  password: '',
+}
+
+const formData = ref ({
+...formDataDefault
+})
+
+const onLogin = () => {
+  alert(formData.value)
+}
+
+const onFormSubmit = () => {
+  refVForm.value?.validate().then(({ valid }) => {
+    if(valid)
+    onLogin()
+  })
+}
+
 </script>
 <template>
-  <v-form>
+  <v-form  ref="refVForm" @submit.prevent="onFormSubmit">
     <!-- Account Input -->
     <div class="text-subtitle-1 text-medium-emphasis">
       <h4 class="text-black">Account</h4>
     </div>
     <v-text-field
+    v-model="formData.email"
       density="compact"
       placeholder="Email or ID Number"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
+      :rules="[requiredValidator, emailValidator]"
     ></v-text-field>
 
     <!-- Password Input -->
@@ -22,6 +46,7 @@ const visible = ref(false)
       <h4 class="text-black">Password</h4>
     </div>
     <v-text-field
+      v-model="formData.password"
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
       density="compact"
@@ -29,6 +54,7 @@ const visible = ref(false)
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="visible = !visible"
+      :rules="[requiredValidator]"
     ></v-text-field>
 
     <v-card class="mb-3" color="surface-variant" variant="outlined">
@@ -60,7 +86,7 @@ const visible = ref(false)
       variant="elevated"
       elevation="15"
       block
-      @click="$router.push('/home')"
+      type="submit"
     >
       Log In
     </v-btn>

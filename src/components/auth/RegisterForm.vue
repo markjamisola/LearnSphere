@@ -1,44 +1,90 @@
 <script setup>
 import { ref } from 'vue'
+import {
+  requiredValidator,
+  emailValidator,
+  passwordValidator,
+  confirmedValidator
+} from '@/utils/validators'
 
-// For toggling visibility of password fields
+const refVForm = ref()
+
+const formDataDefault = {
+  firstname: '',
+  lastname: '',
+  idnumber: '',
+  program: '',
+  email: '',
+  password: '',
+  password_confirmation: ''
+}
+const formData = ref({
+  ...formDataDefault
+})
+
+const onSignup = () => {
+  alert(formData.value)
+}
+
+const onFormSubmit = () => {
+  refVForm.value?.validate().then(({ valid }) => {
+    if (valid) onSignup()
+  })
+}
+
 const visible = ref(false)
 
-// State for the Contact Support dialog/modal
 const contactDialog = ref(false)
 </script>
 
 <template>
-  <v-form>
-    <!-- Reduced spacing between rows -->
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <v-row dense class="gb-0">
       <v-col cols="12" sm="6">
         <v-text-field
           density="compact"
-          placeholder="Name"
+          label="First Name"
           prepend-inner-icon="mdi-account-outline"
           variant="outlined"
+          :rules="[requiredValidator]"
+          v-model="formData.firstname"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
         <v-text-field
           density="compact"
-          placeholder="ID Number"
-          prepend-inner-icon="mdi-card-account-details-outline"
+          label="Last Name"
+          prepend-inner-icon="mdi-account-outline"
           variant="outlined"
+          :rules="[requiredValidator]"
+          v-model="formData.lastname"
         ></v-text-field>
       </v-col>
     </v-row>
 
-    <!-- College and Program dropdowns -->
-    <v-row class="mt-0">
-      <v-col cols="12" lg="12" sm="6" md="12">
+    <v-row dense class="gb-0">
+      <v-col cols="12" sm="6">
+        <v-text-field
+          density="compact"
+          label="ID Number"
+          prepend-inner-icon="mdi-card-account-details-outline"
+          variant="outlined"
+          class="mb-0"
+          :rules="[requiredValidator]"
+          v-model="formData.idnumber"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" sm="6">
         <v-select
-          :items="['Information Technology', 'Computer Science', 'Information System']"
+          :items="[' ','BSIT', 'BSCS', 'BSIS']"
           placeholder="Program"
           prepend-inner-icon="mdi-laptop"
           variant="outlined"
           density="compact"
+          item-text=""                            
+          item-value="" 
+          :rules="[requiredValidator]"
+          v-model="formData.program"
         ></v-select>
       </v-col>
     </v-row>
@@ -46,9 +92,11 @@ const contactDialog = ref(false)
     <!-- Email -->
     <v-text-field
       density="compact"
-      placeholder="Email address"
+      label="Email address"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
+      :rules="[requiredValidator, emailValidator]"
+      v-model="formData.email"
     ></v-text-field>
 
     <!-- Password and Verify Password fields -->
@@ -56,20 +104,26 @@ const contactDialog = ref(false)
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
       density="compact"
-      placeholder="Password"
+      label="Password"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="visible = !visible"
+      :rules="[requiredValidator, passwordValidator]"
+      v-model="formData.password_confirmation"
     ></v-text-field>
 
     <v-text-field
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
       density="compact"
-      placeholder="Verify Password"
+      label="Verify Password"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="visible = !visible"
+      :rules="[
+        requiredValidator,
+        confirmedValidator(formData.password_confirmation, formData.password)
+      ]"
     ></v-text-field>
 
     <!-- Contact Support Link -->
@@ -90,7 +144,7 @@ const contactDialog = ref(false)
       variant="elevated"
       elevation="15"
       block
-      @click="$router.push('/home')"
+      type="submit"
     >
       Sign Up
     </v-btn>
@@ -110,19 +164,23 @@ const contactDialog = ref(false)
             <a
               class="text-decoration-none text-white"
               href="mailto:markdaniel.jamisola@carsu.edu.ph"
-              > markdaniel.jamisola@carsu.edu.ph</a
+            >
+              markdaniel.jamisola@carsu.edu.ph</a
             >
           </p>
           <p>
             <strong>UE:</strong>
-            <a class="text-decoration-none text-white" href="mailto:ushyne.esclamadado.carsu.edu.ph"
-              > ushyne.esclamadado.carsu.edu.ph</a
+            <a
+              class="text-decoration-none text-white"
+              href="mailto:ushyne.esclamadado.carsu.edu.ph"
+            >
+              ushyne.esclamadado.carsu.edu.ph</a
             >
           </p>
           <p>
             <strong>JG:</strong>
-            <a class="text-decoration-none text-white" href="mailto:jusalyn.gimao@carsu.edu.ph"
-              > jusalyn.gimao@carsu.edu.ph</a
+            <a class="text-decoration-none text-white" href="mailto:jusalyn.gimao@carsu.edu.ph">
+              jusalyn.gimao@carsu.edu.ph</a
             >
           </p>
         </v-card-text>
