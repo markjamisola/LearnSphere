@@ -4,8 +4,8 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
 
 <template>
   <v-responsive>
-    <v-app class="background-color">
-      <!-- Apply background color here -->
+    <v-app class="animated-background">
+      <!-- Animated background applied -->
       <v-container fluid>
         <v-row class="fill-height align-self-center" align="center" justify="center">
           <v-col cols="12" sm="8" md="6" lg="4">
@@ -23,8 +23,8 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
               <template v-slot:title>
                 <h3 class="font-weight-black text-center">Sign Up</h3>
               </template>
-              <!-- Form Field -->
 
+              <!-- Form Field -->
               <RegisterForm></RegisterForm>
 
               <!-- Already Have an Account link -->
@@ -43,14 +43,26 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
 </template>
 
 <style scoped>
-/* Set the background color for the entire app */
-.background-color {
-  background-color: #803d3b; /* Your desired background color */
-  height: 100%;
+/* Background animation */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-background {
+  background: linear-gradient(270deg, #803d3b, #faeed1, #aa7154, #b54646);
+  background-size: 800% 800%;
+  animation: gradientBackground 15s ease infinite;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-/* Customize other styles if needed */
 </style>

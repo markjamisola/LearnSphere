@@ -7,7 +7,6 @@ const dialog = ref(false)
 const router = useRouter()
 
 // Function to handle email send and show modal
-
 const goToLogin = () => {
   dialog.value = false
   router.push('/login')
@@ -16,8 +15,8 @@ const goToLogin = () => {
 
 <template>
   <v-responsive>
-    <v-app class="background-color">
-      <!-- Background color -->
+    <v-app class="animated-background">
+      <!-- Background color with gradient animation -->
       <v-container>
         <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
 
@@ -91,7 +90,9 @@ const goToLogin = () => {
             Please check your email for instructions to reset your password.
           </v-card-text>
           <v-card-actions>
-            <v-btn color="deep-purple-darken-3" block @click="goToLogin"> Back to Log In </v-btn>
+            <v-btn color="deep-purple-darken-3" block @click="goToLogin">
+              Back to Log In
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -100,10 +101,24 @@ const goToLogin = () => {
 </template>
 
 <style scoped>
-/* Set the background color for the entire app */
-.background-color {
-  background-color: #803d3b;
-  height: 100%;
+/* Background animation */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-background {
+  background: linear-gradient(270deg, #803d3b, #faeed1, #aa7154, #b54646);
+  background-size: 800% 800%;
+  animation: gradientBackground 15s ease infinite;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
