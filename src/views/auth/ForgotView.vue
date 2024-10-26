@@ -3,14 +3,14 @@ import ForgotView from '@/components/auth/ForgotView.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-// modal visibility control
+// Modal visibility control
 const dialog = ref(false)
 const router = useRouter()
 
 // Function to handle email send and show modal
 const onEmailSent = () => {
-  // replace this with actual API call
-  // after success api, the modal will show
+  // Replace this with actual API call
+  // After success API, the modal will show
   dialog.value = true
 }
 
@@ -23,7 +23,6 @@ const goToLogin = () => {
 <template>
   <v-responsive>
     <v-app class="animated-background">
-
       <!-- Floating Icons in Background -->
       <div class="anim-elements">
         <div 
@@ -32,7 +31,7 @@ const goToLogin = () => {
           :key="index" 
           :style="{
             '--i': index + 1,
-            top: `${Math.random() * 100}vh`,
+            top: `${Math.random() * 120}vh`,
             left: `${Math.random() * 100}vw`,
             animationDuration: `${10 + Math.random() * 10}s`,
             fontSize: `${20 + Math.random() * 40}px`
@@ -45,7 +44,6 @@ const goToLogin = () => {
       <!-- Apply animated background here -->
       <v-container>
         <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
-
         <v-card
           class="mx-auto pa-8 pb-5"
           elevation="15"
@@ -59,7 +57,6 @@ const goToLogin = () => {
 
           <!-- Form Field -->
           <ForgotView @email-sent="onEmailSent" />
-
         </v-card>
       </v-container>
 
@@ -86,7 +83,15 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill(['bx bxl-html5', 'bx bxl-react', 'bx bxl-android', 'bx bxl-apple', 'bx bxl-css3', 'bx bxl-javascript', 'bx bxl-nodejs', 'bx bxl-python', 'bx bxl-github', 'bx bxl-bootstrap']).flat()
+      icons: Array(10).fill([
+        'bx bxl-github', 
+        'bx bxl-react', 
+        'bx bxl-android', 
+        'bx bxl-apple', 
+        'bx bxl-vuejs',
+        'bx bxl-figma',
+        'bx bxl-java',
+      ]).flat()
     }
   }
 }

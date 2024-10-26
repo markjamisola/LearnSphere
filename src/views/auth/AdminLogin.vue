@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-// modal visibility control
+// Modal visibility control
 const dialog = ref(false)
 const router = useRouter()
 
@@ -25,7 +25,7 @@ const goToLogin = () => {
           :key="index" 
           :style="{
             '--i': index + 1,
-            top: `${Math.random() * 100}vh`,
+            top: `${Math.random() * 120}vh`,
             left: `${Math.random() * 100}vw`,
             animationDuration: `${10 + Math.random() * 10}s`,
             fontSize: `${20 + Math.random() * 40}px`
@@ -34,11 +34,12 @@ const goToLogin = () => {
           <i :class="icon"></i>
         </div>
       </div>
-      
-      <!-- Background color with gradient animation -->
+
+      <!-- Main Container -->
       <v-container>
         <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
 
+        <!-- Login Card -->
         <v-card
           class="mx-auto pa-8 pb-5"
           elevation="15"
@@ -49,10 +50,12 @@ const goToLogin = () => {
           <template v-slot:title>
             <h3 class="font-weight-black text-center">Admin Log In</h3>
           </template>
+          
           <div class="text-subtitle-1 text-medium-emphasis">
             <h4 class="text-black">Account</h4>
           </div>
-          <!-- Form Field -->
+
+          <!-- Email or ID Number Field -->
           <v-text-field
             density="compact"
             placeholder="Email or ID Number"
@@ -60,12 +63,10 @@ const goToLogin = () => {
             variant="outlined"
           ></v-text-field>
 
-          <div
-            class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
-          >
+          <!-- Password Field -->
+          <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
             <h4 class="text-black">Password</h4>
           </div>
-
           <v-text-field
             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
             :type="visible ? 'text' : 'password'"
@@ -76,6 +77,7 @@ const goToLogin = () => {
             @click:append-inner="visible = !visible"
           ></v-text-field>
 
+          <!-- Action Buttons -->
           <v-row class="justify-space-between mt-3">
             <v-btn
               class="mx-3 mb-6"
@@ -124,7 +126,15 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill(['bx bxl-html5', 'bx bxl-react', 'bx bxl-android', 'bx bxl-apple', 'bx bxl-css3', 'bx bxl-javascript', 'bx bxl-nodejs', 'bx bxl-python', 'bx bxl-github', 'bx bxl-bootstrap']).flat()
+      icons: Array(10).fill([
+        'bx bxl-github', 
+        'bx bxl-react', 
+        'bx bxl-android', 
+        'bx bxl-apple', 
+        'bx bxl-vuejs',
+        'bx bxl-figma',
+        'bx bxl-java',
+      ]).flat()
     }
   }
 }

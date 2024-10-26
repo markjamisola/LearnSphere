@@ -14,7 +14,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
           :key="index" 
           :style="{
             '--i': index + 1,
-            top: `${Math.random() * 100}vh`,
+            top: `${Math.random() * 120}vh`,
             left: `${Math.random() * 100}vw`,
             animationDuration: `${10 + Math.random() * 10}s`,
             fontSize: `${20 + Math.random() * 40}px`
@@ -66,7 +66,15 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill(['bx bxl-html5', 'bx bxl-react', 'bx bxl-android', 'bx bxl-apple', 'bx bxl-css3', 'bx bxl-javascript', 'bx bxl-nodejs', 'bx bxl-python', 'bx bxl-github', 'bx bxl-bootstrap']).flat()
+      icons: Array(10).fill([
+        'bx bxl-github', 
+        'bx bxl-react', 
+        'bx bxl-android', 
+        'bx bxl-apple', 
+        'bx bxl-vuejs',
+        'bx bxl-figma',
+        'bx bxl-java',
+      ]).flat()
     }
   }
 }
