@@ -26,7 +26,7 @@ const goToLogin = () => {
           :style="{
             '--i': index + 1,
             top: `${Math.random() * 120}vh`,
-            left: `${Math.random() * 100}vw`,
+            left: `${Math.random() * 150}vw`,
             animationDuration: `${10 + Math.random() * 10}s`,
             fontSize: `${20 + Math.random() * 40}px`
           }"
