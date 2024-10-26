@@ -6,6 +6,7 @@ import {
   passwordValidator,
   confirmedValidator
 } from '@/utils/validators'
+import { supabase, formActionDefault } from '@/utils/supabase'
 
 const refVForm = ref()
 
@@ -22,8 +23,38 @@ const formData = ref({
   ...formDataDefault
 })
 
-const onSignup = () => {
-  alert(formData.value)
+const formAction = ref({
+  ...formActionDefault
+})
+
+const onSignup = async () => {
+  formAction.value = { formActionDefault }
+  formAction.value.formProcess = true
+
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+    options: {
+      data: {
+        firstname: formData.value.firstname,
+        lastname: formData.value.lastname,
+        idnumber: formData.value.idnumber,
+        program: formData.value.program
+      }
+    }
+  })
+
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    console.log(data)
+    formAction.value.formSuccessMessage = 'Successfully Registered!'
+    refVForm.value?.reset()
+  }
+
+  formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
@@ -38,6 +69,29 @@ const contactDialog = ref(false)
 </script>
 
 <template>
+  <v-alert
+    v-if="formAction.formSuccessMessage"
+    :text="formAction.formSuccessMessage"
+    closable
+    icon="mdi-account-check"
+    title="Success!"
+    type="success"
+    density="compact"
+    variant="tonal"
+    border="start"
+  ></v-alert>
+  <v-alert
+    v-if="formAction.formErrorMessage"
+    :text="formAction.formErrorMessage"
+    closable
+    icon="mdi-account-alert"
+    title="Oops!"
+    type="error"
+    density="compact"
+    variant="tonal"
+    border="start"
+  ></v-alert>
+
   <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <v-row dense class="gb-0">
       <v-col cols="12" sm="6">
@@ -107,7 +161,7 @@ const contactDialog = ref(false)
       variant="outlined"
       @click:append-inner="visible = !visible"
       :rules="[requiredValidator, passwordValidator]"
-      v-model="formData.password_confirmation"
+      v-model="formData.password"
     ></v-text-field>
 
     <v-text-field
@@ -122,6 +176,7 @@ const contactDialog = ref(false)
         requiredValidator,
         confirmedValidator(formData.password_confirmation, formData.password)
       ]"
+      v-model="formData.password_confirmation"
     ></v-text-field>
 
     <!-- Contact Support Link -->
@@ -143,6 +198,8 @@ const contactDialog = ref(false)
       elevation="15"
       block
       type="submit"
+      :disabled="formAction.formProcess"
+      :loading="formAction.formProcess"
     >
       Sign Up
     </v-btn>
@@ -168,10 +225,7 @@ const contactDialog = ref(false)
           </p>
           <p>
             <strong>UE:</strong>
-            <a
-              class="text-decoration-none text-white"
-              href="mailto:ushyne.esclamadado.carsu.edu.ph"
-            >
+            <a class="text-decoration-none text-white" href="mailto:ushyne.esclamado.carsu.edu.ph">
               ushyne.esclamado.carsu.edu.ph</a
             >
           </p>
