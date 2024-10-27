@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill([
+      icons: Array(7).fill([
         'bx bxl-github', 
         'bx bxl-react', 
         'bx bxl-android', 

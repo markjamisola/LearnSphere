@@ -172,7 +172,7 @@ const contactDialog = ref(false)
               class="text-decoration-none text-white"
               href="mailto:ushyne.esclamadado.carsu.edu.ph"
             >
-              ushyne.esclamadado.carsu.edu.ph</a
+              ushyne.esclamado.carsu.edu.ph</a
             >
           </p>
           <p>
