@@ -87,9 +87,9 @@ const router = createRouter({
       component: AdminPage
     },
     {
-     path: '/adminlogin',
-     name: '/adminlogin',
-     component: AdminLogin
+      path: '/adminlogin',
+      name: 'adminlogin',
+      component: AdminLogin
     }
   ]
 })
