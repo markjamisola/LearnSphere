@@ -5,13 +5,12 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
 <template>
   <v-responsive>
     <v-app class="animated-background">
-
       <!-- Floating Icons in Background -->
       <div class="anim-elements">
-        <div 
-          class="anim-element" 
-          v-for="(icon, index) in icons" 
-          :key="index" 
+        <div
+          class="anim-element"
+          v-for="(icon, index) in icons"
+          :key="index"
           :style="{
             '--i': index + 1,
             top: `${Math.random() * 120}vh`,
@@ -23,13 +22,24 @@ import RegisterForm from '@/components/auth/RegisterForm.vue'
           <i :class="icon"></i>
         </div>
       </div>
-      
+
       <!-- Animated background applied -->
       <v-container fluid>
         <v-row class="fill-height align-self-center" align="center" justify="center">
-          <v-col cols="12" sm="8" md="6" lg="4">
-            <v-img class="mx-auto mb-0 mt-1" max-width="200" src="/logo5.png"></v-img>
+          <v-col cols="12" md="4" class="d-flex flex-column justify-center align-center">
+            <div class="text-center">
+              <!-- Logo -->
+              <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
 
+              <!-- Title and Tagline -->
+              <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
+              <p class="text-white mb-6">
+                Your one-stop portal for IT, IS, and CS resources, tailored to support your academic
+                journey.
+              </p>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="8" md="6" lg="4">
             <!-- Sign-Up Form Card -->
             <v-card
               class="mx-auto pa-8 pb-5"
@@ -66,18 +76,20 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill([
-        'bx bxl-html5',       
-        'bx bxl-css3',         
-        'bx bxl-javascript',   
-        'bx bxl-java',         
-        'bx bxl-python',       
-        'bx bxl-php',          
-        'bx bxl-c-plus-plus',  
-        'bx bxl-nodejs',       
-        'bx bxl-typescript',   
-        'bx bxl-ruby'          
-      ]).flat()
+      icons: Array(10)
+        .fill([
+          'bx bxl-html5',
+          'bx bxl-css3',
+          'bx bxl-javascript',
+          'bx bxl-java',
+          'bx bxl-python',
+          'bx bxl-php',
+          'bx bxl-c-plus-plus',
+          'bx bxl-nodejs',
+          'bx bxl-typescript',
+          'bx bxl-ruby'
+        ])
+        .flat()
     }
   }
 }
@@ -133,6 +145,13 @@ export default {
   }
   100% {
     transform: translate(0, 0);
+  }
+}
+@media (min-width: 768px) {
+  .v-container {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
   }
 }
 </style>
