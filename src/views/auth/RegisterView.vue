@@ -76,7 +76,7 @@ onMounted(() => {
             <div class="text-center">
               <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
               <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
-              <p class="text-white mb-6">
+              <p class="text-white mb-6 text-justify ">
                 Unlock your potential and start your learning journey today! Sign up now to access a
                 wealth of resources tailored just for you. Join a community of aspiring IT, IS, and
                 CS students and take the first step towards success!

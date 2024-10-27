@@ -40,7 +40,7 @@ onMounted(() => {
 
               <!-- Title and Tagline -->
               <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
-              <p class="text-white mb-6">
+              <p class="text-white mb-6 ">
                 Your one-stop portal for IT, IS, and CS resources, tailored to support your academic journey.
               </p>
             </div>

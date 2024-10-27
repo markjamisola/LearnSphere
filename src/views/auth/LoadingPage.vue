@@ -24,8 +24,6 @@ onMounted(() => {
     <v-main class="d-flex justify-center align-center">
       <v-container class="text-center">
         <v-img class="mx-auto" max-width="400" src="/logo5.png"></v-img>
-        <h3 class="text-white mb-4">Learn Smarter, Succeed Faster</h3>
-      
       </v-container>
     </v-main>
   </v-app>
