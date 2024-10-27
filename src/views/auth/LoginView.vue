@@ -5,14 +5,40 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 <template>
   <v-responsive>
     <v-app class="animated-background">
-      <!-- Use v-row and v-col to center content -->
-      <v-container fluid>
-        <v-row class="fill-height align-self-center" align="center" justify="center">
-          <v-col cols="12" sm="8" md="6" lg="4" flex>
-            <!-- Logo -->
-            <v-img class="mx-auto mb-0 mt-1" max-width="200" src="/logo5.png"></v-img>
+      <!-- Floating Icons in Background -->
+      <div class="anim-elements">
+        <div 
+          class="anim-element" 
+          v-for="(icon, index) in icons" 
+          :key="index" 
+          :style="{
+            '--i': index + 1,
+            top: `${Math.random() * 120}vh`,
+            left: `${Math.random() * 150}vw`,
+            animationDuration: `${10 + Math.random() * 10}s`,
+            fontSize: `${20 + Math.random() * 40}px`
+          }"
+        >
+          <i :class="icon"></i>
+        </div>
+      </div>
 
-            <!-- Card for Login Form -->
+      <!-- Centered Login Form -->
+      <v-container fluid>
+        <v-row class="align-center justify-center" align="center" justify="center">
+          <v-col cols="12" md="4" class="d-flex flex-column justify-center align-center">
+            <div class="text-center">
+              <!-- Logo -->
+              <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
+
+              <!-- Title and Tagline -->
+              <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
+              <p class="text-white mb-6">
+                Your one-stop portal for IT, IS, and CS resources, tailored to support your academic journey.
+              </p>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="8" md="6" lg="4" flex>
             <v-card
               class="mx-auto pa-6 pb-4 justify-center align-center"
               elevation="12"
@@ -22,13 +48,9 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               <template v-slot:title>
                 <h3 class="font-weight-black text-center">Log In</h3>
               </template>
-
-              <!-- Form Field -->
               <LoginForm></LoginForm>
-
-              <!-- Sign Up Link -->
               <v-card-text class="text-center pt-0">
-                <RouterLink class="text-black text-decoration-none text-black" to="/register">
+                <RouterLink class="text-black text-decoration-none" to="/register">
                   Sign Up Now
                 </RouterLink>
                 <v-icon icon="mdi-chevron-right"></v-icon>
@@ -40,6 +62,28 @@ import LoginForm from '@/components/auth/LoginForm.vue'
     </v-app>
   </v-responsive>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      // Fewer icons to reduce the density
+      icons: Array(10).fill([
+        'bx bxl-html5',       
+        'bx bxl-css3',         
+        'bx bxl-javascript',   
+        'bx bxl-java',         
+        'bx bxl-python',       
+        'bx bxl-php',          
+        'bx bxl-c-plus-plus',  
+        'bx bxl-nodejs',       
+        'bx bxl-typescript',   
+        'bx bxl-ruby'          
+      ]).flat()
+    }
+  }
+}
+</script>
 
 <style scoped>
 /* Background animation */
@@ -56,14 +100,50 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 }
 
 .animated-background {
-  background: linear-gradient(270deg, #803d3b, #faeed1, #aa7154, #b54646);
+  background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;
   animation: gradientBackground 15s ease infinite;
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Customize other styles if needed */
+/* Floating Icon Styles */
+.anim-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.anim-element {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.5);
+  animation: float infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(100px, -100px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Center content on larger screens */
+@media (min-width: 768px) {
+  .v-container {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+  }
+}
 </style>

@@ -1,31 +1,39 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const isLoading = ref(true) // control loading screen visibility
+const isFadingOut = ref(false) // trigger fade-out animation
+const router = useRouter() //
+
+onMounted(() => {
+
+  setTimeout(() => {
+    isFadingOut.value = true // Start fade-out animation
+    setTimeout(() => {
+      isLoading.value = false // Hide the loading screen
+      router.push('/login') // Redirect to login page
+    }, 1000) // Delay for transition
+  }, 2000) // Loading page duration
+})
+</script>
+
 <template>
-  <v-responsive>
-    <v-app class="animated-background">
-      <v-main class="d-flex">
-        <!-- Centering the content inside the container -->
-        <v-container class="align-self-center text-center">
-          <!-- Logo Image -->
-          <v-img class="mx-auto" max-width="400" src="/logo5.png"></v-img>
+  <!-- Loading Screen -->
+  <v-app v-if="isLoading" :class="['animated-background', { 'fade-out': isFadingOut }]">
+    <v-main class="d-flex justify-center align-center">
+      <v-container class="text-center">
+        <v-img class="mx-auto" max-width="400" src="/logo5.png"></v-img>
+        <h3 class="text-white mb-4">Learn Smarter, Succeed Faster</h3>
+      
+      </v-container>
+    </v-main>
+  </v-app>
 
-          <!-- Heading Text -->
-          <h3 class="text-white mb-4">Learn Smarter, Succeed Faster</h3>
-
-          <!-- Button Link -->
-          <RouterLink class="text-decoration-none" to="/login">
-            <h4 class="text-white">
-              <v-icon icon="mdi-chevron-left"></v-icon><v-icon icon="mdi-chevron-left"></v-icon>
-              Click to Begin Learning
-              <v-icon icon="mdi-chevron-right"></v-icon><v-icon icon="mdi-chevron-right"></v-icon>
-            </h4>
-          </RouterLink>
-        </v-container>
-      </v-main>
-    </v-app>
-  </v-responsive>
+  <RouterView v-else />
 </template>
 
 <style scoped>
-/* Background animation */
 @keyframes gradientBackground {
   0% {
     background-position: 0% 50%;
@@ -46,7 +54,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  transition: opacity 1s ease; 
 }
 
-/* Customize other styles if needed */
+.fade-out {
+  opacity: 0;
+}
 </style>
