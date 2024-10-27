@@ -1,39 +1,69 @@
 <script setup>
 import { ref } from 'vue'
-import {requiredValidator, emailValidator } from '@/utils/validators';
+import { requiredValidator, emailValidator } from '@/utils/validators'
+import { supabase } from '@/utils/supabase'
+import { formActionDefault } from '@/utils/supabase'
+import { useRouter } from 'vue-router'
+import AlertNotification from './AlertNotification.vue'
 
 const visible = ref(false)
 const refVForm = ref()
 
 const formDataDefault = {
   email: '',
-  password: '',
+  password: ''
 }
 
-const formData = ref ({
-...formDataDefault
+const router = useRouter()
+
+const formData = ref({
+  ...formDataDefault
 })
 
-const onLogin = () => {
-  alert(formData.value)
+const formAction = ref({
+  ...formActionDefault
+})
+
+const onLogin = async () => {
+  formAction.value = { formActionDefault }
+  formAction.value.formProcess = true
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: formData.value.email,
+    password: formData.value.password
+  })
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    console.log(data)
+    formAction.value.formSuccessMessage = 'Successfully Logged In!'
+    router.replace('/home')
+  }
+
+  refVForm.value?.reset()
+  formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
   refVForm.value?.validate().then(({ valid }) => {
-    if(valid)
-    onLogin()
+    if (valid) onLogin()
   })
 }
-
 </script>
 <template>
-  <v-form  ref="refVForm" @submit.prevent="onFormSubmit">
+  <AlertNotification
+    :form-success-message="formAction.formSuccessMessage"
+    :form-error-message="formAction.formErrorMessage"
+  ></AlertNotification>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="mt-5">
     <!-- Account Input -->
     <div class="text-subtitle-1 text-medium-emphasis">
       <h4 class="text-black">Account</h4>
     </div>
     <v-text-field
-    v-model="formData.email"
+      v-model="formData.email"
       density="compact"
       placeholder="Email or ID Number"
       prepend-inner-icon="mdi-email-outline"

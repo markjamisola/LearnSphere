@@ -7,6 +7,10 @@ import {
   confirmedValidator
 } from '@/utils/validators'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
+import { useRouter } from 'vue-router'
+import AlertNotification from './AlertNotification.vue'
+
+const router = useRouter()
 
 const refVForm = ref()
 
@@ -39,7 +43,8 @@ const onSignup = async () => {
         firstname: formData.value.firstname,
         lastname: formData.value.lastname,
         idnumber: formData.value.idnumber,
-        program: formData.value.program
+        program: formData.value.program,
+        is_admin: false
       }
     }
   })
@@ -51,9 +56,10 @@ const onSignup = async () => {
   } else if (data) {
     console.log(data)
     formAction.value.formSuccessMessage = 'Successfully Registered!'
-    refVForm.value?.reset()
+    
+    router.replace('/home')
   }
-
+  refVForm.value?.reset()
   formAction.value.formProcess = false
 }
 
@@ -69,30 +75,12 @@ const contactDialog = ref(false)
 </script>
 
 <template>
-  <v-alert
-    v-if="formAction.formSuccessMessage"
-    :text="formAction.formSuccessMessage"
-    closable
-    icon="mdi-account-check"
-    title="Success!"
-    type="success"
-    density="compact"
-    variant="tonal"
-    border="start"
-  ></v-alert>
-  <v-alert
-    v-if="formAction.formErrorMessage"
-    :text="formAction.formErrorMessage"
-    closable
-    icon="mdi-account-alert"
-    title="Oops!"
-    type="error"
-    density="compact"
-    variant="tonal"
-    border="start"
-  ></v-alert>
+  <AlertNotification
+    :form-success-message="formAction.formSuccessMessage"
+    :form-error-message="formAction.formErrorMessage"
+  ></AlertNotification>
 
-  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="mt-5">
     <v-row dense class="gb-0">
       <v-col cols="12" sm="6">
         <v-text-field
