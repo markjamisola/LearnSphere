@@ -21,6 +21,7 @@ const router = createRouter({
     {
       path: '/',
       redirect: '/loading',
+      meta: { requiresAuth: false }
     },
     {
       path: '/loading',
@@ -116,9 +117,9 @@ router.beforeEach(async (to) => {
   // Check if the user is an admin based on userMetadata
   const isAdmin = userMetadata?.is_admin === true
 
-  // Redirect to home or login based on auth status on the loading page
-  if (to.name === 'loading') {
-    return isLoggedIn ? { name: 'home' } : { name: 'login' }
+  // Allow access to loading and load pages for all users, regardless of auth status
+  if (to.name === 'loading' || to.name === 'load') {
+    return true
   }
 
   // If logged in, apply restrictions based on user roles
@@ -129,12 +130,17 @@ router.beforeEach(async (to) => {
     }
 
     // Prevent admin users from accessing non-admin pages except the login, load, loading, and register pages for logout
-    if (isAdmin && to.name !== 'admin' && to.meta.requiresAuth && !['login', 'load', 'loading', 'register'].includes(to.name)) {
+    if (
+      isAdmin &&
+      to.name !== 'admin' &&
+      to.meta.requiresAuth &&
+      !['login', 'load', 'loading', 'register'].includes(to.name)
+    ) {
       return { name: 'admin' }
     }
 
     // Prevent logged-in users from accessing login or register pages
-    if ((to.name === 'login' || to.name === 'register') && !['login', 'load', 'loading', 'register'].includes(to.name)) {
+    if (to.name === 'login' || to.name === 'register') {
       return { name: 'home' }
     }
   } else {
@@ -147,5 +153,4 @@ router.beforeEach(async (to) => {
   // Allow navigation if none of the conditions above were met
   return true
 })
-
 export default router

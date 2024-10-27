@@ -23,6 +23,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { supabase, formActionDefault } from '@/utils/supabase'
 
 // A ref to control the modal's visibility
 const show = ref(false)
@@ -33,18 +34,29 @@ const open = () => {
   show.value = true
 }
 
+const formAction = ref({
+  ...formActionDefault
+})
 // Function to close the modal without logging out
 const cancelLogout = () => {
   show.value = false
 }
 
 // Perform the logout logic
-const logout = () => {
-  show.value = false
-  // Add your logout logic here (clear session, tokens, etc.)
+const logout = async () => {
+  formAction.value = { ...formActionDefault, formProcess: true }
 
-  // Redirect the user after logging out
-  router.push('/load')
+// Get supabase logout functionality
+const { error } = await supabase.auth.signOut()
+if (error) {
+  console.error('Error during logout:', error)
+  return
+}
+
+formAction.value.formProcess = false
+// Reset State
+
+router.replace('/load')
 }
 
 // Expose the open function so the parent can call it
