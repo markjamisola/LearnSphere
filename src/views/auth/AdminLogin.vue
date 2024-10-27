@@ -126,14 +126,17 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(7).fill([
-        'bx bxl-github', 
-        'bx bxl-react', 
-        'bx bxl-android', 
-        'bx bxl-apple', 
-        'bx bxl-vuejs',
-        'bx bxl-figma',
-        'bx bxl-java',
+      icons: Array(10).fill([
+        'bx bxl-html5',       
+        'bx bxl-css3',         
+        'bx bxl-javascript',   
+        'bx bxl-java',         
+        'bx bxl-python',       
+        'bx bxl-php',          
+        'bx bxl-c-plus-plus',  
+        'bx bxl-nodejs',       
+        'bx bxl-typescript',   
+        'bx bxl-ruby'          
       ]).flat()
     }
   }
