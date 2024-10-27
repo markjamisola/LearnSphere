@@ -13,78 +13,92 @@ import CSC102Page from '@/views/system/CSC102Page.vue'
 import AdminPage from '@/views/system/AdminPage.vue'
 import AdminLogin from '@/views/auth/AdminLogin.vue'
 import VideoPage from '@/views/auth/VideoPage.vue'
+import { getUserInformation, isAuthenticated } from '@/utils/supabase'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/loading'
+      redirect: '/loading',
     },
     {
       path: '/loading',
       name: 'loading',
-      component: VideoPage
+      component: VideoPage,
+      meta: { requiresAuth: false }
     },
     {
       path: '/load',
       name: 'load',
-      component: LoadingPage
+      component: LoadingPage,
+      meta: { requiresAuth: false }
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: { requiresAuth: false }
     },
     {
       path: '/forgot',
       name: 'forgot',
-      component: ForgotView
+      component: ForgotView,
+      meta: { requiresAuth: false }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
+      meta: { requiresAuth: false }
     },
     {
       path: '/home',
       name: 'home',
-      component: HomePage
+      component: HomePage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfilePage
+      component: ProfilePage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/history',
       name: 'history',
-      component: HistoryPage
+      component: HistoryPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',
       name: 'about',
-      component: AboutPage
+      component: AboutPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/it-109',
       name: 'it-109',
-      component: IT109Page
+      component: IT109Page,
+      meta: { requiresAuth: true }
     },
     {
       path: '/ite12',
       name: 'ite12',
-      component: ITE12Page
+      component: ITE12Page,
+      meta: { requiresAuth: true }
     },
     {
       path: '/csc102',
       name: 'csc102',
-      component: CSC102Page
+      component: CSC102Page,
+      meta: { requiresAuth: true }
     },
     {
       path: '/admin',
       name: 'admin',
-      component: AdminPage
+      component: AdminPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/adminlogin',
@@ -92,6 +106,46 @@ const router = createRouter({
       component: AdminLogin
     }
   ]
+})
+
+router.beforeEach(async (to) => {
+  // Check if the user is logged in
+  const isLoggedIn = await isAuthenticated()
+  const userMetadata = isLoggedIn ? await getUserInformation() : null
+
+  // Check if the user is an admin based on userMetadata
+  const isAdmin = userMetadata?.is_admin === true
+
+  // Redirect to home or login based on auth status on the loading page
+  if (to.name === 'loading') {
+    return isLoggedIn ? { name: 'home' } : { name: 'login' }
+  }
+
+  // If logged in, apply restrictions based on user roles
+  if (isLoggedIn) {
+    // Prevent non-admin users from accessing the admin page
+    if (!isAdmin && to.name === 'admin') {
+      return { name: 'home' }
+    }
+
+    // Prevent admin users from accessing non-admin pages except the login, load, loading, and register pages for logout
+    if (isAdmin && to.name !== 'admin' && to.meta.requiresAuth && !['login', 'load', 'loading', 'register'].includes(to.name)) {
+      return { name: 'admin' }
+    }
+
+    // Prevent logged-in users from accessing login or register pages
+    if ((to.name === 'login' || to.name === 'register') && !['login', 'load', 'loading', 'register'].includes(to.name)) {
+      return { name: 'home' }
+    }
+  } else {
+    // If not logged in, prevent access to pages requiring authentication
+    if (to.meta.requiresAuth) {
+      return { name: 'login' }
+    }
+  }
+
+  // Allow navigation if none of the conditions above were met
+  return true
 })
 
 export default router

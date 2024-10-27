@@ -44,7 +44,7 @@ const logout = () => {
   // Add your logout logic here (clear session, tokens, etc.)
 
   // Redirect the user after logging out
-  router.push('/login')
+  router.push('/load')
 }
 
 // Expose the open function so the parent can call it
