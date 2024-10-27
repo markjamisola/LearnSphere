@@ -171,7 +171,7 @@ const contactDialog = ref(false)
     <v-card class="mb-3" color="surface-variant" variant="outlined">
       <v-card-text class="text-caption text-justify text-black">
         Ensure that all information is correct before signing up. If you need assistance, please
-        <a @click.prevent="contactDialog = true" class="text-decoration-underline font-weight-bold">
+        <a @click.prevent="contactDialog = true" class=" text-deep-orange-darken-4 font-weight-bold">
           contact support.
         </a>
       </v-card-text>
