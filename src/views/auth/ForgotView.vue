@@ -47,25 +47,28 @@ const goToLogin = () => {
         </div>
       </div>
 
-      <v-container >
-        <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
-        <v-card
-          class="mx-auto pa-8 pb-5"
-          elevation="15"
-          max-width="448"
-          rounded="lg"
-          color="#FAEED1"
-          :class="{ 'slide-in': isMounted }"
-        >
-          <template v-slot:title>
-            <h3 class="font-weight-black text-center">Reset Password</h3>
-          </template>
-          <!-- Form Field -->
-          <ForgotView @email-sent="onEmailSent" />
-        </v-card>
+      <v-container fluid>
+        <v-row class="align-center justify-center" align="center" justify="center">
+          <v-col
+            ><v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
+            <v-card
+              class="mx-auto pa-8 pb-5"
+              elevation="15"
+              max-width="448"
+              rounded="lg"
+              color="#FAEED1"
+              :class="{ 'slide-in': isMounted }"
+            >
+              <template v-slot:title>
+                <h3 class="font-weight-black text-center description">Reset Password</h3>
+              </template>
+              <!-- Form Field -->
+              <ForgotView @email-sent="onEmailSent" />
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
 
-      <!-- Modal Dialog -->
       <v-dialog v-model="dialog" max-width="400">
         <v-card
           class="mx-auto pa-8 pb-5"
@@ -74,15 +77,17 @@ const goToLogin = () => {
           rounded="lg"
           color="#803d3b"
         >
-          <v-card-title><h3 class="font-weight-black text-center">Email Sent!</h3></v-card-title>
+          <v-card-title
+            ><h3 class="font-weight-black text-center description">Email Sent!</h3></v-card-title
+          >
           <v-card class="mb-3" color="white" variant="outlined">
-            <v-card-text class="text-justify text-whitetext-caption">
-              <h4>Please check your email for instructions to reset your password.</h4>
+            <v-card-text class="text-center text-white text-caption description">
+              Please check your email for instructions to reset your password.
             </v-card-text>
           </v-card>
           <v-card-actions>
             <v-btn
-              class=""
+              class="description"
               color="#FAEED1"
               size="large"
               variant="elevated"
@@ -123,6 +128,7 @@ export default {
 }
 </script>
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
 /* Background animation */
 @keyframes gradientBackground {
   0% {
@@ -134,6 +140,10 @@ export default {
   100% {
     background-position: 0% 50%;
   }
+}
+
+.description {
+  font-family: 'Unbounded', sans-serif;
 }
 
 .animated-background {
@@ -189,5 +199,12 @@ export default {
 /* Slide-in class */
 .slide-in {
   animation: slide-in 0.5s ease forwards; /* Apply slide-in animation */
+}
+@media (min-width: 768px) {
+  .v-container {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+  }
 }
 </style>

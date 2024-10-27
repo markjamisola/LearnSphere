@@ -60,7 +60,7 @@ const onFormSubmit = () => {
   <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="mt-5">
     <!-- Account Input -->
     <div class="text-subtitle-1 text-medium-emphasis">
-      <h4 class="text-black">Account</h4>
+      <h4 class="text-black description">Account</h4>
     </div>
     <v-text-field
       v-model="formData.email"
@@ -69,11 +69,12 @@ const onFormSubmit = () => {
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
       :rules="[requiredValidator, emailValidator]"
+      class="description"
     ></v-text-field>
 
     <!-- Password Input -->
     <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-      <h4 class="text-black">Password</h4>
+      <h4 class="text-black description">Password</h4>
     </div>
     <v-text-field
       v-model="formData.password"
@@ -85,28 +86,23 @@ const onFormSubmit = () => {
       variant="outlined"
       @click:append-inner="visible = !visible"
       :rules="[requiredValidator]"
+      class="description"
     ></v-text-field>
 
-    <v-card class="mb-3" color="surface-variant" variant="outlined">
-      <v-card-text class="text-justify text-black text-caption">
+    <v-card class="mb-6" color="surface-variant" variant="outlined">
+      <v-card-text class="text-justify text-black text-caption description">
         Warning: If you try to log in with the wrong password three times, your account will be
         locked for three hours. To regain access, you can either wait for the lock to expire or
-        click "Reset Password" to create a new password and log in right away.
+        click
+        <RouterLink class="text-deep-orange-darken-4 text-decoration-none description" to="/forgot">
+          Reset Password </RouterLink
+        >to create a new password and log in right away.
       </v-card-text>
     </v-card>
 
-    <v-row class="mb-2 justify-space-between">
-      <v-col cols="6"> </v-col>
-      <v-col cols="6" class="d-flex justify-end pr-4">
-        <RouterLink class="text-deep-orange-darken-4 text-decoration-none" to="/forgot">
-          <h5>Reset Password</h5>
-        </RouterLink>
-      </v-col>
-    </v-row>
-
     <!-- Log In Button -->
     <v-btn
-      class="mb-5"
+      class="mb-5 description"
       color="#803d3b"
       size="large"
       variant="elevated"
@@ -118,3 +114,10 @@ const onFormSubmit = () => {
     </v-btn>
   </v-form>
 </template>
+<style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
+
+.description {
+  font-family: 'Unbounded', sans-serif;
+}
+</style>

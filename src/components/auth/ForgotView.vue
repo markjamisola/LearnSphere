@@ -1,15 +1,20 @@
 <template>
   <v-form @submit.prevent="handleSubmit">
-    <v-text-field v-model="email" label="Registered Email" required></v-text-field>
+    <v-text-field
+      class="description"
+      v-model="email"
+      label="Registered Email"
+      required
+    ></v-text-field>
     <v-card class="mb-4" color="surface-variant" variant="outlined">
-      <v-card-text class="text-justify text-black text-caption">
-        <h4>Instructions to reset your password will be sent to your registered email.</h4>
+      <v-card-text class="text-justify text-black text-caption description">
+        Instructions to reset your password will be sent to your registered email.
       </v-card-text>
     </v-card>
 
     <v-row class="justify-space-between mt-3">
       <v-btn
-        class="mx-3 mb-6"
+        class="mx-3 mb-6 description"
         color="#803d3b"
         size="large"
         variant="elevated"
@@ -19,7 +24,7 @@
         Back
       </v-btn>
       <v-btn
-        class="mx-3 mb-6"
+        class="mx-3 mb-6 description"
         color="#803d3b"
         size="large"
         variant="elevated"
@@ -59,3 +64,10 @@ const handleSubmit = async () => {
   }
 }
 </script>
+<style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
+
+.description {
+  font-family: 'Unbounded', sans-serif;
+}
+</style>
