@@ -6,7 +6,7 @@ import {
   passwordValidator,
   confirmedValidator
 } from '@/utils/validators'
-import { supabase, formActionDefault } from '@/utils/supabase'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
 
 const refVForm = ref()
 
