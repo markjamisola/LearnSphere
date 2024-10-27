@@ -96,14 +96,10 @@ const onFormSubmit = () => {
     </v-card>
 
     <v-row class="mb-2 justify-space-between">
-      <v-col cols="6">
-        <RouterLink class="text-deep-orange-darken-4" to="/forgot">
-          <h5>Reset Password</h5>
-        </RouterLink>
-      </v-col>
+      <v-col cols="6"> </v-col>
       <v-col cols="6" class="d-flex justify-end pr-4">
-        <RouterLink class="text-deep-orange-darken-4" to="/adminlogin">
-          <h5>Admin Log In</h5>
+        <RouterLink class="text-deep-orange-darken-4 text-decoration-none" to="/forgot">
+          <h5>Reset Password</h5>
         </RouterLink>
       </v-col>
     </v-row>

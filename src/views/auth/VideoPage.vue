@@ -15,6 +15,16 @@
       <source src="/vid.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
+    <!-- Skip Button -->
+    <v-btn
+      class="mx-2 skip-button"
+      color="#1c1c3a"
+      size="large"
+      variant="elevated"
+      elevation="15"
+      @click="skipLoading"
+      >Skip</v-btn
+    >
   </div>
 </template>
 
@@ -37,6 +47,10 @@ function redirectToLoad() {
     loading.value = false
     router.push('/load') // Redirect to /load after fade-out completes
   }
+}
+
+function skipLoading() {
+  fadeOut.value = true // Immediately start fade-out
 }
 </script>
 
@@ -67,10 +81,18 @@ function redirectToLoad() {
   object-fit: cover;
 }
 
-.loading-text {
-  position: relative;
-  color: white;
-  font-size: 24px;
+.skip-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   z-index: 10000;
+}
+
+.skip-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
 }
 </style>

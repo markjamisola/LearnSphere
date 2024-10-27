@@ -1,7 +1,13 @@
 <script setup>
 import ForgotView from '@/components/auth/ForgotView.vue'
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
 
 // Modal visibility control
 const dialog = ref(false)
@@ -9,14 +15,13 @@ const router = useRouter()
 
 // Function to handle email send and show modal
 const onEmailSent = () => {
-  // Replace this with actual API call
-  // After success API, the modal will show
-  dialog.value = true
+  console.log('Email sent event received') // Log when the event is emitted
+  dialog.value = true // Show the modal
 }
 
 const goToLogin = () => {
-  dialog.value = false
-  router.push('/login')
+  dialog.value = false // Hide the modal
+  router.push('/login') // Redirect to login
 }
 </script>
 
@@ -24,11 +29,12 @@ const goToLogin = () => {
   <v-responsive>
     <v-app class="animated-background">
       <!-- Floating Icons in Background -->
+      <!-- Floating Icons in Background -->
       <div class="anim-elements">
-        <div 
-          class="anim-element" 
-          v-for="(icon, index) in icons" 
-          :key="index" 
+        <div
+          class="anim-element"
+          v-for="(icon, index) in icons"
+          :key="index"
           :style="{
             '--i': index + 1,
             top: `${Math.random() * 120}vh`,
@@ -41,8 +47,7 @@ const goToLogin = () => {
         </div>
       </div>
 
-      <!-- Apply animated background here -->
-      <v-container>
+      <v-container >
         <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
         <v-card
           class="mx-auto pa-8 pb-5"
@@ -50,11 +55,11 @@ const goToLogin = () => {
           max-width="448"
           rounded="lg"
           color="#FAEED1"
+          :class="{ 'slide-in': isMounted }"
         >
           <template v-slot:title>
             <h3 class="font-weight-black text-center">Reset Password</h3>
           </template>
-
           <!-- Form Field -->
           <ForgotView @email-sent="onEmailSent" />
         </v-card>
@@ -62,13 +67,29 @@ const goToLogin = () => {
 
       <!-- Modal Dialog -->
       <v-dialog v-model="dialog" max-width="400">
-        <v-card>
-          <v-card-title class="text-h5">Email Sent!</v-card-title>
-          <v-card-text>
-            Please check your email for instructions to reset your password.
-          </v-card-text>
+        <v-card
+          class="mx-auto pa-8 pb-5"
+          elevation="15"
+          max-width="448"
+          rounded="lg"
+          color="#803d3b"
+        >
+          <v-card-title><h3 class="font-weight-black text-center">Email Sent!</h3></v-card-title>
+          <v-card class="mb-3" color="white" variant="outlined">
+            <v-card-text class="text-justify text-whitetext-caption">
+              <h4>Please check your email for instructions to reset your password.</h4>
+            </v-card-text>
+          </v-card>
           <v-card-actions>
-            <v-btn color="deep-purple-darken-3" block @click="goToLogin">
+            <v-btn
+              class=""
+              color="#FAEED1"
+              size="large"
+              variant="elevated"
+              elevation="15"
+              block
+              @click="goToLogin"
+            >
               Back to Log In
             </v-btn>
           </v-card-actions>
@@ -83,23 +104,24 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill([
-        'bx bxl-html5',       
-        'bx bxl-css3',         
-        'bx bxl-javascript',   
-        'bx bxl-java',         
-        'bx bxl-python',       
-        'bx bxl-php',          
-        'bx bxl-c-plus-plus',  
-        'bx bxl-nodejs',       
-        'bx bxl-typescript',   
-        'bx bxl-ruby'          
-      ]).flat()
+      icons: Array(10)
+        .fill([
+          'bx bxl-html5',
+          'bx bxl-css3',
+          'bx bxl-javascript',
+          'bx bxl-java',
+          'bx bxl-python',
+          'bx bxl-php',
+          'bx bxl-c-plus-plus',
+          'bx bxl-nodejs',
+          'bx bxl-typescript',
+          'bx bxl-ruby'
+        ])
+        .flat()
     }
   }
 }
 </script>
-
 <style scoped>
 /* Background animation */
 @keyframes gradientBackground {
@@ -151,5 +173,21 @@ export default {
   100% {
     transform: translate(0, 0);
   }
+}
+/* Keyframes for sliding in from the right */
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%); /* Start off-screen to the right */
+    opacity: 0; /* Start invisible */
+  }
+  to {
+    transform: translateY(0); /* End in place */
+    opacity: 1; /* End visible */
+  }
+}
+
+/* Slide-in class */
+.slide-in {
+  animation: slide-in 0.5s ease forwards; /* Apply slide-in animation */
 }
 </style>

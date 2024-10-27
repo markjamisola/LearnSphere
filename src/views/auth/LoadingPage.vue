@@ -14,7 +14,7 @@ onMounted(() => {
       isLoading.value = false // Hide the loading screen
       router.push('/login') // Redirect to login page
     }, 1000) // Delay for transition
-  }, 2000) // Loading page duration
+  }, 3000) // Loading page duration
 })
 </script>
 
@@ -24,8 +24,6 @@ onMounted(() => {
     <v-main class="d-flex justify-center align-center">
       <v-container class="text-center">
         <v-img class="mx-auto" max-width="400" src="/logo5.png"></v-img>
-        <h3 class="text-white mb-4">Learn Smarter, Succeed Faster</h3>
-      
       </v-container>
     </v-main>
   </v-app>
@@ -47,7 +45,7 @@ onMounted(() => {
 }
 
 .animated-background {
-  background: linear-gradient(270deg, #803d3b, #faeed1, #aa7154, #b54646);
+  background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;
   animation: gradientBackground 15s ease infinite;
   height: 100vh;
