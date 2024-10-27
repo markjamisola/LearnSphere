@@ -32,30 +32,27 @@ onMounted(() => {
       <!-- Animated background applied -->
       <v-container fluid>
         <v-row class="fill-height align-self-center" align="center" justify="center">
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="6" lg="4">
             <!-- Logo and Description for Mobile -->
-            <div class="text-center d-md-none">
+            <div class="text-center d-md-none description">
               <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
-              <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
-              <p class="text-white mb-6">
-                Unlock your potential and start your learning journey today! Sign up now to access a
-                wealth of resources tailored just for you. Join a community of aspiring IT, IS, and
-                CS students and take the first step towards success!
-              </p>
+              <h2 class="text-white description mb-2">Learn Smarter, Succeed Faster</h2>
+              <h3 class="text-white text-center mb-6">
+                Unlock your potential and start your learning journey today!
+              </h3>
             </div>
 
             <!-- Sign-Up Form Card -->
             <v-card
-              class="mx-auto pa-8 pb-5"
+              class="mx-auto pa-8 pb-5 justify-center align-center"
               elevation="15"
-              max-width="448"
               rounded="lg"
               color="#FAEED1"
               :class="{ 'slide-in': isMounted }"
             >
               <!-- Title -->
               <template v-slot:title>
-                <h3 class="font-weight-black text-center">Sign Up</h3>
+                <h3 class="font-weight-black text-center description">Sign Up</h3>
               </template>
 
               <!-- Form Field -->
@@ -63,7 +60,10 @@ onMounted(() => {
 
               <!-- Already Have an Account link -->
               <v-card-text class="text-center pt-0">
-                <RouterLink class="text-black text-decoration-none text-black" to="/login">
+                <RouterLink
+                  class="text-black text-decoration-none text-black description"
+                  to="/login"
+                >
                   Already have an account? Log in
                 </RouterLink>
                 <v-icon icon="mdi-chevron-right"></v-icon>
@@ -73,13 +73,11 @@ onMounted(() => {
 
           <v-col cols="12" md="4" class="d-none d-md-flex flex-column justify-center align-center">
             <!-- Logo and Description for Desktop -->
-            <div class="text-center">
+            <div class="text-center description-section">
               <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
-              <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
-              <p class="text-white mb-6 text-justify ">
-                Unlock your potential and start your learning journey today! Sign up now to access a
-                wealth of resources tailored just for you. Join a community of aspiring IT, IS, and
-                CS students and take the first step towards success!
+              <h2 class="text-white description mb-2">Learn Smarter, Succeed Faster</h2>
+              <p class="text-white mb-6 description">
+                Unlock your potential and start your learning journey today!
               </p>
             </div>
           </v-col>
@@ -103,9 +101,7 @@ export default {
           'bx bxl-python',
           'bx bxl-php',
           'bx bxl-c-plus-plus',
-          'bx bxl-nodejs',
-          'bx bxl-typescript',
-          'bx bxl-ruby'
+          'bx bxl-nodejs'
         ])
         .flat()
     }
@@ -114,6 +110,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
 /* Background animation */
 @keyframes gradientBackground {
   0% {
@@ -126,7 +123,9 @@ export default {
     background-position: 0% 50%;
   }
 }
-
+.description {
+  font-family: 'Unbounded', sans-serif;
+}
 .animated-background {
   background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;

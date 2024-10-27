@@ -1,12 +1,12 @@
 <script setup>
-import LoginForm from '@/components/auth/LoginForm.vue';
-import { ref, onMounted } from 'vue';
+import LoginForm from '@/components/auth/LoginForm.vue'
+import { ref, onMounted } from 'vue'
 
-const isMounted = ref(false);
+const isMounted = ref(false)
 
 onMounted(() => {
-  isMounted.value = true;
-});
+  isMounted.value = true
+})
 </script>
 
 <template>
@@ -14,10 +14,10 @@ onMounted(() => {
     <v-app class="animated-background">
       <!-- Floating Icons in Background -->
       <div class="anim-elements">
-        <div 
-          class="anim-element" 
-          v-for="(icon, index) in icons" 
-          :key="index" 
+        <div
+          class="anim-element"
+          v-for="(icon, index) in icons"
+          :key="index"
           :style="{
             '--i': index + 1,
             top: `${Math.random() * 120}vh`,
@@ -39,9 +39,10 @@ onMounted(() => {
               <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
 
               <!-- Title and Tagline -->
-              <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
-              <p class="text-white mb-6 ">
-                Your one-stop portal for IT, IS, and CS resources, tailored to support your academic journey.
+              <h2 class="text-white description mb-2">Learn Smarter, Succeed Faster</h2>
+              <p class="text-white description">
+                Your one-stop portal for IT, IS, and CS resources, tailored to support your academic
+                journey.
               </p>
             </div>
           </v-col>
@@ -49,16 +50,16 @@ onMounted(() => {
             <v-card
               class="mx-auto pa-6 pb-4 justify-center align-center"
               elevation="12"
-              rounded="lg"  
+              rounded="lg"
               color="#FAEED1"
-              :class="{ 'slide-in': isMounted }" 
+              :class="{ 'slide-in': isMounted }"
             >
               <template v-slot:title>
-                <h3 class="font-weight-black text-center">Log In</h3>
+                <h3 class="font-weight-black text-center description">Log In</h3>
               </template>
               <LoginForm></LoginForm>
               <v-card-text class="text-center pt-0">
-                <RouterLink class="text-black text-decoration-none" to="/register">
+                <RouterLink class="text-black text-decoration-none description" to="/register">
                   Sign Up Now
                 </RouterLink>
                 <v-icon icon="mdi-chevron-right"></v-icon>
@@ -76,24 +77,27 @@ export default {
   data() {
     return {
       // Fewer icons to reduce the density
-      icons: Array(10).fill([
-        'bx bxl-html5',       
-        'bx bxl-css3',         
-        'bx bxl-javascript',   
-        'bx bxl-java',         
-        'bx bxl-python',       
-        'bx bxl-php',          
-        'bx bxl-c-plus-plus',  
-        'bx bxl-nodejs',       
-        'bx bxl-typescript',   
-        'bx bxl-ruby'          
-      ]).flat()
+      icons: Array(10)
+        .fill([
+          'bx bxl-html5',
+          'bx bxl-css3',
+          'bx bxl-javascript',
+          'bx bxl-java',
+          'bx bxl-python',
+          'bx bxl-php',
+          'bx bxl-c-plus-plus',
+          'bx bxl-nodejs',
+          'bx bxl-typescript',
+          'bx bxl-ruby'
+        ])
+        .flat()
     }
   }
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
 /* Background animation */
 @keyframes gradientBackground {
   0% {
@@ -105,6 +109,10 @@ export default {
   100% {
     background-position: 0% 50%;
   }
+}
+
+.description{
+  font-family: 'Unbounded', sans-serif;                                     
 }
 
 .animated-background {

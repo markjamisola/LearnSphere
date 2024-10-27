@@ -56,7 +56,7 @@ const onSignup = async () => {
   } else if (data) {
     console.log(data)
     formAction.value.formSuccessMessage = 'Successfully Registered!'
-    
+
     router.replace('/home')
   }
   refVForm.value?.reset()
@@ -81,7 +81,7 @@ const contactDialog = ref(false)
   ></AlertNotification>
 
   <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="mt-5">
-    <v-row dense class="gb-0">
+    <v-row dense class="gb-0 description">
       <v-col cols="12" sm="6">
         <v-text-field
           density="compact"
@@ -104,7 +104,7 @@ const contactDialog = ref(false)
       </v-col>
     </v-row>
 
-    <v-row dense class="gb-0">
+    <v-row dense class="gb-0 description">
       <v-col cols="12" sm="6">
         <v-text-field
           density="compact"
@@ -137,6 +137,7 @@ const contactDialog = ref(false)
       variant="outlined"
       :rules="[requiredValidator, emailValidator]"
       v-model="formData.email"
+      class="description"
     ></v-text-field>
 
     <!-- Password and Verify Password fields -->
@@ -147,6 +148,7 @@ const contactDialog = ref(false)
       label="Password"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
+      class="description"
       @click:append-inner="visible = !visible"
       :rules="[requiredValidator, passwordValidator]"
       v-model="formData.password"
@@ -159,6 +161,7 @@ const contactDialog = ref(false)
       label="Verify Password"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
+      class="description"
       @click:append-inner="visible = !visible"
       :rules="[
         requiredValidator,
@@ -169,9 +172,9 @@ const contactDialog = ref(false)
 
     <!-- Contact Support Link -->
     <v-card class="mb-3" color="surface-variant" variant="outlined">
-      <v-card-text class="text-caption text-justify text-black">
+      <v-card-text class="text-caption text-justify text-black description">
         Ensure that all information is correct before signing up. If you need assistance, please
-        <a @click.prevent="contactDialog = true" class=" text-deep-orange-darken-4 font-weight-bold">
+        <a @click.prevent="contactDialog = true" class="text-deep-orange-darken-4 font-weight-bold">
           contact support.
         </a>
       </v-card-text>
@@ -179,7 +182,7 @@ const contactDialog = ref(false)
 
     <!-- Sign Up Button -->
     <v-btn
-      class="mb-8"
+      class="mb-8 description"
       color="#803d3b"
       size="large"
       variant="elevated"
@@ -244,11 +247,16 @@ const contactDialog = ref(false)
 </template>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
 .text-decoration-underline {
   text-decoration: underline;
 }
 
 .font-weight-bold {
   font-weight: bold;
+}
+
+.description {
+  font-family: 'Unbounded', sans-serif;
 }
 </style>
