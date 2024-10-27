@@ -14,7 +14,7 @@ onMounted(() => {
       isLoading.value = false // Hide the loading screen
       router.push('/login') // Redirect to login page
     }, 1000) // Delay for transition
-  }, 3000) // Loading page duration
+  }, 2000) // Loading page duration
 })
 </script>
 
@@ -25,11 +25,7 @@ onMounted(() => {
       <v-container class="text-center">
         <v-img class="mx-auto" max-width="400" src="/logo5.png"></v-img>
         <h3 class="text-white mb-4">Learn Smarter, Succeed Faster</h3>
-        <h4 class="text-white">
-          <v-icon icon="mdi-chevron-left"></v-icon><v-icon icon="mdi-chevron-left"></v-icon>
-          Loading...
-          <v-icon icon="mdi-chevron-right"></v-icon><v-icon icon="mdi-chevron-right"></v-icon>
-        </h4>
+      
       </v-container>
     </v-main>
   </v-app>

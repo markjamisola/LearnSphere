@@ -12,13 +12,19 @@ import ITE12Page from '@/views/system/ITE12Page.vue'
 import CSC102Page from '@/views/system/CSC102Page.vue'
 import AdminPage from '@/views/system/AdminPage.vue'
 import AdminLogin from '@/views/auth/AdminLogin.vue'
+import VideoPage from '@/views/auth/VideoPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/load'
+      redirect: '/loading'
+    },
+    {
+      path: '/loading',
+      name: 'loading',
+      component: VideoPage
     },
     {
       path: '/load',

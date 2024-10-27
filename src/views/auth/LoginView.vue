@@ -5,7 +5,6 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 <template>
   <v-responsive>
     <v-app class="animated-background">
-      
       <!-- Floating Icons in Background -->
       <div class="anim-elements">
         <div 
@@ -26,9 +25,20 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 
       <!-- Centered Login Form -->
       <v-container fluid>
-        <v-row class="fill-height align-self-center" align="center" justify="center">
+        <v-row class="align-center justify-center" align="center" justify="center">
+          <v-col cols="12" md="4" class="d-flex flex-column justify-center align-center">
+            <div class="text-center">
+              <!-- Logo -->
+              <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
+
+              <!-- Title and Tagline -->
+              <h3 class="text-white mb-2">Learn Smarter, Succeed Faster</h3>
+              <p class="text-white mb-6">
+                Your one-stop portal for IT, IS, and CS resources, tailored to support your academic journey.
+              </p>
+            </div>
+          </v-col>
           <v-col cols="12" sm="8" md="6" lg="4" flex>
-            <v-img class="mx-auto mb-0 mt-1" max-width="200" src="/logo5.png"></v-img>
             <v-card
               class="mx-auto pa-6 pb-4 justify-center align-center"
               elevation="12"
@@ -122,6 +132,15 @@ export default {
   }
   100% {
     transform: translate(0, 0);
+  }
+}
+
+/* Center content on larger screens */
+@media (min-width: 768px) {
+  .v-container {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
   }
 }
 </style>
