@@ -1,5 +1,12 @@
 <script setup>
-import LoginForm from '@/components/auth/LoginForm.vue'
+import LoginForm from '@/components/auth/LoginForm.vue';
+import { ref, onMounted } from 'vue';
+
+const isMounted = ref(false);
+
+onMounted(() => {
+  isMounted.value = true;
+});
 </script>
 
 <template>
@@ -42,8 +49,9 @@ import LoginForm from '@/components/auth/LoginForm.vue'
             <v-card
               class="mx-auto pa-6 pb-4 justify-center align-center"
               elevation="12"
-              rounded="lg"
+              rounded="lg"  
               color="#FAEED1"
+              :class="{ 'slide-in': isMounted }" 
             >
               <template v-slot:title>
                 <h3 class="font-weight-black text-center">Log In</h3>
@@ -136,6 +144,23 @@ export default {
   100% {
     transform: translate(0, 0);
   }
+}
+
+/* Keyframes for sliding in from the right */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%); /* Start off-screen to the right */
+    opacity: 0; /* Start invisible */
+  }
+  to {
+    transform: translateX(0); /* End in place */
+    opacity: 1; /* End visible */
+  }
+}
+
+/* Slide-in class */
+.slide-in {
+  animation: slide-in 0.5s ease forwards; /* Apply slide-in animation */
 }
 
 /* Center content on larger screens */
