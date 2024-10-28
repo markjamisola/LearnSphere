@@ -12,7 +12,6 @@ import ITE12Page from '@/views/system/ITE12Page.vue'
 import CSC102Page from '@/views/system/CSC102Page.vue'
 import AdminPage from '@/views/system/AdminPage.vue'
 import AdminLogin from '@/views/auth/AdminLogin.vue'
-import VideoPage from '@/views/auth/VideoPage.vue'
 import { getUserInformation, isAuthenticated } from '@/utils/supabase'
 
 const router = createRouter({
@@ -20,13 +19,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/loading',
-      meta: { requiresAuth: false }
-    },
-    {
-      path: '/loading',
-      name: 'loading',
-      component: VideoPage,
+      redirect: '/load',
       meta: { requiresAuth: false }
     },
     {
@@ -118,7 +111,7 @@ router.beforeEach(async (to) => {
   const isAdmin = userMetadata?.is_admin === true
 
   // Allow access to loading and load pages for all users, regardless of auth status
-  if (to.name === 'loading' || to.name === 'load') {
+  if (to.name === 'load') {
     return true
   }
 
