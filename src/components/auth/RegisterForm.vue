@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import {
   requiredValidator,
   emailValidator,
@@ -43,7 +43,7 @@ const onSignup = async () => {
         firstname: formData.value.firstname,
         lastname: formData.value.lastname,
         idnumber: formData.value.idnumber,
-        program: formData.value.program,
+        program: formData.value.program, // Now the UUID
         is_admin: false
       }
     }
@@ -72,6 +72,23 @@ const onFormSubmit = () => {
 const visible = ref(false)
 
 const contactDialog = ref(false)
+const programs = ref([])
+
+onMounted(async () => {
+  const { data, error } = await supabase.from('programs').select('id, program_name')
+
+  if (error) {
+    console.error('Error fetching programs:', error)
+    return
+  }
+
+  // Map the data to the structure needed by v-select
+  programs.value = data.map((program) => ({
+    label: program.program_name, // Display name
+    value: program.id // UUID
+  }))
+  console.log('Programs data:', programs.value)
+})
 </script>
 
 <template>
@@ -86,6 +103,7 @@ const contactDialog = ref(false)
         <v-text-field
           density="compact"
           label="First Name"
+          color="#803d3b"
           prepend-inner-icon="mdi-account-outline"
           variant="outlined"
           :rules="[requiredValidator]"
@@ -95,6 +113,7 @@ const contactDialog = ref(false)
       <v-col cols="12" sm="6">
         <v-text-field
           density="compact"
+          color="#803d3b"
           label="Last Name"
           prepend-inner-icon="mdi-account-outline"
           variant="outlined"
@@ -109,6 +128,7 @@ const contactDialog = ref(false)
         <v-text-field
           density="compact"
           label="ID Number"
+          color="#803d3b"
           prepend-inner-icon="mdi-card-account-details-outline"
           variant="outlined"
           class="mb-0"
@@ -118,13 +138,16 @@ const contactDialog = ref(false)
       </v-col>
       <v-col cols="12" sm="6">
         <v-select
-          :items="['BSIT', 'BSCS', 'BSIS']"
+          :items="programs"
           label="Program"
           prepend-inner-icon="mdi-laptop"
           variant="outlined"
           density="compact"
+          color="#803d3b"
           v-model="formData.program"
           :rules="[requiredValidator]"
+          item-title="label"
+          item-value="value"
         ></v-select>
       </v-col>
     </v-row>
@@ -133,6 +156,7 @@ const contactDialog = ref(false)
     <v-text-field
       density="compact"
       label="Email address"
+      color="#803d3b"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
       :rules="[requiredValidator, emailValidator]"
@@ -146,6 +170,7 @@ const contactDialog = ref(false)
       :type="visible ? 'text' : 'password'"
       density="compact"
       label="Password"
+      color="#803d3b"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       class="description"
@@ -159,6 +184,7 @@ const contactDialog = ref(false)
       :type="visible ? 'text' : 'password'"
       density="compact"
       label="Verify Password"
+      color="#803d3b"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       class="description"
@@ -171,7 +197,7 @@ const contactDialog = ref(false)
     ></v-text-field>
 
     <!-- Contact Support Link -->
-    <v-card class="mb-3" color="surface-variant" variant="outlined">
+    <v-card class="mb-3" color="#803d3b" variant="outlined">
       <v-card-text class="text-caption text-justify text-black description">
         Ensure that all information is correct before signing up. If you need assistance, please
         <a @click.prevent="contactDialog = true" class="text-deep-orange-darken-4 font-weight-bold">

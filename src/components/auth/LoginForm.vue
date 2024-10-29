@@ -66,6 +66,7 @@ const onFormSubmit = () => {
       v-model="formData.email"
       density="compact"
       placeholder="Email or ID Number"
+      color="#803d3b"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
       :rules="[requiredValidator, emailValidator]"
@@ -82,6 +83,7 @@ const onFormSubmit = () => {
       :type="visible ? 'text' : 'password'"
       density="compact"
       placeholder="Enter your password"
+      color="#803d3b"
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="visible = !visible"
@@ -89,7 +91,7 @@ const onFormSubmit = () => {
       class="description"
     ></v-text-field>
 
-    <v-card class="mb-6" color="surface-variant" variant="outlined">
+    <v-card class="mb-6" color="#803d3b" variant="outlined">
       <v-card-text class="text-justify text-black text-caption description">
         Warning: If you try to log in with the wrong password three times, your account will be
         locked for three hours. To regain access, you can either wait for the lock to expire or

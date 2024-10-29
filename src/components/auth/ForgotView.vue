@@ -6,7 +6,7 @@
       label="Registered Email"
       required
     ></v-text-field>
-    <v-card class="mb-4" color="surface-variant" variant="outlined">
+    <v-card class="mb-4" color="#803d3b" variant="outlined">
       <v-card-text class="text-justify text-black text-caption description">
         Instructions to reset your password will be sent to your registered email.
       </v-card-text>
