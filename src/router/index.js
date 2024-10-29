@@ -13,6 +13,7 @@ import CSC102Page from '@/views/system/CSC102Page.vue'
 import AdminPage from '@/views/system/AdminPage.vue'
 import AdminLogin from '@/views/auth/AdminLogin.vue'
 import { getUserInformation, isAuthenticated } from '@/utils/supabase'
+import ResetPassword from '@/views/auth/ResetPassword.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,12 @@ const router = createRouter({
       path: '/forgot',
       name: 'forgot',
       component: ForgotView,
+      meta: { requiresAuth: false }
+    },
+    {
+      path: '/reset',
+      name: 'reset',
+      component: ResetPassword,
       meta: { requiresAuth: false }
     },
     {

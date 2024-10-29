@@ -60,7 +60,7 @@ const goToLogin = () => {
               :class="{ 'slide-in': isMounted }"
             >
               <template v-slot:title>
-                <h3 class="font-weight-black text-center description">Reset Password</h3>
+                <h3 class="font-weight-black text-center description">Forgot Password</h3>
               </template>
               <!-- Form Field -->
               <ForgotView @email-sent="onEmailSent" />

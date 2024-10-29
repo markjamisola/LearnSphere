@@ -97,7 +97,7 @@ const onFormSubmit = () => {
         locked for three hours. To regain access, you can either wait for the lock to expire or
         click
         <RouterLink class="text-deep-orange-darken-4 text-decoration-none description" to="/forgot">
-          Reset Password </RouterLink
+          Forgot Password </RouterLink
         >to create a new password and log in right away.
       </v-card-text>
     </v-card>
