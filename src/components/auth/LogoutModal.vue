@@ -46,17 +46,17 @@ const cancelLogout = () => {
 const logout = async () => {
   formAction.value = { ...formActionDefault, formProcess: true }
 
-// Get supabase logout functionality
-const { error } = await supabase.auth.signOut()
-if (error) {
-  console.error('Error during logout:', error)
-  return
-}
+  // Get supabase logout functionality
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    console.error('Error during logout:', error)
+    return
+  }
 
-formAction.value.formProcess = false
-// Reset State
+  formAction.value.formProcess = false
+  // Reset State
 
-router.replace('/load')
+  router.replace('/login')
 }
 
 // Expose the open function so the parent can call it

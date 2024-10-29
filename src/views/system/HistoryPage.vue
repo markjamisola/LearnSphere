@@ -1,7 +1,7 @@
 <template>
   <v-app class="background-color">
     <!-- Transparent Navigation Drawer for Mobile and Desktop -->
-    <NavBar />
+    <NavBar @triggerLogoutModal="openLogoutModal" />
 
     <!-- Main content area -->
     <v-main>
@@ -49,6 +49,9 @@ import { ref } from 'vue'
 import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
 import NavBar from '@/components/layout/NavBar.vue'
 const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value?.open()
+}
 </script>
 
 <style scoped>
