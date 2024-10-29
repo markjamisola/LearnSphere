@@ -1,13 +1,11 @@
 <template>
-  <v-app class="background-color">
-    <!-- Transparent Navigation Drawer for Mobile and Desktop -->
-    <NavBar />
-
+  <v-app class="animated-background description">
+    <NavBar @triggerLogoutModal="openLogoutModal" />
     <!-- Main content area -->
     <v-main>
       <!-- Content -->
       <v-container fluid>
-        <v-row class="mt-10">
+        <v-row class="mt-2">
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black">About Us</h1>
           </v-col>
@@ -116,6 +114,9 @@ import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as ne
 import NavBar from '@/components/layout/NavBar.vue'
 const logoutModalRef = ref(null)
 
+const openLogoutModal = () => {
+  logoutModalRef.value?.open()
+}
 const teamMembers = ref([
   {
     name: 'Mark Jamisola',
@@ -148,13 +149,29 @@ const teamMembers = ref([
 </script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
+
 .fill-height {
   height: 100vh;
 }
 
-.background-color {
-  background-color: #803d3b; /* Your desired background color */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.animated-background {
+  background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
+  background-size: 800% 800%;
+  animation: gradientBackground 15s ease infinite;
   height: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,5 +179,9 @@ const teamMembers = ref([
 
 .mobile-nav-drawer {
   backdrop-filter: blur(15px);
+}
+
+.description {
+  font-family: 'Unbounded', sans-serif;
 }
 </style>

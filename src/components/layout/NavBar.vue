@@ -45,7 +45,7 @@
         </v-list-item>
       </v-list-item-group>
 
-      <v-list-item @click="openLogoutModal" class="text-center">
+      <v-list-item @click="$emit('triggerLogoutModal')" class="text-center">
         <v-list-item-icon>
           <v-icon large color="white">mdi-logout</v-icon>
         </v-list-item-icon>
@@ -98,7 +98,7 @@
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item @click="openLogoutModal" class="text-center">
+        <v-list-item @click="$emit('triggerLogoutModal')" class="text-center">
           <v-list-item-icon>
             <v-icon large color="white">mdi-logout</v-icon>
           </v-list-item-icon>
@@ -117,11 +117,7 @@
 import { ref } from 'vue'
 
 const drawer = ref(false)
-const logoutModalRef = ref(null)
 
-const openLogoutModal = () => {
-  logoutModalRef.value?.open()
-}
 </script>
 
 <style scoped>

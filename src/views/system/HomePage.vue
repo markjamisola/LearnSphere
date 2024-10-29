@@ -1,13 +1,12 @@
 <template>
-  <v-app class="background-color">
-    <NavBar />
-    <!-- Main content area -->
+  <v-app class="animated-background description">
+    <NavBar @triggerLogoutModal="openLogoutModal" />
+
     <v-main>
-      <!-- Content -->
       <v-container fluid>
-        <v-row class="mt-8">
+        <v-row class="mt-5">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">Time to STUDY! Y/N!</h1>
+            <h1 class="text-white font-weight-black">Time to study {{ firstName }}!</h1>
           </v-col>
         </v-row>
 
@@ -27,7 +26,7 @@
               elevation="15"
               color="deep-purple-darken-3"
               outlined
-              @click:append-inner="onClick"
+              @input="onSearchInput"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -36,34 +35,70 @@
           <v-btn
             elevation="15"
             class="mx-1 mt-2"
-            :color="selectedCategory === 'all' ? 'white' : '#FAEED1'"
-            @click="selectedCategory = 'all'"
+            :color="selectedYearLevel === 0 ? 'white' : '#FAEED1'"
+            @click="selectYearLevel(0)"
           >
             All
           </v-btn>
           <v-btn
             elevation="15"
             class="mx-1 mt-2"
-            :color="selectedCategory === 'it' ? 'white' : '#FAEED1'"
-            @click="selectedCategory = 'it'"
+            :color="selectedYearLevel === 1 ? 'white' : '#FAEED1'"
+            @click="selectYearLevel(1)"
           >
-            IT Courses
+            Year 1
           </v-btn>
           <v-btn
             elevation="15"
             class="mx-1 mt-2"
-            :color="selectedCategory === 'ite' ? 'white' : '#FAEED1'"
-            @click="selectedCategory = 'ite'"
+            :color="selectedYearLevel === 2 ? 'white' : '#FAEED1'"
+            @click="selectYearLevel(2)"
           >
-            ITE Courses
+            Year 2
           </v-btn>
           <v-btn
             elevation="15"
             class="mx-1 mt-2"
-            :color="selectedCategory === 'csc' ? 'white' : '#FAEED1'"
-            @click="selectedCategory = 'csc'"
+            :color="selectedYearLevel === 3 ? 'white' : '#FAEED1'"
+            @click="selectYearLevel(3)"
           >
-            CSC Courses
+            Year 3
+          </v-btn>
+          <v-btn
+            elevation="15"
+            class="mx-1 mt-2"
+            :color="selectedYearLevel === 4 ? 'white' : '#FAEED1'"
+            @click="selectYearLevel(4)"
+          >
+            Year 4
+          </v-btn>
+        </v-row>
+
+        <!-- Semester Buttons (only visible when a year is selected) -->
+        <v-row class="mb-8 justify-center" v-if="selectedYearLevel > 0">
+          <v-btn
+            elevation="15"
+            class="mx-1 mt-2"
+            :color="selectedSemester === 0 ? 'white' : '#FAEED1'"
+            @click="selectSemester(0)"
+          >
+            All Semesters
+          </v-btn>
+          <v-btn
+            elevation="15"
+            class="mx-1 mt-2"
+            :color="selectedSemester === 1 ? 'white' : '#FAEED1'"
+            @click="selectSemester(1)"
+          >
+            1st Sem
+          </v-btn>
+          <v-btn
+            elevation="15"
+            class="mx-1 mt-2"
+            :color="selectedSemester === 2 ? 'white' : '#FAEED1'"
+            @click="selectSemester(2)"
+          >
+            2nd Sem
           </v-btn>
         </v-row>
 
@@ -75,7 +110,6 @@
         </v-row>
 
         <v-row>
-          <!-- Loop through the filteredCourses and display them -->
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
             <v-btn
               class="pa-0"
@@ -85,13 +119,12 @@
               @click="$router.push(course.route)"
               elevation="10"
             >
-              <h1 class="text-center">{{ course.name }}</h1>
+              <div class="text-center">
+                <h1>{{ course.course_name }}</h1>
+                <span>{{ course.description }}</span>
+              </div>
             </v-btn>
           </v-col>
-        </v-row>
-
-        <v-row>
-          <!-- Course Card 1 -->
         </v-row>
       </v-container>
       <LogoutModal ref="logoutModalRef" />
@@ -100,43 +133,98 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+import { ref, computed, onMounted } from 'vue'
+import { supabase } from '@/utils/supabase'
+import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 
 // Reference for the Logout Modal
 const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value?.open()
+}
+// State for user information
+const firstName = ref('')
+const userProgramId = ref('')
 
-// Selected category (for category buttons)
-const selectedCategory = ref('all')
+// Selected year level (for year level buttons)
+const selectedYearLevel = ref(0) // 0 represents 'All'
+
+// Selected semester (for semester buttons)
+const selectedSemester = ref(0) // 0 represents 'All Semesters'
 
 // Search query (for search bar)
 const searchQuery = ref('')
 
 // Courses data
-const courses = ref([
-  { id: 1, name: 'IT 109', category: 'it', route: '/it-109' },
-  { id: 2, name: 'ITE 12', category: 'ite', route: '/ite12' },
-  { id: 3, name: 'CSC 102', category: 'csc', route: '/csc102' },
-  { id: 4, name: 'IT 108', category: 'it', route: '/it-108' },
-  { id: 5, name: 'ITE 13', category: 'ite', route: '/ite13' },
-  { id: 6, name: 'CSC 106', category: 'csc', route: '/csc106' }
-  // Add more courses here...
-])
+const courses = ref([]) // Initialize as empty array
 
-// Computed property to filter courses based on the selected category and search query
+// Fetch user information on mount
+onMounted(async () => {
+  const user = await getUserInformation()
+  if (user) {
+    firstName.value = user.firstname
+    userProgramId.value = user.program
+    await fetchCourses() // Fetch courses after getting the user information
+  }
+})
+
+// Fetch user information from Supabase
+async function getUserInformation() {
+  const { data, error } = await supabase.auth.getUser()
+  if (error || !data || !data.user) {
+    console.error('Error getting user information:', error ? error.message : 'No user data')
+    return null
+  }
+  return data.user.user_metadata
+}
+
+// Fetch courses from Supabase based on the user's program ID
+async function fetchCourses() {
+  const { data, error } = await supabase
+    .from('courses')
+    .select('*')
+    .eq('program_id', userProgramId.value)
+
+  if (error) {
+    console.error('Error fetching courses:', error.message)
+    return
+  }
+
+  courses.value = data // Store the fetched courses
+}
+
+// Method to handle year level selection
+function selectYearLevel(yearLevel) {
+  selectedYearLevel.value = yearLevel
+  selectedSemester.value = 0 // Reset semester selection when year level changes
+}
+
+// Method to handle semester selection
+function selectSemester(semester) {
+  selectedSemester.value = semester
+}
+
+// Computed property to filter courses based on the selected year level, semester, and user's program
 const filteredCourses = computed(() => {
   let filtered = courses.value
 
-  // Filter by category
-  if (selectedCategory.value !== 'all') {
-    filtered = filtered.filter((course) => course.category === selectedCategory.value)
+  // Filter by year level
+  if (selectedYearLevel.value > 0) {
+    // Exclude 0 (All) option
+    filtered = filtered.filter((course) => course.year_level === selectedYearLevel.value)
+  }
+
+  // Filter by semester
+  if (selectedSemester.value > 0) {
+    // Exclude 0 (All Semesters)
+    filtered = filtered.filter((course) => course.semester === selectedSemester.value)
   }
 
   // Filter by search query
   if (searchQuery.value) {
     filtered = filtered.filter((course) =>
-      course.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
   }
 
@@ -145,7 +233,7 @@ const filteredCourses = computed(() => {
 
 // Loading state for the search field
 const loading = ref(false)
-const onClick = () => {
+const onSearchInput = () => {
   loading.value = true
 
   // Simulate search delay
@@ -154,40 +242,82 @@ const onClick = () => {
   }, 1000)
 }
 </script>
-<script>
-export default {
-  data: () => ({
-    loaded: false,
-    loading: false
-  }),
-
-  methods: {
-    onClick() {
-      this.loading = true
-
-      setTimeout(() => {
-        this.loading = false
-        this.loaded = true
-      }, 2000)
-    }
-  }
-}
-</script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
 .fill-height {
   height: 100vh;
 }
 
-.background-color {
-  background-color: #803d3b; /* Your desired background color */
+.mobile-nav-drawer {
+  backdrop-filter: blur(15px);
+}
+
+/* Background animation */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.description {
+  font-family: 'Unbounded', sans-serif;
+}
+
+.animated-background {
+  background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
+  background-size: 800% 800%;
+  animation: gradientBackground 15s ease infinite;
   height: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.mobile-nav-drawer {
-  backdrop-filter: blur(15px);
+/* Floating Icon Styles */
+.anim-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.anim-element {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.5);
+  animation: float infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(100px, -100px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Keyframes for sliding in from the right */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%); /* Start off-screen to the right */
+    opacity: 0; /* Start invisible */
+  }
+  to {
+    transform: translateX(0); /* End in place */
+    opacity: 1; /* End visible */
+  }
 }
 </style>
