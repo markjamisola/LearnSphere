@@ -1,15 +1,23 @@
-
 <template>
-  <v-app class="background-color">
+  <v-app class="background-color description">
     <NavBar @triggerLogoutModal="openLogoutModal" />
 
     <v-main>
       <v-container fluid>
         <!-- Course Header -->
-        <v-row class="mt-8">
+        <v-row class="mt-5">
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black">
               {{ courseDetails?.course_name || '...' }}
+              <v-btn
+                icon
+                class="ma-2"
+                :color="isStarred ? 'yellow' : '#FAEED1'"
+                @click="toggleStar(courseDetails.id)"
+                v-if="courseDetails"
+              >
+                <v-icon>{{ isStarred ? 'mdi-star-check' : 'mdi-star-plus-outline' }}</v-icon>
+              </v-btn>
             </h1>
           </v-col>
         </v-row>
@@ -72,18 +80,24 @@
 
       <!-- Logout Modal -->
       <LogoutModal ref="logoutModalRef" />
+
+      <!-- Floating Back Button -->
+      <v-btn class="back-button" icon @click="$router.go(-1)">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 
 const logoutModalRef = ref(null)
+const isStarred = ref(false) // Track if course is starred
 
 // Function to open logout modal
 const openLogoutModal = () => {
@@ -116,6 +130,31 @@ onMounted(async () => {
       if (courseError) throw courseError
       courseDetails.value = courseData
 
+      // Check if the course is already starred by the user
+      const {
+        data: { user },
+        error: userError
+      } = await supabase.auth.getUser()
+
+      if (userError) {
+        console.error('Error fetching user:', userError.message)
+        return
+      }
+
+      if (user) {
+        const userId = user.id
+        const { data: starredData, error: starredError } = await supabase
+          .from('starred_courses')
+          .select('*')
+          .eq('user_id', userId)
+          .eq('course_id', courseId)
+
+        if (starredError) throw starredError
+
+        // If the starredData is not empty, set isStarred to true
+        isStarred.value = starredData.length > 0
+      }
+
       // Fetch related topics
       const { data: topicsData, error: topicsError } = await supabase
         .from('topics')
@@ -128,15 +167,16 @@ onMounted(async () => {
       const { data: resourcesData, error: resourcesError } = await supabase
         .from('resources')
         .select('*')
-        .in('topic_id', topicsData.map((topic) => topic.id))
+        .in(
+          'topic_id',
+          topicsData.map((topic) => topic.id)
+        )
 
       if (resourcesError) throw resourcesError
 
       // Combine topics with their resources
       topics.value = topicsData.map((topic) => {
-        const topicResources = resourcesData.filter(
-          (resource) => resource.topic_id === topic.id
-        )
+        const topicResources = resourcesData.filter((resource) => resource.topic_id === topic.id)
         topic.video_url =
           topicResources.find((resource) => resource.resource_type === 'video')?.url || null
         topic.pdf_url =
@@ -153,20 +193,53 @@ onMounted(async () => {
   }
 })
 
+// Function to toggle star status
+async function toggleStar(courseId) {
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser()
 
-// Computed property for filtered topics
-const filteredTopics = computed(() => {
-  return topics.value.filter((topic) =>
-    topic.topic_title.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
-})
+  if (userError) {
+    console.error('Error fetching user:', userError.message)
+    return
+  }
 
-// Function to open PDF
-const showPdf = (pdfUrl) => {
-  window.open(pdfUrl, '_blank')
+  if (!user) {
+    console.error('User is not authenticated')
+    return
+  }
+
+  const userId = user.id
+
+  // If the course is starred, remove it; otherwise, add it
+  if (isStarred.value) {
+    // Remove from starred_courses
+    const { error } = await supabase
+      .from('starred_courses')
+      .delete()
+      .eq('user_id', userId)
+      .eq('course_id', courseId)
+
+    if (error) {
+      console.error('Error removing starred course:', error.message)
+    } else {
+      isStarred.value = false // Update isStarred state
+    }
+  } else {
+    // Add to starred_courses
+    const { error } = await supabase
+      .from('starred_courses')
+      .insert([{ user_id: userId, course_id: courseId, created_at: new Date().toISOString() }])
+
+    if (error) {
+      console.error('Error starring course:', error.message)
+    } else {
+      isStarred.value = true // Update isStarred state
+    }
+  }
 }
 </script>
-
 
 <style scoped>
 .background-color {
@@ -179,5 +252,20 @@ const showPdf = (pdfUrl) => {
 
 .v-card {
   border-radius: 12px;
+}
+
+.description {
+  font-family: 'Unbounded', sans-serif;
+}
+
+/* Styles for the floating back button */
+.back-button {
+  position: fixed;
+  bottom: 20px;
+  left: 18px;
+  z-index: 10000; /* Ensure the button is on top */
+  background-color: #faeed1; /* Background color of the button */
+  color: #803d3b; /* Icon color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow */
 }
 </style>
