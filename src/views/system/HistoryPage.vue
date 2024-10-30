@@ -6,7 +6,7 @@
       <v-container fluid>
         <v-row class="mt-8">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white pb-8 font-weight-black">History</h1>
+            <h1 class="text-white font-weight-black">History</h1>
           </v-col>
         </v-row>
 
