@@ -28,6 +28,12 @@
           </v-list-item-icon>
         </v-list-item>
 
+        <v-list-item @click="$router.push('/starred')" class="text-center">
+          <v-list-item-icon>
+            <v-icon large :color="$route.path === '/starred' ? 'black' : 'white'"> mdi-star</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
         <v-list-item @click="$router.push('/history')" class="text-center">
           <v-list-item-icon>
             <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
@@ -82,6 +88,12 @@
           </v-list-item-icon>
         </v-list-item>
 
+        <v-list-item @click="$router.push('/starred')" class="text-center">
+          <v-list-item-icon>
+            <v-icon large :color="$route.path === '/starred' ? 'black' : 'white'"> mdi-star</v-icon>
+          </v-list-item-icon>
+        </v-list-item>
+
         <v-list-item @click="$router.push('/history')" class="text-center">
           <v-list-item-icon>
             <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
@@ -117,7 +129,6 @@
 import { ref } from 'vue'
 
 const drawer = ref(false)
-
 </script>
 
 <style scoped>

@@ -12,6 +12,7 @@ import AdminLogin from '@/views/auth/AdminLogin.vue'
 import { getUserInformation, isAuthenticated } from '@/utils/supabase'
 import ResetPassword from '@/views/auth/ResetPassword.vue'
 import CoursePage from '@/views/system/CoursePage.vue'
+import StarredCoursePage from '@/views/system/StarredCoursePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,6 +62,12 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfilePage,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/starred',
+      name: 'starred',
+      component: StarredCoursePage,
       meta: { requiresAuth: true }
     },
     {

@@ -1,6 +1,5 @@
-
 <template>
-  <v-app class="background-color">
+  <v-app class="background-color description">
     <NavBar @triggerLogoutModal="openLogoutModal" />
 
     <v-main>
@@ -10,6 +9,16 @@
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black">
               {{ courseDetails?.course_name || '...' }}
+              <v-btn
+                icon
+                class="ma-3"
+                color="#FAEED1"
+                @click="starCourse(courseDetails.id)"
+                v-if="courseDetails"
+              >
+                <v-icon>mdi-star</v-icon>
+              </v-btn>
+              
             </h1>
           </v-col>
         </v-row>
@@ -128,15 +137,16 @@ onMounted(async () => {
       const { data: resourcesData, error: resourcesError } = await supabase
         .from('resources')
         .select('*')
-        .in('topic_id', topicsData.map((topic) => topic.id))
+        .in(
+          'topic_id',
+          topicsData.map((topic) => topic.id)
+        )
 
       if (resourcesError) throw resourcesError
 
       // Combine topics with their resources
       topics.value = topicsData.map((topic) => {
-        const topicResources = resourcesData.filter(
-          (resource) => resource.topic_id === topic.id
-        )
+        const topicResources = resourcesData.filter((resource) => resource.topic_id === topic.id)
         topic.video_url =
           topicResources.find((resource) => resource.resource_type === 'video')?.url || null
         topic.pdf_url =
@@ -153,7 +163,6 @@ onMounted(async () => {
   }
 })
 
-
 // Computed property for filtered topics
 const filteredTopics = computed(() => {
   return topics.value.filter((topic) =>
@@ -165,8 +174,41 @@ const filteredTopics = computed(() => {
 const showPdf = (pdfUrl) => {
   window.open(pdfUrl, '_blank')
 }
-</script>
 
+async function starCourse(courseId) {
+  // Fetch the current user
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser()
+
+  if (userError) {
+    console.error('Error fetching user:', userError.message)
+    return // Exit if there's an error fetching the user
+  }
+
+  // Ensure user exists
+  if (!user) {
+    console.error('User is not authenticated')
+    return // Exit if no user is authenticated
+  }
+
+  const userId = user.id // Get the user ID
+
+  console.log('Starring course for user:', userId, 'Course ID:', courseId)
+
+  // Insert into starred_courses table
+  const { data, error } = await supabase
+    .from('starred_courses')
+    .insert([{ user_id: userId, course_id: courseId, created_at: new Date().toISOString() }])
+
+  if (error) {
+    console.error('Error starring course:', error.message)
+  } else {
+    console.log('Course starred successfully:', data)
+  }
+}
+</script>
 
 <style scoped>
 .background-color {
@@ -179,5 +221,8 @@ const showPdf = (pdfUrl) => {
 
 .v-card {
   border-radius: 12px;
+}
+.description {
+  font-family: 'Unbounded', sans-serif;
 }
 </style>

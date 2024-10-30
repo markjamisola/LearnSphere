@@ -16,7 +16,7 @@
           <v-col cols="12" md="4" class="mb-5">
             <h3 class="text-white pb-5 description">Personal Information</h3>
 
-
+            
             <v-text-field
               label="First Name"
               variant="solo"

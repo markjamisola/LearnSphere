@@ -18,21 +18,23 @@
             <!-- Search Course Bar -->
             <v-row class="justify-center mb-1 mx-auto">
               <v-col cols="12" sm="8" md="6">
-                <v-text-field
-                  v-model="searchQuery"
-                  :loading="loading"
-                  append-inner-icon="mdi-magnify"
-                  prepend-inner-icon="mdi-cast-education"
-                  density="comfortable"
-                  label="Search Course"
-                  variant="solo"
-                  hide-details
-                  single-line
-                  elevation="15"
-                  color="deep-purple-darken-3"
-                  outlined
-                  @input="onSearchInput"
-                ></v-text-field>
+                <v-card class="pa-2" elevation="15" color="#803d3b" variant="elevated">
+                  <v-text-field
+                    v-model="searchQuery"
+                    :loading="loading"
+                    append-inner-icon="mdi-magnify"
+                    prepend-inner-icon="mdi-cast-education"
+                    density="comfortable"
+                    label="Search Course"
+                    variant="solo"
+                    hide-details
+                    single-line
+                    elevation="15"
+                    color="deep-purple-darken-3"
+                    outlined
+                    @input="onSearchInput"
+                  ></v-text-field>
+                </v-card>
               </v-col>
             </v-row>
 
@@ -120,22 +122,24 @@
 
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-btn
-              class="pa-0"
-              color="#FAEED1"
-              block
-              height="150px"
-              @click="recordUserHistory(course.id)"
-              :to="{ name: 'CoursePage', params: { id: course.id } }"
-              elevation="10"
-            >
-              <div class="text-center">
-                <h1 class="mb-2">{{ course.course_name }}</h1>
-                <v-card class="pa-3" color="#803d3b" variant="outlined">
-                  <h5 class="course-description">{{ course.description }}</h5>
-                </v-card>
-              </div>
-            </v-btn>
+            <v-card class="pa-3" elevation="15" color="#803d3b" variant="elevated">
+              <v-btn
+                class="pa-0"
+                color="#FAEED1"
+                block
+                height="150px"
+                @click="recordUserHistory(course.id)"
+                :to="{ name: 'CoursePage', params: { id: course.id } }"
+                elevation="10"
+              >
+                <div class="text-center">
+                  <h1 class="mb-2">{{ course.course_name }}</h1>
+                  <v-card class="pa-3" color="#803d3b" variant="outlined">
+                    <h5 class="course-description">{{ course.description }}</h5>
+                  </v-card>
+                </div>
+              </v-btn>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -315,22 +319,15 @@ const onSearchInput = () => {
   font-family: 'Unbounded', sans-serif;
 }
 
-.v-btn {
-  max-height: 150px; /* Adjust as needed */
-  overflow: hidden; /* Hide overflow */
-}
-
 .text-center {
   padding: 10px; /* Add some padding to ensure text is not cramped */
 }
 .course-description {
-  display: -webkit-box; /* Use the flexible box layout model */
-  -webkit-box-orient: vertical; /* Set the box orientation to vertical */
-  overflow: hidden; /* Hide overflow text */
-  -webkit-line-clamp: 2; /* Limit to 2 lines */
-  line-height: 1.2em; /* Adjust line height */
-  max-height: 2.4em; /* Maximum height for 2 lines */
-  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+  display: block;
+  overflow-wrap: break-word; /* Allow long words to wrap within the container */
+  white-space: normal; /* Enable text to break onto new lines */
+  line-height: 1.4; /* Adjust line height for readability */
+  color: #803d3b;
 }
 .animated-background {
   background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);

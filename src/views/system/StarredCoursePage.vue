@@ -6,23 +6,12 @@
       <v-container fluid>
         <v-row class="mt-8">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white pb-8 font-weight-black">History</h1>
-          </v-col>
-        </v-row>
-
-        <v-row v-if="recentCourses.length">
-          <v-col>
-            <h2 class="text-white font-weight-black text-center">Recently Viewed Courses</h2>
-          </v-col>
-        </v-row>
-        <v-row v-if="!recentCourses.length">
-          <v-col cols="12">
-            <h2 class="text-center text-white">No recently viewed courses.</h2>
+            <h1 class="text-white pb-8 font-weight-black">Starred Courses</h1>
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col v-for="course in recentCourses" :key="course.id" cols="12" sm="6" md="4">
+          <v-col v-for="course in starredCourses" :key="course.id" cols="12" sm="6" md="4">
             <v-card class="pa-3" elevation="15" color="#803d3b" variant="elevated">
               <v-btn
                 class="pa-0"
@@ -38,6 +27,17 @@
                     <h5 class="course-description">{{ course.description }}</h5>
                   </v-card>
                 </div>
+              </v-btn>
+              <v-btn
+                class="mb-1 mt-3 delete-button"
+                color="#FAEED1"
+                size="large"
+                variant="elevated"
+                elevation="15"
+                block
+                @click="deleteStarredCourse(course.id)"
+              >
+                REMOVE<v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-card>
           </v-col>
@@ -57,16 +57,15 @@ import NavBar from '@/components/layout/NavBar.vue'
 
 // References
 const logoutModalRef = ref(null)
-const recentCourses = ref([])
+const starredCourses = ref([])
 
 // Function to open logout modal
 const openLogoutModal = () => {
   logoutModalRef.value?.open()
 }
 
-// Record course view in user history
-
-const fetchRecentCourses = async () => {
+// Fetch starred courses from Supabase
+const fetchStarredCourses = async () => {
   try {
     const {
       data: { user },
@@ -74,28 +73,19 @@ const fetchRecentCourses = async () => {
     } = await supabase.auth.getUser()
     if (userError) throw userError
 
-    // Fetch user history and order by viewed_at to get recent views first
-    const { data: userHistory, error: historyError } = await supabase
-      .from('user_history')
-      .select('course_id, viewed_at')
+    // Fetch starred courses for the logged-in user
+    const { data: starred, error: starredError } = await supabase
+      .from('starred_courses')
+      .select('course_id')
       .eq('user_id', user.id)
-      .order('viewed_at', { ascending: false })
 
-    if (historyError) throw historyError
+    if (starredError) throw starredError
 
-    if (userHistory.length) {
-      // Filter out duplicate course_ids, keeping only the most recent entry
-      const uniqueCourses = []
-      const seenCourseIds = new Set()
-      for (const item of userHistory) {
-        if (!seenCourseIds.has(item.course_id)) {
-          uniqueCourses.push(item)
-          seenCourseIds.add(item.course_id)
-        }
-      }
+    if (starred.length) {
+      // Extract unique course IDs from the starred courses
+      const courseIds = starred.map((item) => item.course_id)
 
-      // Map unique course_ids to fetch course details
-      const courseIds = uniqueCourses.map((item) => item.course_id)
+      // Fetch course details for the starred courses
       const { data: courses, error: courseError } = await supabase
         .from('courses')
         .select('*')
@@ -103,25 +93,42 @@ const fetchRecentCourses = async () => {
 
       if (courseError) throw courseError
 
-      // Create a mapping to maintain the order based on uniqueCourses
-      const courseMap = {}
-      courses.forEach((course) => {
-        courseMap[course.id] = course
-      })
-
-      // Map the uniqueCourses array to retrieve courses in the correct order
-      recentCourses.value = uniqueCourses.map((item) => courseMap[item.course_id])
+      starredCourses.value = courses
     } else {
-      recentCourses.value = []
+      starredCourses.value = []
     }
   } catch (error) {
-    console.error('Error fetching recent courses:', error.message)
+    console.error('Error fetching starred courses:', error.message)
   }
 }
 
-// Fetch recent courses when component mounts
+// Delete a starred course
+const deleteStarredCourse = async (courseId) => {
+  try {
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser()
+    if (userError) throw userError
+
+    // Remove the course from starred_courses
+    const { error: deleteError } = await supabase
+      .from('starred_courses')
+      .delete()
+      .match({ user_id: user.id, course_id: courseId })
+
+    if (deleteError) throw deleteError
+
+    // Remove the course from local starredCourses array
+    starredCourses.value = starredCourses.value.filter((course) => course.id !== courseId)
+  } catch (error) {
+    console.error('Error deleting starred course:', error.message)
+  }
+}
+
+// Fetch starred courses when component mounts
 onMounted(() => {
-  fetchRecentCourses()
+  fetchStarredCourses()
 })
 </script>
 
@@ -160,6 +167,7 @@ onMounted(() => {
 .text-center {
   padding: 10px; /* Add some padding to ensure text is not cramped */
 }
+
 .course-description {
   display: block;
   overflow-wrap: break-word; /* Allow long words to wrap within the container */
@@ -167,14 +175,16 @@ onMounted(() => {
   line-height: 1.4; /* Adjust line height for readability */
   color: #803d3b;
 }
+
 .animated-background {
   background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;
   animation: gradientBackground 15s ease infinite;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+/* Style for the delete button */
+.delete-button {
+  z-index: 1; /* Ensure button is on top */
+  position: relative;
 }
 </style>
