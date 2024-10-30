@@ -14,7 +14,7 @@
         <v-col cols="12">
           <v-row class="mx-4">
             <v-card class="mx-auto pa-5" elevation="15" rounded="lg" color="#FAEED1">
-              <v-card-text class="text-center">
+              <v-card-text class="text-justify">
                 <span>
                   The LearnSphere is designed to help students conveniently access course materials
                   and video tutorials. Our goal is to create an efficient learning environment where

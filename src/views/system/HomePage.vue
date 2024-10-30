@@ -4,110 +4,119 @@
 
     <v-main>
       <v-container fluid>
-        <v-row class="mt-5">
-          <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">Time to study {{ firstName }}!</h1>
-          </v-col>
-        </v-row>
+        <div>
+          <!-- Sticky Header Container -->
+          <div class="sticky-header">
+            <v-row class="mt-5">
+              <v-col cols="12" class="text-center">
+                <h1 class="text-white font-weight-black">
+                  Time to study {{ firstName || '...' }}!
+                </h1>
+              </v-col>
+            </v-row>
 
-        <!-- Search Course Bar -->
-        <v-row class="justify-center mb-8 mx-auto">
-          <v-col cols="12" sm="8" md="6">
-            <v-text-field
-              v-model="searchQuery"
-              :loading="loading"
-              append-inner-icon="mdi-magnify"
-              prepend-inner-icon="mdi-cast-education"
-              density="comfortable"
-              label="Search Course"
-              variant="solo"
-              hide-details
-              single-line
-              elevation="15"
-              color="deep-purple-darken-3"
-              outlined
-              @input="onSearchInput"
-            ></v-text-field>
-          </v-col>
-        </v-row>
+            <!-- Search Course Bar -->
+            <v-row class="justify-center mb-1 mx-auto">
+              <v-col cols="12" sm="8" md="6">
+                <v-text-field
+                  v-model="searchQuery"
+                  :loading="loading"
+                  append-inner-icon="mdi-magnify"
+                  prepend-inner-icon="mdi-cast-education"
+                  density="comfortable"
+                  label="Search Course"
+                  variant="solo"
+                  hide-details
+                  single-line
+                  elevation="15"
+                  color="deep-purple-darken-3"
+                  outlined
+                  @input="onSearchInput"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-        <v-row class="mb-8 justify-center">
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedYearLevel === 0 ? 'white' : '#FAEED1'"
-            @click="selectYearLevel(0)"
-          >
-            All
-          </v-btn>
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedYearLevel === 1 ? 'white' : '#FAEED1'"
-            @click="selectYearLevel(1)"
-          >
-            Year 1
-          </v-btn>
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedYearLevel === 2 ? 'white' : '#FAEED1'"
-            @click="selectYearLevel(2)"
-          >
-            Year 2
-          </v-btn>
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedYearLevel === 3 ? 'white' : '#FAEED1'"
-            @click="selectYearLevel(3)"
-          >
-            Year 3
-          </v-btn>
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedYearLevel === 4 ? 'white' : '#FAEED1'"
-            @click="selectYearLevel(4)"
-          >
-            Year 4
-          </v-btn>
-        </v-row>
+            <v-row class="mb-3 justify-center">
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedYearLevel === 0 ? 'white' : '#FAEED1'"
+                @click="selectYearLevel(0)"
+              >
+                All
+              </v-btn>
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedYearLevel === 1 ? 'white' : '#FAEED1'"
+                @click="selectYearLevel(1)"
+              >
+                Year 1
+              </v-btn>
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedYearLevel === 2 ? 'white' : '#FAEED1'"
+                @click="selectYearLevel(2)"
+              >
+                Year 2
+              </v-btn>
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedYearLevel === 3 ? 'white' : '#FAEED1'"
+                @click="selectYearLevel(3)"
+              >
+                Year 3
+              </v-btn>
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedYearLevel === 4 ? 'white' : '#FAEED1'"
+                @click="selectYearLevel(4)"
+              >
+                Year 4
+              </v-btn>
+            </v-row>
 
-        <!-- Semester Buttons (only visible when a year is selected) -->
-        <v-row class="mb-8 justify-center" v-if="selectedYearLevel > 0">
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedSemester === 0 ? 'white' : '#FAEED1'"
-            @click="selectSemester(0)"
-          >
-            All Semesters
-          </v-btn>
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedSemester === 1 ? 'white' : '#FAEED1'"
-            @click="selectSemester(1)"
-          >
-            1st Sem
-          </v-btn>
-          <v-btn
-            elevation="15"
-            class="mx-1 mt-2"
-            :color="selectedSemester === 2 ? 'white' : '#FAEED1'"
-            @click="selectSemester(2)"
-          >
-            2nd Sem
-          </v-btn>
-        </v-row>
+            <!-- Semester Buttons (only visible when a year is selected) -->
+            <v-row class="mb-8 justify-center" v-if="selectedYearLevel > 0">
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedSemester === 0 ? 'white' : '#FAEED1'"
+                @click="selectSemester(0)"
+              >
+                All Semesters
+              </v-btn>
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedSemester === 1 ? 'white' : '#FAEED1'"
+                @click="selectSemester(1)"
+              >
+                1st Sem
+              </v-btn>
+              <v-btn
+                elevation="15"
+                class="mx-1 mt-2"
+                :color="selectedSemester === 2 ? 'white' : '#FAEED1'"
+                @click="selectSemester(2)"
+              >
+                2nd Sem
+              </v-btn>
+            </v-row>
+          </div>
 
-        <!-- Suggested Courses Section -->
-        <v-row>
-          <v-col>
-            <h2 class="text-white">Course List</h2>
-          </v-col>
-        </v-row>
+          <!-- Suggested Courses Section -->
+          <v-row>
+            <v-col>
+              <h2 class="text-white">Course List</h2>
+            </v-col>
+          </v-row>
+
+          <!-- Remaining page content -->
+        </div>
 
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
@@ -116,12 +125,15 @@
               color="#FAEED1"
               block
               height="150px"
-              @click="$router.push(course.route)"
+              @click="recordUserHistory(course.id)"
+              :to="{ name: 'CoursePage', params: { id: course.id } }"
               elevation="10"
             >
               <div class="text-center">
-                <h1>{{ course.course_name }}</h1>
-                <span>{{ course.description }}</span>
+                <h1 class="mb-2">{{ course.course_name }}</h1>
+                <v-card class="pa-3" color="#803d3b" variant="outlined">
+                  <h5 class="course-description">{{ course.description }}</h5>
+                </v-card>
               </div>
             </v-btn>
           </v-col>
@@ -143,9 +155,11 @@ const logoutModalRef = ref(null)
 const openLogoutModal = () => {
   logoutModalRef.value?.open()
 }
+
 // State for user information
 const firstName = ref('')
 const userProgramId = ref('')
+const userId = ref(null) // Store the user's ID for recording history
 
 // Selected year level (for year level buttons)
 const selectedYearLevel = ref(0) // 0 represents 'All'
@@ -165,18 +179,35 @@ onMounted(async () => {
   if (user) {
     firstName.value = user.firstname
     userProgramId.value = user.program
-    await fetchCourses() // Fetch courses after getting the user information
+    userId.value = user.id // Make sure this line is correct
+    console.log('User ID set to:', userId.value) // Log the user ID
+    await fetchCourses()
+  } else {
+    console.error('Failed to get user information.')
   }
 })
 
 // Fetch user information from Supabase
 async function getUserInformation() {
   const { data, error } = await supabase.auth.getUser()
-  if (error || !data || !data.user) {
-    console.error('Error getting user information:', error ? error.message : 'No user data')
+
+  if (error) {
+    console.error('Error fetching user information:', error.message)
+    return null // Return null if there's an error
+  }
+
+  if (data.user) {
+    const { user } = data
+    console.log('Fetched user data:', user) // Log the fetched user data
+    return {
+      id: user.id,
+      firstname: user.user_metadata.firstname,
+      program: user.user_metadata.program
+    }
+  } else {
+    console.warn('No user data found.')
     return null
   }
-  return data.user.user_metadata
 }
 
 // Fetch courses from Supabase based on the user's program ID
@@ -203,6 +234,21 @@ function selectYearLevel(yearLevel) {
 // Method to handle semester selection
 function selectSemester(semester) {
   selectedSemester.value = semester
+}
+
+// Method to record user history when a course is clicked
+async function recordUserHistory(courseId) {
+  console.log('Recording history for user:', userId.value, 'Course ID:', courseId)
+
+  const { error } = await supabase
+    .from('user_history')
+    .insert([{ user_id: userId.value, course_id: courseId, viewed_at: new Date().toISOString() }])
+
+  if (error) {
+    console.error('Error recording user history:', error.message)
+  } else {
+    console.log('User history recorded successfully')
+  }
 }
 
 // Computed property to filter courses based on the selected year level, semester, and user's program
@@ -242,7 +288,6 @@ const onSearchInput = () => {
   }, 1000)
 }
 </script>
-
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/unbounded');
 .fill-height {
@@ -270,6 +315,23 @@ const onSearchInput = () => {
   font-family: 'Unbounded', sans-serif;
 }
 
+.v-btn {
+  max-height: 150px; /* Adjust as needed */
+  overflow: hidden; /* Hide overflow */
+}
+
+.text-center {
+  padding: 10px; /* Add some padding to ensure text is not cramped */
+}
+.course-description {
+  display: -webkit-box; /* Use the flexible box layout model */
+  -webkit-box-orient: vertical; /* Set the box orientation to vertical */
+  overflow: hidden; /* Hide overflow text */
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  line-height: 1.2em; /* Adjust line height */
+  max-height: 2.4em; /* Maximum height for 2 lines */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
 .animated-background {
   background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;
@@ -296,28 +358,10 @@ const onSearchInput = () => {
   color: rgba(255, 255, 255, 0.5);
   animation: float infinite;
 }
-
-@keyframes float {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(100px, -100px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-/* Keyframes for sliding in from the right */
-@keyframes slide-in {
-  from {
-    transform: translateX(100%); /* Start off-screen to the right */
-    opacity: 0; /* Start invisible */
-  }
-  to {
-    transform: translateX(0); /* End in place */
-    opacity: 1; /* End visible */
-  }
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10; /* ensures it stays above other content */
+  padding: 20px 0; /* optional padding for aesthetics */
 }
 </style>
