@@ -1,130 +1,6 @@
 <template>
   <v-app class="animated-background">
-    <!-- Transparent Navigation Drawer for Mobile and Desktop -->
-    <v-navigation-drawer
-      v-if="$vuetify.display.mdAndUp"
-      fixed
-      clipped
-      color="transparent"
-      class="#803D3B"
-      width="80"
-      app
-    >
-      <v-list class="d-flex flex-column justify-space-between fill-height">
-        <!-- Logo at the Top -->
-        <v-list-item class="text-center">
-          <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
-        </v-list-item>
-
-        <v-list-item-group>
-          <!-- Navigation icons with links -->
-          <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'">mdi-home</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/profile')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? '#000' : 'white'"
-                >mdi-account</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/history')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? '#000' : 'white'"
-                >mdi-history</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/about')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? '#000' : 'white'"
-                >mdi-information</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
-        </v-list-item-group>
-
-        <!-- Log Out Button at the Bottom -->
-        <v-list-item @click="openLogoutModal" class="text-center">
-          <v-list-item-icon>
-            <v-icon large color="white">mdi-logout</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <!-- Overlay for blur effect -->
-    <v-overlay v-if="drawer" :absolute="true" class="overlay" z-index="1">
-      <div class="bg-black bg-opacity-50" style="backdrop-filter: blur(50px); height: 100%"></div>
-    </v-overlay>
-
-    <!-- Navigation Drawer for Mobile (overlay and toggleable) -->
-    <v-navigation-drawer
-      v-if="$vuetify.display.smAndDown"
-      v-model="drawer"
-      temporary
-      app
-      color="transparent mobile-nav-drawer"
-      class="teal-darken-4"
-      width="80"
-    >
-      <v-list class="d-flex flex-column align-center justify-center fill-height">
-        <v-list-item-group>
-          <!-- Centered Navigation icons with links -->
-          <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
-          </v-list-item>
-
-          <!-- Navigation icons with links -->
-          <v-list-item @click="$router.push('/home')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/home' ? '#000' : 'white'">mdi-home</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/profile')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/profile' ? '#000' : 'white'"
-                >mdi-account</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/history')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/history' ? '#000' : 'white'"
-                >mdi-history</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="$router.push('/about')" class="text-center">
-            <v-list-item-icon>
-              <v-icon large :color="$route.path === '/about' ? '#000' : 'white'"
-                >mdi-information</v-icon
-              >
-            </v-list-item-icon>
-          </v-list-item>
-
-          <v-list-item @click="openLogoutModal" class="text-center">
-            <v-list-item-icon>
-              <v-icon large color="white">mdi-logout</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-
-    <!-- App bar with toggle button only for mobile screens -->
-    <v-app-bar v-if="$vuetify.display.smAndDown" app color="transparent" class="mobile-nav-drawer">
-      <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-white font-weight-black">LearnSphere</v-toolbar-title>
-    </v-app-bar>
+    <NavBar @triggerLogoutModal="openLogoutModal" />
 
     <!-- Main content area -->
     <v-main>
@@ -136,13 +12,11 @@
           </v-col>
         </v-row>
 
-        <!-- Main Row for Personal Information (Left) and Reset Password (Right) -->
         <v-row class="justify-center pt-8">
-          <!-- Personal Information Section on Left Side -->
           <v-col cols="12" md="4" class="mb-5">
             <h3 class="text-white pb-5 description">Personal Information</h3>
 
-            <!-- First Name Field with Margin for Spacing -->
+
             <v-text-field
               label="First Name"
               variant="solo"
@@ -156,7 +30,7 @@
               </template>
             </v-text-field>
 
-            <!-- Last Name Field with Margin for Spacing -->
+
             <v-text-field
               label="Last Name"
               variant="solo"
@@ -170,7 +44,7 @@
               </template>
             </v-text-field>
 
-            <!-- ID Number Field with Margin for Spacing -->
+
             <v-text-field
               label="ID Number"
               variant="solo"
@@ -185,22 +59,8 @@
             </v-text-field>
 
             <!-- Program Select Field -->
-            <v-select
-              :items="programs"
-              v-model="selectedProgram"
-              item-title="label"
-              item-value="value"
-              placeholder="Program"
-              prepend-inner-icon="mdi-laptop"
-              variant="solo"
-              class="description"
-            ></v-select>
-            <v-btn color="#FAEED1" class="mt-0" block elevation="15" @click="updateProgram"
-              >Update</v-btn
-            >
           </v-col>
 
-          <!-- Reset Password Section on Right Side -->
           <v-col cols="12" md="4">
             <h3 class="text-white pb-5 description">Reset Password</h3>
             <v-text-field
@@ -216,7 +76,27 @@
                 <v-btn color="#803D3B" small elevation="15" @click="updatePassword">Update</v-btn>
               </template>
             </v-text-field>
+            <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
+            <v-select
+              :items="programs"
+              v-model="selectedProgram"
+              item-title="label"
+              item-value="value"
+              placeholder="Program"
+              prepend-inner-icon="mdi-laptop"
+              variant="solo"
+              class="description"
+            ></v-select>
+            <v-btn color="#803D3B" class="mt-0" block elevation="15" @click="updateProgram"
+              >Update</v-btn
+            >
           </v-col>
+          <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
+            <v-card-text class="text-justify text-white text-caption description">
+              Warning: Changing your current PROGRAM will also change the COURSES that are available
+              and displayed on the homepage.
+            </v-card-text>
+          </v-card>
         </v-row>
       </v-container>
 
@@ -254,7 +134,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
-import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+import LogoutModal from '@/components/auth/LogoutModal.vue'
+import NavBar from '@/components/layout/NavBar.vue'
 
 const logoutModalRef = ref(null)
 const openLogoutModal = () => {
@@ -398,6 +279,4 @@ onMounted(fetchUserData)
 .mobile-nav-drawer {
   backdrop-filter: blur(15px);
 }
-
-
 </style>
