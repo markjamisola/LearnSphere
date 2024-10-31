@@ -7,12 +7,12 @@ import HomePage from '@/views/system/HomePage.vue'
 import ProfilePage from '@/views/system/ProfilePage.vue'
 import HistoryPage from '@/views/system/HistoryPage.vue'
 import AboutPage from '@/views/system/AboutPage.vue'
-import AdminPage from '@/views/system/AdminPage.vue'
-import AdminLogin from '@/views/auth/AdminLogin.vue'
 import { getUserInformation, isAuthenticated } from '@/utils/supabase'
 import ResetPassword from '@/views/auth/ResetPassword.vue'
 import CoursePage from '@/views/system/CoursePage.vue'
 import StarredCoursePage from '@/views/system/StarredCoursePage.vue'
+import AdminHomePage from '@/views/system/AdminHomePage.vue'
+import AdminProfile from '@/views/system/AdminProfile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -88,15 +88,16 @@ const router = createRouter({
       component: CoursePage
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: AdminPage,
+      path: '/adminhome',
+      name: 'adminhome',
+      component: AdminHomePage,
       meta: { requiresAuth: true }
     },
     {
-      path: '/adminlogin',
-      name: 'adminlogin',
-      component: AdminLogin
+      path: '/adminprofile',
+      name: 'adminprofile',
+      component: AdminProfile,
+      meta: { requiresAuth: true }
     }
   ]
 })
@@ -114,21 +115,25 @@ router.beforeEach(async (to) => {
     return true
   }
 
+  if ((isAdmin && to.name === 'adminhome') || to.name === 'adminprofile') {
+    return true
+  }
+
   // If logged in, apply restrictions based on user roles
   if (isLoggedIn) {
     // Prevent non-admin users from accessing the admin page
-    if (!isAdmin && to.name === 'admin') {
+    if (!isAdmin && to.name === 'adminhome') {
       return { name: 'home' }
     }
 
     // Prevent admin users from accessing non-admin pages except the login, load, loading, and register pages for logout
     if (
       isAdmin &&
-      to.name !== 'admin' &&
+      to.name !== 'adminhome' &&
       to.meta.requiresAuth &&
-      !['login', 'load', 'loading', 'register'].includes(to.name)
+      !['login', 'load', 'register'].includes(to.name)
     ) {
-      return { name: 'admin' }
+      return { name: 'adminhome' }
     }
 
     // Prevent logged-in users from accessing login or register pages

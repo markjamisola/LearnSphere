@@ -5,8 +5,7 @@
     <v-main>
       <v-container fluid>
         <div>
-          <!-- Sticky Header Container -->
-          <div class="sticky-header">
+          <div>
             <v-row class="mt-5">
               <v-col cols="12" class="text-center">
                 <h1 class="text-white font-weight-black">
@@ -320,13 +319,13 @@ const onSearchInput = () => {
 }
 
 .text-center {
-  padding: 10px; /* Add some padding to ensure text is not cramped */
+  padding: 10px; 
 }
 .course-description {
   display: block;
-  overflow-wrap: break-word; /* Allow long words to wrap within the container */
-  white-space: normal; /* Enable text to break onto new lines */
-  line-height: 1.4; /* Adjust line height for readability */
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4; 
   color: #803d3b;
 }
 .animated-background {
@@ -354,11 +353,5 @@ const onSearchInput = () => {
   position: absolute;
   color: rgba(255, 255, 255, 0.5);
   animation: float infinite;
-}
-.sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 10; /* ensures it stays above other content */
-  padding: 20px 0; /* optional padding for aesthetics */
 }
 </style>

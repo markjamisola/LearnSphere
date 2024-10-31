@@ -32,7 +32,6 @@
         </v-col>
 
         <!-- Mission and Vision Cards -->
-
         <v-row class="mx-4 mt-3" justify="center">
           <v-col cols="12" md="6">
             <h1 class="text-white text-center font-weight-black">Mission</h1>
@@ -75,7 +74,6 @@
 
         <v-col cols="12">
           <v-row class="mx-4">
-            <!-- Remove horizontal margins -->
             <v-card class="mx-auto pa-3" rounded="lg" color="transparent" width="100%" flat>
               <template v-slot:title>
                 <h3 class="font-weight-black text-white text-center">Contact Us</h3>
@@ -116,7 +114,7 @@
 <script setup>
 import { ref } from 'vue'
 
-import LogoutModal from '@/components/auth/LogoutModal.vue' // Adjust path as necessary
+import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 const logoutModalRef = ref(null)
 

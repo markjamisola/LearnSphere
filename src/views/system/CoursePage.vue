@@ -12,7 +12,7 @@
               <v-btn
                 icon
                 class="ma-2"
-                :color="isStarred ? 'yellow' : '#FAEED1'"
+                :color="isStarred ? 'red' : '#FAEED1'"
                 @click="toggleStar(courseDetails.id)"
                 v-if="courseDetails"
               >
@@ -79,7 +79,13 @@
         </v-row>
 
         <!-- Video Dialog -->
-        <v-dialog v-model="dialog" max-width="1400px" rounded="lg">
+        <v-dialog
+          v-model="dialog"
+          max-width="1400px"
+          rounded="lg"
+          overlay="true"
+          class="dialog-with-blur"
+        >
           <div class="d-flex justify-start mb-2 description">
             <v-card color="#FAEED1" elevation="10">
               <v-card-title class="headline text-center topic-title">
@@ -155,7 +161,7 @@ const searchQuery = ref('')
 const dialog = ref(false)
 const videos = ref([])
 const selectedTopic = ref('')
-const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ' // Replace with your actual YouTube API key
+const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ'
 
 // Use Vue Router's route object
 const route = useRoute()
@@ -347,9 +353,14 @@ const showPdf = (pdfUrl) => {
 
 .topic-title {
   display: block;
-  overflow-wrap: break-word; /* Allow long words to wrap within the container */
-  white-space: normal; /* Enable text to break onto new lines */
-  line-height: 1.4; /* Adjust line height for readability */
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4;
   color: #803d3b;
+}
+
+.dialog-with-blur {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>

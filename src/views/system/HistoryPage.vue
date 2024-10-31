@@ -152,19 +152,14 @@ onMounted(() => {
   font-family: 'Unbounded', sans-serif;
 }
 
-.v-btn {
-  max-height: 150px; /* Adjust as needed */
-  overflow: hidden; /* Hide overflow */
-}
-
 .text-center {
-  padding: 10px; /* Add some padding to ensure text is not cramped */
+  padding: 10px; 
 }
 .course-description {
   display: block;
-  overflow-wrap: break-word; /* Allow long words to wrap within the container */
-  white-space: normal; /* Enable text to break onto new lines */
-  line-height: 1.4; /* Adjust line height for readability */
+  overflow-wrap: break-word; 
+  white-space: normal; 
+  line-height: 1.4;
   color: #803d3b;
 }
 .animated-background {
