@@ -56,26 +56,68 @@
               </v-card-title>
               <v-card-subtitle class="text-center">{{ topic.description }}</v-card-subtitle>
               <v-card-text>
-                <v-btn
-                  v-if="topic.video_url"
-                  elevation="10"
-                  color="#803D3B"
-                  block
-                  @click="showVideo(topic.video_url)"
-                  >Watch Video</v-btn
-                >
-                <v-btn
-                  v-if="topic.pdf_url"
-                  elevation="10"
-                  color="#803D3B"
-                  block
-                  @click="showPdf(topic.pdf_url)"
-                  >Open PDF</v-btn
-                >
+                <v-row>
+                  <v-col cols="6">
+                    <v-btn
+                      elevation="10"
+                      color="#803D3B"
+                      block
+                      @click="openVideoDialog(topic.topic_title)"
+                    >
+                      Watch Videos
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn elevation="10" color="#803D3B" block @click="showPdf(topic.pdf_url)">
+                      Open PDF
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-card-text>
             </v-card>
           </v-col>
         </v-row>
+
+        <!-- Video Dialog -->
+        <v-dialog v-model="dialog" max-width="1400px" rounded="lg">
+          <div class="d-flex justify-start mb-2 description">
+            <v-card color="#FAEED1" elevation="10">
+              <v-card-title class="headline text-center topic-title">
+                <h4>Related Videos for {{ selectedTopic }}</h4>
+              </v-card-title>
+            </v-card>
+          </div>
+          <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+            <v-card-text color="#803D3B">
+              <v-list class="colorist" rounded="lg">
+                <v-list-item v-for="video in videos" :key="video.id.videoId" color="#803D3B">
+                  <v-list-item-content class="video-content">
+                    <div class="text-white mb-2">
+                      <v-list-item-title
+                        ><h4>{{ video.snippet.title }}</h4></v-list-item-title
+                      >
+                      <v-list-item-subtitle>{{ video.snippet.description }}</v-list-item-subtitle>
+                    </div>
+                    <!-- Embedded YouTube video player -->
+                    <iframe
+                      :src="'https://www.youtube.com/embed/' + video.id.videoId"
+                      width="100%"
+                      height="315"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    ></iframe>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
+          </v-card>
+          <div class="d-flex justify-end description">
+            <v-card color="#FAEED1" elevation="10">
+              <v-btn color="#FAEED1" size="large" @click="dialog = false"><h5>Close</h5></v-btn>
+            </v-card>
+          </div>
+        </v-dialog>
       </v-container>
 
       <!-- Logout Modal -->
@@ -90,30 +132,42 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 
+// Modal and star state
 const logoutModalRef = ref(null)
-const isStarred = ref(false) // Track if course is starred
+const isStarred = ref(false)
 
-// Function to open logout modal
+// Function to open the logout modal
 const openLogoutModal = () => {
   logoutModalRef.value?.open()
 }
 
-// Define reactive references
+// Reactive variables
 const courseDetails = ref(null)
 const topics = ref([])
 const loading = ref(false)
 const searchQuery = ref('')
+const dialog = ref(false)
+const videos = ref([])
+const selectedTopic = ref('')
+const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ' // Replace with your actual YouTube API key
 
-// Use the route object
+// Use Vue Router's route object
 const route = useRoute()
 
-// Fetch course data and related topics
+// Filtered topics based on the search query
+const filteredTopics = computed(() => {
+  return topics.value.filter((topic) =>
+    topic.topic_title.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+// Fetch course data, related topics, and resources
 onMounted(async () => {
   const courseId = route.params.id
   if (courseId) {
@@ -126,44 +180,34 @@ onMounted(async () => {
         .select('*')
         .eq('id', courseId)
         .single()
-
       if (courseError) throw courseError
       courseDetails.value = courseData
 
-      // Check if the course is already starred by the user
+      // Check if course is starred by user
       const {
         data: { user },
         error: userError
       } = await supabase.auth.getUser()
-
-      if (userError) {
-        console.error('Error fetching user:', userError.message)
-        return
-      }
+      if (userError) throw userError
 
       if (user) {
-        const userId = user.id
         const { data: starredData, error: starredError } = await supabase
           .from('starred_courses')
           .select('*')
-          .eq('user_id', userId)
+          .eq('user_id', user.id)
           .eq('course_id', courseId)
-
         if (starredError) throw starredError
 
-        // If the starredData is not empty, set isStarred to true
         isStarred.value = starredData.length > 0
       }
 
-      // Fetch related topics
+      // Fetch topics associated with the course
       const { data: topicsData, error: topicsError } = await supabase
         .from('topics')
         .select('*')
         .eq('course_id', courseId)
-
       if (topicsError) throw topicsError
 
-      // Fetch related resources
       const { data: resourcesData, error: resourcesError } = await supabase
         .from('resources')
         .select('*')
@@ -177,8 +221,6 @@ onMounted(async () => {
       // Combine topics with their resources
       topics.value = topicsData.map((topic) => {
         const topicResources = resourcesData.filter((resource) => resource.topic_id === topic.id)
-        topic.video_url =
-          topicResources.find((resource) => resource.resource_type === 'video')?.url || null
         topic.pdf_url =
           topicResources.find((resource) => resource.resource_type === 'pdf')?.url || null
         return topic
@@ -193,51 +235,82 @@ onMounted(async () => {
   }
 })
 
-// Function to toggle star status
+// Toggle star status for the course
 async function toggleStar(courseId) {
   const {
     data: { user },
     error: userError
   } = await supabase.auth.getUser()
-
   if (userError) {
     console.error('Error fetching user:', userError.message)
     return
   }
-
   if (!user) {
     console.error('User is not authenticated')
     return
   }
-
   const userId = user.id
 
-  // If the course is starred, remove it; otherwise, add it
   if (isStarred.value) {
-    // Remove from starred_courses
     const { error } = await supabase
       .from('starred_courses')
       .delete()
       .eq('user_id', userId)
       .eq('course_id', courseId)
-
     if (error) {
       console.error('Error removing starred course:', error.message)
     } else {
-      isStarred.value = false // Update isStarred state
+      isStarred.value = false
     }
   } else {
-    // Add to starred_courses
     const { error } = await supabase
       .from('starred_courses')
       .insert([{ user_id: userId, course_id: courseId, created_at: new Date().toISOString() }])
-
     if (error) {
       console.error('Error starring course:', error.message)
     } else {
-      isStarred.value = true // Update isStarred state
+      isStarred.value = true
     }
   }
+}
+
+// Open video dialog and fetch related YouTube videos
+const openVideoDialog = (topicTitle) => {
+  selectedTopic.value = topicTitle
+  dialog.value = true
+  fetchRelatedVideos(topicTitle)
+}
+
+// Fetch related YouTube videos based on topic title
+const fetchRelatedVideos = async (topicTitle) => {
+  if (!topicTitle) {
+    console.error('Topic title is undefined or empty.')
+    return
+  }
+
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${encodeURIComponent(
+        topicTitle
+      )}&type=video&key=${youtubeApiKey}`
+    )
+
+    if (!response.ok)
+      throw new Error(`YouTube API error: ${response.status} ${response.statusText}`)
+
+    const data = await response.json()
+    videos.value = data.items || []
+    if (videos.value.length === 0) {
+      console.warn('No related videos found.')
+    }
+  } catch (error) {
+    console.error('Error fetching YouTube videos:', error.message)
+  }
+}
+
+// Show PDF in a new tab
+const showPdf = (pdfUrl) => {
+  window.open(pdfUrl, '_blank')
 }
 </script>
 
@@ -258,14 +331,25 @@ async function toggleStar(courseId) {
   font-family: 'Unbounded', sans-serif;
 }
 
-/* Styles for the floating back button */
 .back-button {
   position: fixed;
   bottom: 20px;
   left: 18px;
-  z-index: 10000; /* Ensure the button is on top */
-  background-color: #faeed1; /* Background color of the button */
-  color: #803d3b; /* Icon color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow */
+  z-index: 2000;
+  background-color: #faeed1;
+  color: #803d3b;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.colorist {
+  background-color: #803d3b;
+}
+
+.topic-title {
+  display: block;
+  overflow-wrap: break-word; /* Allow long words to wrap within the container */
+  white-space: normal; /* Enable text to break onto new lines */
+  line-height: 1.4; /* Adjust line height for readability */
+  color: #803d3b;
 }
 </style>
