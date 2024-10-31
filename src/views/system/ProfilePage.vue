@@ -103,11 +103,9 @@
           <v-card-title>
             <h3 class="font-weight-black text-center description">Success</h3>
           </v-card-title>
-          <v-card class="mb-3" color="#803d3b" variant="outlined">
             <v-card-text class="text-center text-black text-caption description">
               <h3>Information Successfully Updated!</h3>
             </v-card-text>
-          </v-card>
           <v-card-actions>
             <v-btn
               class="description"
