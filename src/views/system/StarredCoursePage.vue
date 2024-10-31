@@ -4,9 +4,14 @@
 
     <v-main>
       <v-container fluid>
-        <v-row class="mt-8">
+        <v-row class="mt-8" v-if="starredCourses.length">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white pb-8 font-weight-black">Starred Courses</h1>
+            <h1 class="text-white font-weight-black">Starred Courses</h1>
+          </v-col>
+        </v-row>
+        <v-row class="mt-8" v-if="!starredCourses.length">
+          <v-col cols="12" class="text-center">
+            <h1 class="text-white font-weight-black">You have no Starred Courses</h1>
           </v-col>
         </v-row>
 
@@ -35,14 +40,61 @@
                 variant="elevated"
                 elevation="15"
                 block
-                @click="deleteStarredCourse(course.id)"
+                @click="confirmRemoveCourse(course.id)"
               >
-                REMOVE<v-icon>mdi-delete</v-icon>
+                REMOVE <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
+
+      <!-- Confirmation Dialog -->
+      <v-dialog v-model="showRemoveConfirm" max-width="400" class="dialog-with-blur">
+        <v-card color="#FAEED1" elevation="10" class="dialog-card">
+          <v-card-title class="headline text-center mt-4 mb-0">
+            <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
+          </v-card-title>
+          <v-card-text class="font-weight-black text-center mt-0">
+            <h2
+              class="text-h5 text-center font-weight-black"
+              style="color: #803d3b; font-family: 'Unbounded', sans-serif"
+            >
+              Are you sure you want to remove this course?
+            </h2>
+          </v-card-text>
+          <v-card-actions class="justify-center dialog-actions mb-2">
+            <v-btn
+              color="#FAEED1"
+              text
+              class="confirm-btn font-weight-bold"
+              @click="removeCourse"
+              style="
+                background-color: white;
+                color: #803d3b;
+                font-family: 'Unbounded', sans-serif;
+                margin-right: 5px;
+              "
+            >
+              Yes, Remove
+            </v-btn>
+            <v-btn
+              color="#FAEED1"
+              text
+              class="cancel-btn font-weight-bold"
+              @click="showRemoveConfirm = false"
+              style="
+                font-family: 'Unbounded', sans-serif;
+                background-color: #803d3b;
+                color: #faeed1;
+                margin-left: 5px;
+              "
+            >
+              No
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <LogoutModal ref="logoutModalRef" />
     </v-main>
@@ -58,10 +110,44 @@ import NavBar from '@/components/layout/NavBar.vue'
 // References
 const logoutModalRef = ref(null)
 const starredCourses = ref([])
+const showRemoveConfirm = ref(false)
+const courseIdToRemove = ref(null)
 
 // Function to open logout modal
 const openLogoutModal = () => {
   logoutModalRef.value?.open()
+}
+
+// Open confirmation dialog before deleting
+const confirmRemoveCourse = (courseId) => {
+  courseIdToRemove.value = courseId
+  showRemoveConfirm.value = true
+}
+
+// Remove course function with confirmation
+const removeCourse = async () => {
+  try {
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser()
+    if (userError) throw userError
+
+    const { error: deleteError } = await supabase
+      .from('starred_courses')
+      .delete()
+      .match({ user_id: user.id, course_id: courseIdToRemove.value })
+
+    if (deleteError) throw deleteError
+
+    // Update starred courses locally
+    starredCourses.value = starredCourses.value.filter(
+      (course) => course.id !== courseIdToRemove.value
+    )
+    showRemoveConfirm.value = false // Close dialog after deletion
+  } catch (error) {
+    console.error('Error deleting starred course:', error.message)
+  }
 }
 
 // Fetch starred courses from Supabase
@@ -102,30 +188,6 @@ const fetchStarredCourses = async () => {
   }
 }
 
-// Delete a starred course
-const deleteStarredCourse = async (courseId) => {
-  try {
-    const {
-      data: { user },
-      error: userError
-    } = await supabase.auth.getUser()
-    if (userError) throw userError
-
-    // Remove the course from starred_courses
-    const { error: deleteError } = await supabase
-      .from('starred_courses')
-      .delete()
-      .match({ user_id: user.id, course_id: courseId })
-
-    if (deleteError) throw deleteError
-
-    // Remove the course from local starredCourses array
-    starredCourses.value = starredCourses.value.filter((course) => course.id !== courseId)
-  } catch (error) {
-    console.error('Error deleting starred course:', error.message)
-  }
-}
-
 // Fetch starred courses when component mounts
 onMounted(() => {
   fetchStarredCourses()
@@ -134,6 +196,7 @@ onMounted(() => {
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/unbounded');
+
 .fill-height {
   height: 100vh;
 }
@@ -160,19 +223,19 @@ onMounted(() => {
 }
 
 .v-btn {
-  max-height: 150px; /* Adjust as needed */
-  overflow: hidden; /* Hide overflow */
+  max-height: 150px;
+  overflow: hidden;
 }
 
 .text-center {
-  padding: 10px; /* Add some padding to ensure text is not cramped */
+  padding: 10px;
 }
 
 .course-description {
   display: block;
-  overflow-wrap: break-word; /* Allow long words to wrap within the container */
-  white-space: normal; /* Enable text to break onto new lines */
-  line-height: 1.4; /* Adjust line height for readability */
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.4;
   color: #803d3b;
 }
 
@@ -182,9 +245,13 @@ onMounted(() => {
   animation: gradientBackground 15s ease infinite;
 }
 
-/* Style for the delete button */
 .delete-button {
-  z-index: 1; /* Ensure button is on top */
+  z-index: 1;
   position: relative;
+}
+
+.dialog-with-blur {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-app class="animated-background description">
-    <NavBar @triggerLogoutModal="openLogoutModal" />
+    <AdminNav @triggerLogoutModal="openLogoutModal" />
 
     <!-- Main content area -->
     <v-main>
@@ -73,27 +73,7 @@
                 <v-btn color="#803D3B" small elevation="15" @click="updatePassword">Update</v-btn>
               </template>
             </v-text-field>
-            <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
-            <v-select
-              :items="programs"
-              v-model="selectedProgram"
-              item-title="label"
-              item-value="value"
-              placeholder="Program"
-              prepend-inner-icon="mdi-laptop"
-              variant="solo"
-              class="description"
-            ></v-select>
-            <v-btn color="#803D3B" class="mt-0" block elevation="15" @click="updateProgram"
-              >Update</v-btn
-            >
           </v-col>
-          <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
-            <v-card-text class="text-justify text-white text-caption description">
-              Warning: Changing your current PROGRAM will also change the COURSES that are available
-              and displayed on the homepage.
-            </v-card-text>
-          </v-card>
         </v-row>
       </v-container>
 
@@ -132,7 +112,7 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
-import NavBar from '@/components/layout/NavBar.vue'
+import AdminNav from '@/components/layout/AdminNav.vue';
 
 const logoutModalRef = ref(null)
 const openLogoutModal = () => {
@@ -213,17 +193,6 @@ const updateIdNumber = async () => {
     successDialog.value = true // Show success dialog
   } else {
     console.error('Error updating ID number:', error)
-  }
-}
-
-const updateProgram = async () => {
-  const { error } = await supabase.auth.updateUser({
-    data: { program: selectedProgram.value } // Use selected program ID
-  })
-  if (!error) {
-    successDialog.value = true // Show success dialog
-  } else {
-    console.error('Error updating program:', error)
   }
 }
 

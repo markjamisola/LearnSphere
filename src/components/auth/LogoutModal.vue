@@ -1,20 +1,46 @@
 <template>
-  <v-dialog v-model="show" max-width="500">
-    <v-card class="pa-0" color="#FAEED1" block elevation="10">
-      <v-card-title class="headline text-center mt-6 mb-0">
-        <v-icon large>mdi-emoticon-sad-outline</v-icon>
+  <v-dialog v-model="show" max-width="400" class="dialog-with-blur">
+    <v-card color="#FAEED1" elevation="10" class="dialog-card">
+      <v-card-title class="headline text-center mt-4 mb-0">
+        <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
       </v-card-title>
-      <v-card-text class="font-weight-black text-center mt-0"
-        ><h2>Are you sure you want to Log Out?</h2></v-card-text
-      >
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-row class="mb-3">
-          <v-btn class="mx-2" color="whtie" variant="elevated" text @click="logout">Logout</v-btn>
-          <v-btn class="mx-2" color="#803d3b" variant="elevated" text @click="cancelLogout"
-            >Cancel</v-btn
-          >
-        </v-row>
+      <v-card-text class="font-weight-black text-center mt-0">
+        <h2
+          class="text-h5 font-weight-black"
+          style="color: #803d3b; font-family: 'Unbounded', sans-serif"
+        >
+          Are you sure you want to Log Out?
+        </h2>
+      </v-card-text>
+      <v-card-actions class="justify-center dialog-actions mb-2">
+        <v-btn
+          color="#FAEED1"
+          text
+          class="confirm-btn font-weight-bold"
+          @click="logout"
+          style="
+            background-color: white;
+            color: #803d3b;
+            font-family: 'Unbounded', sans-serif;
+            margin-right: 5px;
+          "
+        >
+          Logout
+        </v-btn>
+        <v-btn
+          color="#FAEED1"
+          text
+          class="cancel-btn font-weight-bold"
+          @click="cancelLogout"
+          style="
+            font-family: 'Unbounded', sans-serif;
+            background-color: #803d3b;
+            color: #faeed1;
+            margin-left: 5px;
+          "
+        >
+          Cancel
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -68,5 +94,9 @@ defineExpose({
 <style scoped>
 .text-center {
   text-align: center;
+}
+.dialog-with-blur {
+  backdrop-filter: blur(10px); /* Adjust the blur strength as needed */
+  background-color: rgba(0, 0, 0, 0.3); /* Adds a slight dark overlay with blur */
 }
 </style>
