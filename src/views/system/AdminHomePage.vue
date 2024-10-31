@@ -34,12 +34,17 @@
             </v-col>
           </v-row>
           <v-row class="justify-center mt-3 mb-4">
-            <v-btn color="#FAEED1" @click="openAddCourseModal"> Add New Course </v-btn>
+            <v-btn class="ma-1" color="#FAEED1" @click="openAddCourseModal">
+              <h4><v-icon>mdi-plus</v-icon> Add New Course</h4>
+            </v-btn>
+            <v-btn class="ma-1" color="#FAEED1" @click="openAddTopicModal">
+              <h4><v-icon>mdi-plus</v-icon> Add New Topic</h4>
+            </v-btn>
           </v-row>
 
           <!-- Program Filter Buttons -->
           <v-row class="justify-center mb-4">
-            <v-btn color="#FAEED1" @click="setSelectedProgram(null)">
+            <v-btn color="#FAEED1" class="mx-1" @click="setSelectedProgram(null)">
               <h3 class="text-black">All</h3>
             </v-btn>
             <v-btn
@@ -47,6 +52,7 @@
               :key="program.id"
               @click="setSelectedProgram(program.id)"
               color="#FAEED1"
+              class="mx-1"
             >
               <h3 class="text-black">{{ program.program_name }}</h3>
             </v-btn>
@@ -83,8 +89,12 @@
         </v-row>
       </v-container>
 
-      <!-- Add Course Modal -->
-      <v-dialog v-model="addCourseModalVisible" max-width="600px" class="dialog-with-blur">
+      <v-dialog
+        v-model="addCourseModalVisible"
+        max-width="600px"
+        persistent
+        class="dialog-with-blur"
+      >
         <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
           <v-card-title class="headline text-center"><h3>Add New Course</h3></v-card-title>
           <v-card class="ma-6 mt-2 description" color="#FAEED1" elevation="10" rounded="lg">
@@ -94,7 +104,7 @@
                   v-model="newCourse.program_id"
                   :items="programs"
                   item-value="id"
-                  item-text="program_name"
+                  item-title="program_name"
                   label="Select Program"
                   required
                   prepend-inner-icon="mdi-laptop"
@@ -137,7 +147,13 @@
               </v-btn>
             </v-col>
             <v-col cols="6">
-              <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="closeAddCourseModal">
+              <v-btn
+                rounded="lg"
+                elevation="10"
+                color="#FAEED1"
+                block
+                @click="addCourseModalVisible = false"
+              >
                 Cancel
               </v-btn>
             </v-col>
@@ -145,17 +161,106 @@
         </div>
       </v-dialog>
 
-      <!-- Success Dialog -->
-      <v-dialog v-model="successDialogVisible" max-width="400px">
-        <v-card>
-          <v-card-title class="headline">Success</v-card-title>
-          <v-card-text>Course added successfully!</v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="closeSuccessDialog">OK</v-btn>
+      <v-dialog v-model="addTopicDialog" max-width="600px" persistent class="dialog-with-blur">
+        <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+          <v-card-title class="headline text-center"><h3>Add New Topic</h3> </v-card-title>
+          <v-card class="ma-6 mt-2 description" color="#FAEED1" elevation="10" rounded="lg">
+            <v-card-text>
+              <v-form ref="addTopicForm">
+                <!-- Program selection -->
+                <v-select
+                  v-model="selectedProgramId"
+                  :items="programs"
+                  item-title="program_name"
+                  item-value="id"
+                  label="Program"
+                  prepend-inner-icon="mdi-laptop"
+                  @change="fetchCoursesByProgram"
+                  required
+                ></v-select>
+                <!-- Course selection -->
+                <v-select
+                  v-model="newTopic.course_id"
+                  :items="filteredCourses"
+                  item-title="course_name"
+                  item-value="id"
+                  label="Course"
+                  prepend-inner-icon="mdi-cast-education"
+                  required
+                ></v-select>
+                <!-- Topic title and description -->
+                <v-text-field
+                  v-model="newTopic.title"
+                  prepend-inner-icon="mdi-tag-edit"
+                  label="Topic Title"
+                  required
+                ></v-text-field>
+                <v-textarea
+                  v-model="newTopic.description"
+                  label="Description"
+                  required
+                  prepend-inner-icon="mdi-text-box-edit-outline"
+                ></v-textarea>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </v-card>
+        <div class="d-flex justify-end description">
+          <v-row>
+            <v-col cols="6">
+              <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="saveTopic">
+                Save
+              </v-btn>
+            </v-col>
+            <v-col cols="6">
+              <v-btn
+                rounded="lg"
+                elevation="10"
+                color="#FAEED1"
+                block
+                @click="addTopicDialog = false"
+              >
+                Cancel
+              </v-btn>
+            </v-col>
+          </v-row>
+        </div>
+      </v-dialog>
+
+      <!-- Success dialog for adding course -->
+
+      <v-dialog v-model="successDialogVisible" max-width="400px" persistent class="dialog-with-blur">
+        <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+          <v-card-title class="text-center"><h4>Success!</h4></v-card-title>
+          <v-card-text class="text-center"> Course has been successfully added.</v-card-text>
+          <v-card-actions class="justify-center mb-2">
+            <v-col cols="12" color="#FAEED1">
+              <v-card color="#FAEED1">
+                <v-btn rounded="lg" elevation="10" block @click="successDialogVisible = false">
+                  OK
+                </v-btn>
+              </v-card>
+            </v-col>
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <v-dialog v-model="successTopicDialogVisible" max-width="400px" persistent class="dialog-with-blur">
+        <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+          <v-card-title class="text-center"><h4>Success!</h4></v-card-title>
+          <v-card-text class="text-center"> Topic has been successfully added. </v-card-text>
+          <v-card-actions class="justify-center mb-2">
+            <v-col cols="12" color="#FAEED1">
+              <v-card color="#FAEED1">
+                <v-btn rounded="lg" elevation="10" block @click="successTopicDialogVisible = false">
+                  OK
+                </v-btn>
+              </v-card>
+            </v-col>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
@@ -164,7 +269,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
-import AdminNav from '@/components/layout/AdminNav.vue';
+import AdminNav from '@/components/layout/AdminNav.vue'
 
 // State for user information, modals, and dialogs
 const logoutModalRef = ref(null)
@@ -179,6 +284,8 @@ const searchQuery = ref('')
 const courses = ref([])
 const addCourseModalVisible = ref(false)
 const successDialogVisible = ref(false)
+const successTopicDialogVisible = ref(false)
+const addTopicDialog = ref(false) // New: Dialog for adding a topic
 
 // New course data
 const newCourse = ref({
@@ -188,6 +295,14 @@ const newCourse = ref({
   year_level: null,
   semester: null,
   created_at: new Date().toISOString()
+})
+
+// New: New topic data
+const newTopic = ref({
+  program_id: null, // Program filter
+  course_id: null,
+  title: '',
+  description: ''
 })
 
 // Fetch user information on mount
@@ -203,29 +318,38 @@ onMounted(async () => {
 })
 
 // Functions for Add Course Modal
+const openAddTopicModal = () => {
+  addTopicDialog.value = true
+}
+
 const openAddCourseModal = () => {
   addCourseModalVisible.value = true
 }
-
-const closeAddCourseModal = () => {
-  addCourseModalVisible.value = false
-}
-
-const closeSuccessDialog = () => {
-  successDialogVisible.value = false
-}
-
 const addCourse = async () => {
+  // Log the new course data being inserted
+  console.log('Attempting to add course:', newCourse.value)
+
   // Save the new course to Supabase
-  const { data, error } = await supabase.from('courses').insert(newCourse.value)
+  const { data, error } = await supabase.from('courses').insert({
+    program_id: newCourse.value.program_id,
+    course_name: newCourse.value.course_name,
+    description: newCourse.value.description,
+    year_level: newCourse.value.year_level,
+    semester: newCourse.value.semester,
+    created_at: new Date().toISOString()
+  })
+
+  // Handle error case
   if (error) {
     console.error('Error adding course:', error.message)
   } else {
-    courses.value.push(data[0])
-    closeAddCourseModal()
-    successDialogVisible.value = true
+    // Log the successful addition of the course
+    console.log('Course added:', data)
 
-    // Reset the form fields
+    // Close the add course modal
+    addCourseModalVisible.value = false
+
+    // Reset course form
     newCourse.value = {
       program_id: null,
       course_name: '',
@@ -234,12 +358,42 @@ const addCourse = async () => {
       semester: null,
       created_at: new Date().toISOString()
     }
+
+    // Show success dialog
+    successDialogVisible.value = true
   }
 }
 
-// Filter function for courses
+// Filter function for courses by selected program
 const setSelectedProgram = (programId) => {
   selectedProgramId.value = programId
+  newTopic.value.course_id = null // Reset course when program changes
+}
+
+// Function to save new topic
+const saveTopic = async () => {
+  const { data, error } = await supabase.from('topics').insert({
+    course_id: newTopic.value.course_id,
+    description: newTopic.value.description,
+    topic_title: newTopic.value.title,
+    created_at: new Date().toISOString()
+  })
+
+  if (error) {
+    console.error('Error adding topic:', error.message)
+  } else {
+    console.log('Topic added:', data)
+    addTopicDialog.value = false
+    // Reset topic form
+    newTopic.value = {
+      program_id: null,
+      course_id: null,
+      topic_title: '',
+      description: ''
+    }
+    addTopicDialog.value = false // Close the dialog
+    successTopicDialogVisible.value = true // Show success dialog
+  }
 }
 
 // Fetch programs and courses
@@ -295,6 +449,7 @@ const onSearchInput = () => {
   }, 1000)
 }
 </script>
+
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/unbounded');
 .fill-height {
@@ -328,8 +483,8 @@ const onSearchInput = () => {
 .course-description {
   display: block;
   overflow-wrap: break-word;
-  white-space: normal; 
-  line-height: 1.4; 
+  white-space: normal;
+  line-height: 1.4;
   color: #803d3b;
 }
 .animated-background {
@@ -360,7 +515,7 @@ const onSearchInput = () => {
 }
 
 .dialog-with-blur {
-  backdrop-filter: blur(10px); 
-  background-color: rgba(0, 0, 0, 0.3); 
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>

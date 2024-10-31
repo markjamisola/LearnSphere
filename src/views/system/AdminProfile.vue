@@ -8,7 +8,7 @@
         <!-- Profile Title -->
         <v-row class="mt-5 justify-center">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black description">Profile</h1>
+            <h1 class="text-white font-weight-black description">Admin Profile</h1>
           </v-col>
         </v-row>
 
@@ -83,11 +83,9 @@
           <v-card-title>
             <h3 class="font-weight-black text-center description">Success</h3>
           </v-card-title>
-          <v-card class="mb-3" color="#803d3b" variant="outlined">
-            <v-card-text class="text-center text-black text-caption description">
-              <h3>Information Successfully Updated!</h3>
-            </v-card-text>
-          </v-card>
+          <v-card-text class="text-center text-black text-caption description">
+            <h3>Information Successfully Updated!</h3>
+          </v-card-text>
           <v-card-actions>
             <v-btn
               class="description"
@@ -112,7 +110,7 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
-import AdminNav from '@/components/layout/AdminNav.vue';
+import AdminNav from '@/components/layout/AdminNav.vue'
 
 const logoutModalRef = ref(null)
 const openLogoutModal = () => {
