@@ -35,7 +35,7 @@
                 variant="elevated"
                 elevation="15"
                 block
-                @click="deleteStarredCourse(course.id)"
+                @click="confirmRemoveCourse(course.id)"
               >
                 REMOVE<v-icon>mdi-delete</v-icon>
               </v-btn>
@@ -43,6 +43,28 @@
           </v-col>
         </v-row>
       </v-container>
+
+    <!-- Confirmation Dialog -->
+<v-dialog v-model="showRemoveConfirm" max-width="400">
+  <v-card color="#FAEED1" elevation="10" class="dialog-card">
+    <v-card-title class="headline text-center mt-4 mb-0">
+      <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
+    </v-card-title>
+    <v-card-text class="font-weight-black text-center mt-0">
+      <h2 class="text-h5 text-center font-weight-black" style="color: #803d3b; font-family: 'Unbounded', sans-serif;">
+        Are you sure you want to remove this course?
+      </h2>
+    </v-card-text>
+    <v-card-actions class="justify-center dialog-actions">
+      <v-btn color="#FAEED1" text class="confirm-btn font-weight-bold" @click="removeCourse" style="background-color: white; color: #803d3b; font-family: 'Unbounded', sans-serif;">
+        Yes, Remove
+      </v-btn>
+      <v-btn color="#FAEED1" text class="cancel-btn font-weight-bold" @click="showRemoveConfirm = false" style="font-family: 'Unbounded', sans-serif; background-color: #803d3b; color: #FAEED1;">
+        No
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
 
       <LogoutModal ref="logoutModalRef" />
     </v-main>
@@ -58,10 +80,42 @@ import NavBar from '@/components/layout/NavBar.vue'
 // References
 const logoutModalRef = ref(null)
 const starredCourses = ref([])
+const showRemoveConfirm = ref(false)
+const courseIdToRemove = ref(null)
 
 // Function to open logout modal
 const openLogoutModal = () => {
   logoutModalRef.value?.open()
+}
+
+// Open confirmation dialog before deleting
+const confirmRemoveCourse = (courseId) => {
+  courseIdToRemove.value = courseId
+  showRemoveConfirm.value = true
+}
+
+// Remove course function with confirmation
+const removeCourse = async () => {
+  try {
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser()
+    if (userError) throw userError
+
+    const { error: deleteError } = await supabase
+      .from('starred_courses')
+      .delete()
+      .match({ user_id: user.id, course_id: courseIdToRemove.value })
+
+    if (deleteError) throw deleteError
+
+    // Update starred courses locally
+    starredCourses.value = starredCourses.value.filter((course) => course.id !== courseIdToRemove.value)
+    showRemoveConfirm.value = false // Close dialog after deletion
+  } catch (error) {
+    console.error('Error deleting starred course:', error.message)
+  }
 }
 
 // Fetch starred courses from Supabase
@@ -99,30 +153,6 @@ const fetchStarredCourses = async () => {
     }
   } catch (error) {
     console.error('Error fetching starred courses:', error.message)
-  }
-}
-
-// Delete a starred course
-const deleteStarredCourse = async (courseId) => {
-  try {
-    const {
-      data: { user },
-      error: userError
-    } = await supabase.auth.getUser()
-    if (userError) throw userError
-
-    // Remove the course from starred_courses
-    const { error: deleteError } = await supabase
-      .from('starred_courses')
-      .delete()
-      .match({ user_id: user.id, course_id: courseId })
-
-    if (deleteError) throw deleteError
-
-    // Remove the course from local starredCourses array
-    starredCourses.value = starredCourses.value.filter((course) => course.id !== courseId)
-  } catch (error) {
-    console.error('Error deleting starred course:', error.message)
   }
 }
 
