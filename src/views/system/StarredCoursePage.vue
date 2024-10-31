@@ -11,7 +11,13 @@
         </v-row>
 
         <v-row>
-          <v-col v-for="course in starredCourses" :key="course.id" cols="12" sm="6" md="4">
+          <v-col
+            v-for="course in starredCourses"
+            :key="course.id"
+            cols="12"
+            sm="6"
+            md="4"
+          >
             <v-card class="pa-3" elevation="15" color="#803d3b" variant="elevated">
               <v-btn
                 class="pa-0"
@@ -37,34 +43,46 @@
                 block
                 @click="confirmRemoveCourse(course.id)"
               >
-                REMOVE<v-icon>mdi-delete</v-icon>
+                REMOVE <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-card>
           </v-col>
         </v-row>
       </v-container>
 
-    <!-- Confirmation Dialog -->
-<v-dialog v-model="showRemoveConfirm" max-width="400">
-  <v-card color="#FAEED1" elevation="10" class="dialog-card">
-    <v-card-title class="headline text-center mt-4 mb-0">
-      <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
-    </v-card-title>
-    <v-card-text class="font-weight-black text-center mt-0">
-      <h2 class="text-h5 text-center font-weight-black" style="color: #803d3b; font-family: 'Unbounded', sans-serif;">
-        Are you sure you want to remove this course?
-      </h2>
-    </v-card-text>
-    <v-card-actions class="justify-center dialog-actions">
-      <v-btn color="#FAEED1" text class="confirm-btn font-weight-bold" @click="removeCourse" style="background-color: white; color: #803d3b; font-family: 'Unbounded', sans-serif;">
-        Yes, Remove
-      </v-btn>
-      <v-btn color="#FAEED1" text class="cancel-btn font-weight-bold" @click="showRemoveConfirm = false" style="font-family: 'Unbounded', sans-serif; background-color: #803d3b; color: #FAEED1;">
-        No
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
+      <!-- Confirmation Dialog -->
+      <v-dialog v-model="showRemoveConfirm" max-width="400">
+        <v-card color="#FAEED1" elevation="10" class="dialog-card">
+          <v-card-title class="headline text-center mt-4 mb-0">
+            <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
+          </v-card-title>
+          <v-card-text class="font-weight-black text-center mt-0">
+            <h2 class="text-h5 text-center font-weight-black" style="color: #803d3b; font-family: 'Unbounded', sans-serif;">
+              Are you sure you want to remove this course?
+            </h2>
+          </v-card-text>
+          <v-card-actions class="justify-center dialog-actions">
+            <v-btn
+              color="#FAEED1"
+              text
+              class="confirm-btn font-weight-bold"
+              @click="removeCourse"
+              style="background-color: white; color: #803d3b; font-family: 'Unbounded', sans-serif; margin-right: 5px;"
+            >
+              Yes, Remove
+            </v-btn>
+            <v-btn
+              color="#FAEED1"
+              text
+              class="cancel-btn font-weight-bold"
+              @click="showRemoveConfirm = false"
+              style="font-family: 'Unbounded', sans-serif; background-color: #803d3b; color: #FAEED1; margin-left: 5px;"
+            >
+              No
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <LogoutModal ref="logoutModalRef" />
     </v-main>
@@ -72,98 +90,99 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { supabase } from '@/utils/supabase'
-import LogoutModal from '@/components/auth/LogoutModal.vue'
-import NavBar from '@/components/layout/NavBar.vue'
+import { ref, onMounted } from 'vue';
+import { supabase } from '@/utils/supabase';
+import LogoutModal from '@/components/auth/LogoutModal.vue';
+import NavBar from '@/components/layout/NavBar.vue';
 
 // References
-const logoutModalRef = ref(null)
-const starredCourses = ref([])
-const showRemoveConfirm = ref(false)
-const courseIdToRemove = ref(null)
+const logoutModalRef = ref(null);
+const starredCourses = ref([]);
+const showRemoveConfirm = ref(false);
+const courseIdToRemove = ref(null);
 
 // Function to open logout modal
 const openLogoutModal = () => {
-  logoutModalRef.value?.open()
-}
+  logoutModalRef.value?.open();
+};
 
 // Open confirmation dialog before deleting
 const confirmRemoveCourse = (courseId) => {
-  courseIdToRemove.value = courseId
-  showRemoveConfirm.value = true
-}
+  courseIdToRemove.value = courseId;
+  showRemoveConfirm.value = true;
+};
 
 // Remove course function with confirmation
 const removeCourse = async () => {
   try {
     const {
       data: { user },
-      error: userError
-    } = await supabase.auth.getUser()
-    if (userError) throw userError
+      error: userError,
+    } = await supabase.auth.getUser();
+    if (userError) throw userError;
 
     const { error: deleteError } = await supabase
       .from('starred_courses')
       .delete()
-      .match({ user_id: user.id, course_id: courseIdToRemove.value })
+      .match({ user_id: user.id, course_id: courseIdToRemove.value });
 
-    if (deleteError) throw deleteError
+    if (deleteError) throw deleteError;
 
     // Update starred courses locally
-    starredCourses.value = starredCourses.value.filter((course) => course.id !== courseIdToRemove.value)
-    showRemoveConfirm.value = false // Close dialog after deletion
+    starredCourses.value = starredCourses.value.filter((course) => course.id !== courseIdToRemove.value);
+    showRemoveConfirm.value = false; // Close dialog after deletion
   } catch (error) {
-    console.error('Error deleting starred course:', error.message)
+    console.error('Error deleting starred course:', error.message);
   }
-}
+};
 
 // Fetch starred courses from Supabase
 const fetchStarredCourses = async () => {
   try {
     const {
       data: { user },
-      error: userError
-    } = await supabase.auth.getUser()
-    if (userError) throw userError
+      error: userError,
+    } = await supabase.auth.getUser();
+    if (userError) throw userError;
 
     // Fetch starred courses for the logged-in user
     const { data: starred, error: starredError } = await supabase
       .from('starred_courses')
       .select('course_id')
-      .eq('user_id', user.id)
+      .eq('user_id', user.id);
 
-    if (starredError) throw starredError
+    if (starredError) throw starredError;
 
     if (starred.length) {
       // Extract unique course IDs from the starred courses
-      const courseIds = starred.map((item) => item.course_id)
+      const courseIds = starred.map((item) => item.course_id);
 
       // Fetch course details for the starred courses
       const { data: courses, error: courseError } = await supabase
         .from('courses')
         .select('*')
-        .in('id', courseIds)
+        .in('id', courseIds);
 
-      if (courseError) throw courseError
+      if (courseError) throw courseError;
 
-      starredCourses.value = courses
+      starredCourses.value = courses;
     } else {
-      starredCourses.value = []
+      starredCourses.value = [];
     }
   } catch (error) {
-    console.error('Error fetching starred courses:', error.message)
+    console.error('Error fetching starred courses:', error.message);
   }
-}
+};
 
 // Fetch starred courses when component mounts
 onMounted(() => {
-  fetchStarredCourses()
-})
+  fetchStarredCourses();
+});
 </script>
 
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/unbounded');
+
 .fill-height {
   height: 100vh;
 }
