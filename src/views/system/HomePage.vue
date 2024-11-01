@@ -17,7 +17,7 @@
             <!-- Search Course Bar -->
             <v-row class="justify-center mb-1 mx-auto">
               <v-col cols="12" sm="8" md="6">
-                <v-card class="pa-2" elevation="15" color="#803d3b" variant="elevated">
+                <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
                   <v-text-field
                     v-model="searchQuery"
                     :loading="loading"

@@ -13,6 +13,7 @@ import CoursePage from '@/views/system/CoursePage.vue'
 import StarredCoursePage from '@/views/system/StarredCoursePage.vue'
 import AdminHomePage from '@/views/system/AdminHomePage.vue'
 import AdminProfile from '@/views/system/AdminProfile.vue'
+import AdminCoursePage from '@/views/system/AdminCoursePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -86,6 +87,11 @@ const router = createRouter({
       path: '/course/:id',
       name: 'CoursePage',
       component: CoursePage
+    },
+    {
+      path: '/admincourse/:id',
+      name: 'admincoursepage',
+      component: AdminCoursePage
     },
     {
       path: '/adminhome',
