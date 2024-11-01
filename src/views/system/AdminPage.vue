@@ -186,23 +186,40 @@
           </v-card>
         </v-dialog>
 
-        <!-- Delete Confirmation Modal -->
-        <v-dialog v-model="deleteDialog" max-width="500px">
-          <v-card class="pa-0" color="#FAEED1" block elevation="10">
-            <v-card-title class="headline font-weight-black text-center mt-2">Confirm Deletion</v-card-title>
-            <v-card-text class="text-center">
-              <p>Are you sure you want to delete this course?</p>
+     <!-- Delete Confirmation Modal -->
+     <v-dialog v-model="deleteDialog" max-width="400">
+          <v-card color="#FAEED1" elevation="10" class="dialog-card">
+            <v-card-title class="headline text-center mt-4 mb-0">
+              <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
+            </v-card-title>
+            <v-card-text class="font-weight-black text-center mt-0">
+              <h2 class="text-h5 text-center font-weight-black" style="color: #803d3b; font-family: 'Unbounded', sans-serif;">
+                Are you sure you want to delete this course?
+              </h2>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-row class="mb-2">
-              <v-btn class="mx-2" color="#803d3b" variant="elevated" text @click="deleteDialog = false"> Cancel </v-btn>
-              <v-btn class="mx-2" color="whtie" variant="elevated" text @click="deleteCourse"> Delete </v-btn>
-            </v-row>
+            <v-card-actions class="justify-center dialog-actions">
+              <v-btn
+                color="#FAEED1"
+                text
+                class="confirm-btn font-weight-bold"
+                @click="deleteCourse"
+                style="background-color: white; color: #803d3b; font-family: 'Unbounded', sans-serif; margin-right: 5px;"
+              >
+                Yes, Delete
+              </v-btn>
+              <v-btn
+                color="#FAEED1"
+                text
+                class="cancel-btn font-weight-bold"
+                @click="deleteDialog = false"
+                style="font-family: 'Unbounded', sans-serif; background-color: #803d3b; color: #FAEED1; margin-left: 5px;"
+              >
+                No
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-
+        
         <LogoutModal ref="logoutModalRef" />
       </v-container>
     </v-main>
@@ -300,6 +317,8 @@ const filteredCourses = computed(() => {
 </script>
 
 <style scoped>
+@import url('https://fonts.cdnfonts.com/css/unbounded');
+
 .fill-height {
   height: 100vh;
 }
@@ -307,9 +326,44 @@ const filteredCourses = computed(() => {
 .background-color {
   background-color: #803d3b; /* Your desired background color */
   height: 100%;
+  font-family: 'Unbounded', sans-serif; /* Set the font for the entire app */
 }
 
 .mobile-nav-drawer {
   backdrop-filter: blur(15px);
+}
+
+.text-white {
+  color: white; /* Ensure text color remains white if necessary */
+}
+
+.font-weight-black {
+  font-weight: 900; /* For bold text */
+}
+
+/* Card Styles */
+.v-card {
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+  border-radius: 15px; /* Rounded corners */
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+.v-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+/* Button Styles */
+.v-btn {
+  border-radius: 8px; /* Rounded button */
+}
+
+/* Ensure proper spacing */
+.mb-4 {
+  margin-bottom: 16px; /* Bottom margin for spacing */
+}
+
+.pa-4 {
+  padding: 16px; /* Padding inside cards */
 }
 </style>
