@@ -9,16 +9,16 @@
         <v-row class="mt-8 d-flex" v-if="starredCourses.length">
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px"> mdi-star </v-icon>
+              <v-icon large :color="textColor" > mdi-star </v-icon>
               Starred Courses
             </h1>
           </v-col>
         </v-row>
 
-        <v-row class="mt-8" v-else>
+        <v-row class="mt-8  d-flex" v-else>
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px">
+            <h1 class="text-white font-weight-black align-items-center justify-center">
+              <v-icon large :color="textColor">
                 mdi-alert-circle-outline
               </v-icon>
               You have no Starred Courses
