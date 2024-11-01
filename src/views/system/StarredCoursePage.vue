@@ -6,12 +6,10 @@
     <v-main>
       <v-container fluid>
         <!-- Display header for starred courses or a message if none exist -->
-        <v-row class="mt-8" v-if="starredCourses.length">
+        <v-row class="mt-8 d-flex" v-if="starredCourses.length">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px;">
-                mdi-star
-              </v-icon>
+            <h1 class="text-white font-weight-black align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px"> mdi-star </v-icon>
               Starred Courses
             </h1>
           </v-col>
@@ -20,14 +18,13 @@
         <v-row class="mt-8" v-else>
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px;">
+              <v-icon large :color="textColor" style="margin-right: 10px">
                 mdi-alert-circle-outline
               </v-icon>
               You have no Starred Courses
             </h1>
           </v-col>
         </v-row>
-
 
         <v-row>
           <!-- Loop through starred courses and display each one -->
@@ -72,7 +69,7 @@
           </v-card-title>
           <v-card-text class="text-center text-black text-caption description">
             <h3>Are you sure you want to remove this course?</h3>
-            <h3 style="color: #803d3b;">Please confirm your decision.</h3>
+            <h3 style="color: #803d3b">Please confirm your decision.</h3>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -83,7 +80,12 @@
                 text
                 class="confirm-btn font-weight-bold"
                 @click="removeCourse"
-                style="background-color: white; color: #803d3b; font-family: 'Unbounded', sans-serif; margin-right: 5px;"
+                style="
+                  background-color: white;
+                  color: #803d3b;
+                  font-family: 'Unbounded', sans-serif;
+                  margin-right: 5px;
+                "
               >
                 Remove
               </v-btn>
@@ -93,7 +95,12 @@
                 text
                 class="cancel-btn font-weight-bold"
                 @click="showRemoveConfirm = false"
-                style="background-color: #803d3b; color: #faeed1; font-family: 'Unbounded', sans-serif; margin-left: 5px;"
+                style="
+                  background-color: #803d3b;
+                  color: #faeed1;
+                  font-family: 'Unbounded', sans-serif;
+                  margin-left: 5px;
+                "
               >
                 No
               </v-btn>
@@ -109,27 +116,27 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { supabase } from '@/utils/supabase';
-import LogoutModal from '@/components/auth/LogoutModal.vue';
-import NavBar from '@/components/layout/NavBar.vue';
+import { ref, onMounted } from 'vue'
+import { supabase } from '@/utils/supabase'
+import LogoutModal from '@/components/auth/LogoutModal.vue'
+import NavBar from '@/components/layout/NavBar.vue'
 
 // References for state management
-const logoutModalRef = ref(null);
-const starredCourses = ref([]);
-const showRemoveConfirm = ref(false);
-const courseIdToRemove = ref(null);
+const logoutModalRef = ref(null)
+const starredCourses = ref([])
+const showRemoveConfirm = ref(false)
+const courseIdToRemove = ref(null)
 
 // Function to open logout modal
 const openLogoutModal = () => {
-  logoutModalRef.value?.open();
-};
+  logoutModalRef.value?.open()
+}
 
 // Open confirmation dialog before deleting a course
 const confirmRemoveCourse = (courseId) => {
-  courseIdToRemove.value = courseId;
-  showRemoveConfirm.value = true;
-};
+  courseIdToRemove.value = courseId
+  showRemoveConfirm.value = true
+}
 
 // Remove course function with confirmation
 const removeCourse = async () => {
@@ -138,26 +145,26 @@ const removeCourse = async () => {
     const {
       data: { user },
       error: userError
-    } = await supabase.auth.getUser();
-    if (userError) throw userError;
+    } = await supabase.auth.getUser()
+    if (userError) throw userError
 
     // Remove the course from the starred_courses table
     const { error: deleteError } = await supabase
       .from('starred_courses')
       .delete()
-      .match({ user_id: user.id, course_id: courseIdToRemove.value });
+      .match({ user_id: user.id, course_id: courseIdToRemove.value })
 
-    if (deleteError) throw deleteError;
+    if (deleteError) throw deleteError
 
     // Update starred courses locally after successful deletion
     starredCourses.value = starredCourses.value.filter(
       (course) => course.id !== courseIdToRemove.value
-    );
-    showRemoveConfirm.value = false;
+    )
+    showRemoveConfirm.value = false
   } catch (error) {
-    console.error('Error deleting starred course:', error.message);
+    console.error('Error deleting starred course:', error.message)
   }
-};
+}
 
 // Fetch starred courses from Supabase when the component mounts
 const fetchStarredCourses = async () => {
@@ -165,39 +172,39 @@ const fetchStarredCourses = async () => {
     const {
       data: { user },
       error: userError
-    } = await supabase.auth.getUser();
-    if (userError) throw userError;
+    } = await supabase.auth.getUser()
+    if (userError) throw userError
 
     const { data: starred, error: starredError } = await supabase
       .from('starred_courses')
       .select('course_id')
-      .eq('user_id', user.id);
+      .eq('user_id', user.id)
 
-    if (starredError) throw starredError;
+    if (starredError) throw starredError
 
     if (starred.length) {
-      const courseIds = starred.map((item) => item.course_id);
+      const courseIds = starred.map((item) => item.course_id)
 
       const { data: courses, error: courseError } = await supabase
         .from('courses')
         .select('*')
-        .in('id', courseIds);
+        .in('id', courseIds)
 
-      if (courseError) throw courseError;
+      if (courseError) throw courseError
 
-      starredCourses.value = courses;
+      starredCourses.value = courses
     } else {
-      starredCourses.value = [];
+      starredCourses.value = []
     }
   } catch (error) {
-    console.error('Error fetching starred courses:', error.message);
+    console.error('Error fetching starred courses:', error.message)
   }
-};
+}
 
 // Fetch starred courses when component mounts
 onMounted(() => {
-  fetchStarredCourses();
-});
+  fetchStarredCourses()
+})
 </script>
 
 <style scoped>
