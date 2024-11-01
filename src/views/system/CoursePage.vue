@@ -324,7 +324,7 @@ const showPdf = (pdfUrl) => {
 
 <style scoped>
 .background-color {
-  background-color: #803d3b;
+  background-color: #683130;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -344,7 +344,7 @@ const showPdf = (pdfUrl) => {
   bottom: 18px;
   left: 18px;
   z-index: 2000;
-  background-color: #FFD700;
+  background-color: #faeed1;
   color: #000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

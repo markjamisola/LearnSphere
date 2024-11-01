@@ -35,10 +35,10 @@
             </v-col>
           </v-row>
           <v-row class="justify-center mt-3 mb-4">
-            <v-btn class="ma-1" color="#FFD700" @click="openAddCourseModal">
+            <v-btn class="ma-1" color="#dd660d" @click="openAddCourseModal">
               <h4><v-icon>mdi-plus</v-icon> Add New Course</h4>
             </v-btn>
-            <v-btn class="ma-1" color="#FFD700" @click="openAddTopicModal">
+            <v-btn class="ma-1" color="#dd660d" @click="openAddTopicModal">
               <h4><v-icon>mdi-plus</v-icon> Add New Topic</h4>
             </v-btn>
           </v-row>

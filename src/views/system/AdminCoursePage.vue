@@ -2,112 +2,79 @@
   <v-app class="background-color description">
     <AdminNav @triggerLogoutModal="openLogoutModal" />
     <v-main>
-      <v-container>
-        <v-row class="mt-5 align-center justify-center">
-          <v-col cols="auto" class="text-center">
-            <v-row>
-              <h1 class="text-white font-weight-black d-inline">
-                <template v-if="!isEditingName">{{ courseDetails?.course_name || '...' }}</template>
-                <div style="display: flex; align-items: center">
-                  <v-text-field
-                    v-if="isEditingName"
-                    v-model="editableCourseName"
-                    hide-details
-                    rounded="lg"
-                    variant="outlined"
-                    density="comfortable"
-                    style="width: 300px; border-radius: 10px; background-color: #faeed1"
-                    class="text-black font-weight-black"
-                    color="black"
-                  ></v-text-field>
-                  <template v-if="isEditingName">
-                    <v-row class="ml-2">
-                      <v-btn icon @click="saveCourseDetails('name')" color="#FFD700">
-                        <v-icon>mdi-check</v-icon>
-                      </v-btn>
-                      <v-btn class="ml-2" icon @click="cancelEdit('name')" color="#FAEED1">
-                        <v-icon>mdi-close</v-icon>
-                      </v-btn>
-                    </v-row>
-                  </template>
-                </div>
-              </h1>
-              <template v-if="!isEditingName">
-                <v-btn class="ml-2" icon @click="toggleEdit('name')" color="#FFD700">
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-              </template>
-            </v-row>
-          </v-col>
-        </v-row>
-
-        <!-- Course Description with Edit Button -->
-        <v-row class="mt-5 align-center justify-center">
-          <v-col cols="auto" class="text-center">
-            <v-row>
-              <h1 class="text-white font-weight-black d-inline">
-                <template v-if="!isEditingDescription">{{
-                  courseDetails?.description || '......'
-                }}</template>
-                <div style="display: flex; align-items: center">
-                  <v-text-field
-                    v-if="isEditingDescription"
-                    v-model="editableDescription"
-                    hide-details
-                    rounded="lg"
-                    variant="outlined"
-                    density="comfortable"
-                    style="width: 500px; border-radius: 10px; background-color: #faeed1"
-                    class="text-black font-weight-black"
-                    color="black"
-                  ></v-text-field>
-                  <template v-if="isEditingDescription">
-                    <v-row class="ml-2">
-                      <v-btn icon @click="saveCourseDetails('description')" color="#FFD700">
-                        <v-icon>mdi-check</v-icon>
-                      </v-btn>
-                      <v-btn class="ml-2" icon @click="cancelEdit('description')" color="#FAEED1">
-                        <v-icon>mdi-close</v-icon>
-                      </v-btn>
-                    </v-row>
-                  </template>
-                </div>
-              </h1>
-              <template v-if="!isEditingDescription">
-                <v-btn class="ml-2" icon @click="toggleEdit('description')" color="#FFD700">
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-              </template>
-            </v-row>
-          </v-col>
-        </v-row>
-
-        <!-- Success Modal -->
-
-        <v-dialog v-model="successModal" max-width="448" class="dialog-with-blur">
-          <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
-            <v-card-title>
-              <h3 class="font-weight-black text-center description">Success</h3>
-            </v-card-title>
-            <v-card-text class="text-center text-black text-caption description">
-              <h3>Information Successfully Updated!</h3>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn
-                class="description"
-                color="#803d3b"
-                size="large"
-                variant="elevated"
-                elevation="15"
-                block
-                @click="refreshPage"
-              >
-                OK
+      <v-container fluid>
+        <v-row class="mt-5">
+          <v-col cols="12" class="text-center">
+            <h1 class="text-white align-center text-center font-weight-black d-inline">
+              {{ courseDetails?.course_name || '...' }}
+              <v-btn class="ml-2" icon @click="openCourseEditModal" color="#dd660d">
+                <v-icon>mdi-pencil</v-icon>
               </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            </h1>
+          </v-col>
+          <v-row class="align-center justify-center">
+            <v-col cols="auto" class="text-center">
+              <h1 class="text-white font-weight-black d-inline">
+                {{ courseDetails?.description || '......' }}
+              </h1>
+            </v-col>
+          </v-row>
+        </v-row>
       </v-container>
+
+      <!-- Edit Modal -->
+      <v-dialog v-model="isModalOpen" persistent max-width="500px">
+        <v-card>
+          <v-card-title>Edit Course Details</v-card-title>
+          <v-card-text>
+            <v-text-field
+              label="Course Name"
+              v-model="editableCourseName"
+              rounded="lg"
+              style="width: 100%; background-color: #faeed1"
+              class="text-black font-weight-black"
+            ></v-text-field>
+            <v-textarea
+              label="Description"
+              v-model="editableDescription"
+              rounded="lg"
+              style="width: 100%; background-color: #faeed1"
+              class="text-black font-weight-black"
+            ></v-textarea>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="b35100" @click="saveCourseDetails">Save</v-btn>
+            <v-btn color="#FAEED1" @click="closeCourseEditModal">Cancel</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Success Modal -->
+
+      <v-dialog v-model="successModal" max-width="448" class="dialog-with-blur">
+        <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
+          <v-card-title>
+            <h3 class="font-weight-black text-center description">Success</h3>
+          </v-card-title>
+          <v-card-text class="text-center text-black text-caption description">
+            <h3>Information Successfully Updated!</h3>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="description"
+              color="#803d3b"
+              size="large"
+              variant="elevated"
+              elevation="15"
+              block
+              @click="refreshPage"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <!-- Search for Topics -->
       <v-row class="justify-center mt-0 mb-4 mx-auto">
         <v-col cols="12" sm="8" md="6">
@@ -129,15 +96,22 @@
           </v-card>
         </v-col>
       </v-row>
-
       <v-row class="justify-center mt-2 mb-4">
-        <v-btn class="ma-1" color="#FFD700" @click="openDeleteDialog">
+        <v-btn class="ma-1" color="#dd660d" @click="openDeleteDialog">
           <h4>
-            <v-icon>mdi-delete</v-icon> Delete {{ courseDetails?.course_name || '...' }}
+            Delete {{ courseDetails?.course_name || '...' }}
             <v-icon>mdi-delete</v-icon>
           </h4>
         </v-btn>
 
+        <v-btn class="ma-1" color="#dd660d" @click="openAddModal">
+          <h4>
+            Add Topic
+            <v-icon>mdi-plus</v-icon>
+          </h4>
+        </v-btn>
+      </v-row>
+      <v-row class="justify-center mt-2 mb-4">
         <v-dialog v-model="deleteDialog" max-width="500px" class="dialog-with-blur">
           <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
             <v-card-title class="font-weight-black text-center description"
@@ -187,11 +161,17 @@
       <v-container fluid>
         <v-row>
           <v-col cols="12" md="6" v-for="topic in filteredTopics" :key="topic.topic_title">
-            <v-card class="mb-5" color="#FAEED1" dark elevation="10">
+            <v-card class="mb-5 pb-2" color="#FAEED1" dark elevation="10">
+              <!-- Topic Title -->
               <v-card-title class="text-center font-weight-black">
                 {{ topic.topic_title }}
               </v-card-title>
-              <v-card-subtitle class="text-center">{{ topic.description }}</v-card-subtitle>
+
+              <!-- Topic Description -->
+              <v-card-subtitle class="text-center">
+                {{ topic.description }}
+              </v-card-subtitle>
+
               <v-card-text>
                 <v-row>
                   <v-col cols="6">
@@ -211,10 +191,111 @@
                   </v-col>
                 </v-row>
               </v-card-text>
+
+              <!-- Delete Topic Button -->
+
+              <v-card-actions>
+                <v-row class="d-flex justify-end mx-3 pb-1">
+                  <v-btn
+                    color="white"
+                    text
+                    class="confirm-btn font-weight-bold"
+                    @click="openTopicDeleteDialog(topic.id)"
+                    style="
+                      background-color: #dd660d;
+                      color: #803d3b;
+                      font-family: 'Unbounded', sans-serif;
+                      margin-right: 5px;
+                    "
+                  >
+                    Delete
+                  </v-btn>
+                  <v-btn
+                    color="#FAEED1"
+                    text
+                    class="cancel-btn font-weight-bold"
+                    @click="openEditModal(topic)"
+                    style="
+                      font-family: 'Unbounded', sans-serif;
+                      background-color: #dd660d;
+                      color: #faeed1;
+                      margin-left: 5px;
+                    "
+                  >
+                    Edit
+                  </v-btn>
+                </v-row>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
 
+        <v-dialog v-model="deleteTopicDialog" max-width="500px" class="dialog-with-blur">
+          <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
+            <v-card-title class="font-weight-black text-center description"
+              >Confirm Deletion</v-card-title
+            >
+            <v-card-text class="text-center text-black text-caption description">
+              <h3>Are you sure you want to delete this Topic?</h3>
+              <h3 class="text-red-darken-4">This action cannot be undone</h3>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-row>
+                <v-btn
+                  color="white"
+                  text
+                  class="confirm-btn font-weight-bold"
+                  @click="deleteTopic(topicToDelete)"
+                  style="
+                    background-color: #dd660d;
+                    color: #803d3b;
+                    font-family: 'Unbounded', sans-serif;
+                    margin-right: 5px;
+                  "
+                >
+                  Delete
+                </v-btn>
+                <v-btn
+                  color="#FAEED1"
+                  text
+                  class="cancel-btn font-weight-bold"
+                  @click="deleteTopicDialog = false"
+                  style="
+                    font-family: 'Unbounded', sans-serif;
+                    background-color: #803d3b;
+                    color: #faeed1;
+                    margin-left: 5px;
+                  "
+                >
+                  Cancel
+                </v-btn>
+              </v-row>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <!-- Edit Topic Modal -->
+        <EditTopicModal
+          v-if="editModalOpen"
+          :isOpen="editModalOpen"
+          :topic="topicToEdit"
+          @update:topic="updateTopic"
+          @close="closeEditModal"
+        />
+        <AddTopicModal
+          v-if="addModalOpen"
+          :isOpen="addModalOpen"
+          @add-topic="addTopic"
+          @close="closeAddModal"
+        />
+        <!-- Edit Course Details Modal -->
+        <EditCourseDetails
+          :isOpen="isEditModalOpen"
+          :courseDetails="courseDetails"
+          @close="isEditModalOpen = false"
+          @save="saveCourseDetails"
+        />
         <!-- Video Dialog -->
         <v-dialog
           v-model="dialog"
@@ -280,6 +361,9 @@ import { useRoute, useRouter } from 'vue-router' // Import useRouter
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import AdminNav from '@/components/layout/AdminNav.vue'
+import EditTopicModal from '@/components/layout/EditTopicModal.vue'
+import AddTopicModal from '@/components/layout/AddTopicModal.vue'
+import EditCourseDetails from '@/components/layout/EditCourseDetails.vue'
 
 // Modal and star state
 const logoutModalRef = ref(null)
@@ -298,15 +382,18 @@ const dialog = ref(false)
 const videos = ref([])
 const selectedTopic = ref('')
 const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ'
-const isEditingName = ref(false)
-const isEditingDescription = ref(false)
 const editableCourseName = ref()
 const editableDescription = ref()
 const successModal = ref(false)
-const successMessage = ref('')
 const deleteDialog = ref(false) // Add delete confirmation dialog state
+const deleteTopicDialog = ref(false) // Add delete confirmation dialog state
+const topicToDelete = ref(null) // To hold the ID of the topic to delete
+const addModalOpen = ref(false)
 const router = useRouter() // Get router instance
-
+const isModalOpen = ref(false)
+const editModalOpen = ref(false)
+const topicToEdit = ref(null)
+const isEditModalOpen = ref(false)
 // Use Vue Router's route object
 const route = useRoute()
 
@@ -408,44 +495,9 @@ const showPdf = (pdfUrl) => {
   window.open(pdfUrl, '_blank')
 }
 
-// Toggle edit mode and save changes if editing is completed
-const toggleEdit = (field) => {
-  if (field === 'name') {
-    if (isEditingName.value) {
-      saveCourseDetails('name') // Save when editing is completed
-    } else {
-      editableCourseName.value = courseDetails.value.course_name // Initialize editable field
-    }
-    isEditingName.value = !isEditingName.value
-  } else if (field === 'description') {
-    if (isEditingDescription.value) {
-      saveCourseDetails('description') // Save when editing is completed
-    } else {
-      editableDescription.value = courseDetails.value.description // Initialize editable field
-    }
-    isEditingDescription.value = !isEditingDescription.value
-  }
-}
-
-// Cancel edit mode and reset editable field
-const cancelEdit = (field) => {
-  if (field === 'name') {
-    editableCourseName.value = courseDetails.value.course_name // Reset to original value
-    isEditingName.value = false // Close editing mode
-  } else if (field === 'description') {
-    editableDescription.value = courseDetails.value.description // Reset to original value
-    isEditingDescription.value = false // Close editing mode
-  }
-}
-
 // Save updated course details to Supabase
-const saveCourseDetails = async () => {
+const saveCourseDetails = async (updatedData) => {
   try {
-    const updatedData = {
-      course_name: editableCourseName.value,
-      description: editableDescription.value
-    }
-
     const { data, error } = await supabase
       .from('courses')
       .update(updatedData)
@@ -453,26 +505,22 @@ const saveCourseDetails = async () => {
 
     if (error) {
       console.error('Error updating course details:', error)
-      successMessage.value = 'Failed to update course details.'
     } else if (data && data.length) {
       // Update the course name and description with new data
       courseDetails.value.course_name = data[0].course_name
       courseDetails.value.description = data[0].description
       console.log('Course details updated successfully:', data[0])
-
-      // Show success modal
-      successMessage.value = 'Course details updated successfully!'
     }
+
+    successModal.value = true
   } catch (error) {
     console.error('Failed to save changes:', error)
-    successMessage.value = 'An error occurred while saving changes.'
-  } finally {
-    // Open modal regardless of success or failure
-    successModal.value = true
-
-    // Close the editing mode after saving
-    isEditingName.value = false // Close editing for name
-    isEditingDescription.value = false // Close editing for description
+  }
+  return {
+    isEditModalOpen,
+    courseDetails,
+    openCourseEditModal,
+    saveCourseDetails
   }
 }
 
@@ -504,6 +552,118 @@ const deleteCourse = async () => {
 const refreshPage = () => {
   location.reload() // Refresh the page
 }
+
+const openCourseEditModal = () => {
+  isEditModalOpen.value = true
+}
+const closeCourseEditModal = () => {
+  isModalOpen.value = false
+}
+
+const openEditModal = (topic) => {
+  topicToEdit.value = topic
+  editModalOpen.value = true
+}
+
+// Function to close the edit modal
+const closeEditModal = () => {
+  editModalOpen.value = false
+  topicToEdit.value = null
+}
+
+// Function to update the topic in Supabase and locally
+const updateTopic = async (updatedTopic) => {
+  try {
+    const { data, error } = await supabase
+      .from('topics')
+      .update({
+        topic_title: updatedTopic.topic_title,
+        description: updatedTopic.description
+      })
+      .eq('id', updatedTopic.id)
+
+    if (error) throw error
+
+    // Update the topic in the local list
+    const topicIndex = topics.value.findIndex((t) => t.id === updatedTopic.id)
+    if (topicIndex !== -1) {
+      topics.value[topicIndex] = updatedTopic
+    }
+    console.log('Topic updated successfully:', data)
+  } catch (error) {
+    console.error('Error updating topic:', error.message)
+  } finally {
+    closeEditModal()
+  }
+}
+
+const openTopicDeleteDialog = (topicId) => {
+  topicToDelete.value = topicId // Store the topic ID to delete
+  deleteTopicDialog.value = true // Open delete confirmation dialog
+}
+
+// Function to delete a topic from Supabase and locally
+const deleteTopic = async (topicId) => {
+  try {
+    if (!topicId) throw new Error('No topic ID provided')
+
+    const { error } = await supabase.from('topics').delete().eq('id', topicId)
+
+    if (error) throw error
+
+    // Remove the topic from the local list
+    topics.value = topics.value.filter((topic) => topic.id !== topicId)
+    deleteTopicDialog.value = false // Close delete confirmation dialog
+    console.log('Topic deleted successfully')
+  } catch (error) {
+    console.error('Error deleting topic:', error.message)
+  }
+}
+
+// Function to open the Add Topic modal
+const openAddModal = () => {
+  addModalOpen.value = true // Open the modal
+}
+
+// Function to close the Add Topic modal
+const closeAddModal = () => {
+  addModalOpen.value = false // Close the modal
+}
+
+const addTopic = async (newTopic) => {
+  try {
+    const { data, error } = await supabase
+      .from('topics')
+      .insert([
+        {
+          course_id: courseDetails.value.id,
+          topic_title: newTopic.topic_title,
+          description: newTopic.description,
+          created_at: new Date().toISOString() // Optional if auto-generated
+        }
+      ])
+      .select() // Ensure you select to return inserted data
+
+    // Check for errors
+    if (error) {
+      console.error('Supabase insert error:', error)
+      throw error // This will be caught in the catch block
+    }
+
+    // Ensure data is not null
+    if (!data || data.length === 0) {
+      throw new Error('No data returned from Supabase')
+    }
+
+    // Add the new topic to the local list
+    topics.value.push(data[0]) // Assuming data[0] contains the new topic's info
+    console.log('New topic added successfully:', data[0])
+  } catch (error) {
+    console.error('Error adding topic:', error.message)
+  } finally {
+    closeAddModal() // Close the modal after attempting to add the topic
+  }
+}
 </script>
 
 <style scoped>
@@ -525,10 +685,10 @@ const refreshPage = () => {
 
 .back-button {
   position: fixed;
-  bottom: 18px;
+  bottom: 20px;
   left: 18px;
   z-index: 2000;
-  background-color: #FFD700;
+  background-color: #faeed1;
   color: #000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
