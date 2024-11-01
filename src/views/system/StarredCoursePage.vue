@@ -1,9 +1,11 @@
 <template>
   <v-app class="animated-background description">
+    <!-- Navbar component with logout functionality -->
     <NavBar @triggerLogoutModal="openLogoutModal" />
 
     <v-main>
       <v-container fluid>
+        <!-- Display header for starred courses or a message if none exist -->
         <v-row class="mt-8" v-if="starredCourses.length">
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black">Starred Courses</h1>
@@ -16,6 +18,7 @@
         </v-row>
 
         <v-row>
+          <!-- Loop through starred courses and display each one -->
           <v-col v-for="course in starredCourses" :key="course.id" cols="12" sm="6" md="4">
             <v-card class="pa-3" elevation="15" color="#803d3b" variant="elevated">
               <v-btn
@@ -33,6 +36,7 @@
                   </v-card>
                 </div>
               </v-btn>
+              <!-- Button to remove the course with confirmation -->
               <v-btn
                 class="mb-1 mt-3 delete-button"
                 color="#FAEED1"
@@ -49,53 +53,55 @@
         </v-row>
       </v-container>
 
-      <!-- Confirmation Dialog -->
-      <v-dialog v-model="showRemoveConfirm" max-width="400" class="dialog-with-blur">
-        <v-card color="#FAEED1" elevation="10" class="dialog-card">
-          <v-card-title class="headline text-center mt-4 mb-0">
-            <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
+      <!-- Confirmation Dialog for course removal -->
+      <v-dialog v-model="showRemoveConfirm" max-width="500px" class="dialog-with-blur">
+        <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
+          <v-card-title class="font-weight-black text-center description">
+            Confirm Removal
           </v-card-title>
-          <v-card-text class="font-weight-black text-center mt-0">
-            <h2
-              class="text-h5 text-center font-weight-black"
-              style="color: #803d3b; font-family: 'Unbounded', sans-serif"
-            >
-              Are you sure you want to remove this course?
-            </h2>
+          <v-card-text class="text-center text-black text-caption description">
+            <h3>Are you sure you want to remove this course?</h3>
+            <h3 class="text-red-darken-4">Please confirm your decision.</h3>
           </v-card-text>
-          <v-card-actions class="justify-center dialog-actions mb-2">
-            <v-btn
-              color="#FAEED1"
-              text
-              class="confirm-btn font-weight-bold"
-              @click="removeCourse"
-              style="
-                background-color: white;
-                color: #803d3b;
-                font-family: 'Unbounded', sans-serif;
-                margin-right: 5px;
-              "
-            >
-              Yes, Remove
-            </v-btn>
-            <v-btn
-              color="#FAEED1"
-              text
-              class="cancel-btn font-weight-bold"
-              @click="showRemoveConfirm = false"
-              style="
-                font-family: 'Unbounded', sans-serif;
-                background-color: #803d3b;
-                color: #faeed1;
-                margin-left: 5px;
-              "
-            >
-              No
-            </v-btn>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-row>
+              <!-- Button to confirm the removal of the course -->
+              <v-btn
+                color="#FAEED1"
+                text
+                class="confirm-btn font-weight-bold"
+                @click="removeCourse"
+                style="
+                  background-color: white;
+                  color: #803d3b;
+                  font-family: 'Unbounded', sans-serif;
+                  margin-right: 5px;
+                "
+              >
+                Yes, Remove
+              </v-btn>
+              <!-- Button to cancel the removal -->
+              <v-btn
+                color="#FAEED1"
+                text
+                class="cancel-btn font-weight-bold"
+                @click="showRemoveConfirm = false"
+                style="
+                  font-family: 'Unbounded', sans-serif;
+                  background-color: #803d3b;
+                  color: #faeed1;
+                  margin-left: 5px;
+                "
+              >
+                No
+              </v-btn>
+            </v-row>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
+      <!-- Logout modal component -->
       <LogoutModal ref="logoutModalRef" />
     </v-main>
   </v-app>
@@ -107,32 +113,34 @@ import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 
-// References
-const logoutModalRef = ref(null)
-const starredCourses = ref([])
-const showRemoveConfirm = ref(false)
-const courseIdToRemove = ref(null)
+// References for state management
+const logoutModalRef = ref(null)  // Reference for logout modal
+const starredCourses = ref([])     // Array to hold starred courses
+const showRemoveConfirm = ref(false) // Control for confirmation dialog
+const courseIdToRemove = ref(null)   // Store the ID of the course to remove
 
 // Function to open logout modal
 const openLogoutModal = () => {
   logoutModalRef.value?.open()
 }
 
-// Open confirmation dialog before deleting
+// Open confirmation dialog before deleting a course
 const confirmRemoveCourse = (courseId) => {
-  courseIdToRemove.value = courseId
-  showRemoveConfirm.value = true
+  courseIdToRemove.value = courseId // Set the course ID to remove
+  showRemoveConfirm.value = true // Show confirmation dialog
 }
 
 // Remove course function with confirmation
 const removeCourse = async () => {
   try {
+    // Get the currently authenticated user
     const {
       data: { user },
       error: userError
     } = await supabase.auth.getUser()
     if (userError) throw userError
 
+    // Remove the course from the starred_courses table
     const { error: deleteError } = await supabase
       .from('starred_courses')
       .delete()
@@ -140,7 +148,7 @@ const removeCourse = async () => {
 
     if (deleteError) throw deleteError
 
-    // Update starred courses locally
+    // Update starred courses locally after successful deletion
     starredCourses.value = starredCourses.value.filter(
       (course) => course.id !== courseIdToRemove.value
     )
@@ -150,9 +158,10 @@ const removeCourse = async () => {
   }
 }
 
-// Fetch starred courses from Supabase
+// Fetch starred courses from Supabase when the component mounts
 const fetchStarredCourses = async () => {
   try {
+    // Get the currently authenticated user
     const {
       data: { user },
       error: userError
@@ -179,9 +188,9 @@ const fetchStarredCourses = async () => {
 
       if (courseError) throw courseError
 
-      starredCourses.value = courses
+      starredCourses.value = courses // Update starred courses with fetched data
     } else {
-      starredCourses.value = []
+      starredCourses.value = [] // No starred courses found
     }
   } catch (error) {
     console.error('Error fetching starred courses:', error.message)
@@ -198,11 +207,11 @@ onMounted(() => {
 @import url('https://fonts.cdnfonts.com/css/unbounded');
 
 .fill-height {
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
 }
 
 .mobile-nav-drawer {
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px); /* Blur effect for mobile navigation */
 }
 
 /* Background animation */
@@ -219,39 +228,39 @@ onMounted(() => {
 }
 
 .description {
-  font-family: 'Unbounded', sans-serif;
+  font-family: 'Unbounded', sans-serif; /* Font family for description */
 }
 
 .v-btn {
-  max-height: 150px;
-  overflow: hidden;
+  max-height: 150px; /* Limit button height */
+  overflow: hidden; /* Hide overflow content */
 }
 
 .text-center {
-  padding: 10px;
+  padding: 10px; /* Padding for center text */
 }
 
 .course-description {
   display: block;
-  overflow-wrap: break-word;
-  white-space: normal;
-  line-height: 1.4;
-  color: #803d3b;
+  overflow-wrap: break-word; /* Break words to prevent overflow */
+  white-space: normal; /* Allow normal text wrapping */
+  line-height: 1.4; /* Line height for readability */
+  color: #803d3b; /* Text color for course descriptions */
 }
 
 .animated-background {
-  background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
-  background-size: 800% 800%;
-  animation: gradientBackground 15s ease infinite;
+  background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646); /* Animated gradient background */
+  background-size: 800% 800%; /* Background size for animation */
+  animation: gradientBackground 15s ease infinite; /* Animation properties */
 }
 
 .delete-button {
-  z-index: 1;
-  position: relative;
+  z-index: 1; /* Stack order for delete button */
+  position: relative; /* Relative positioning */
 }
 
 .dialog-with-blur {
-  backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px); /* Blur effect for the dialog background */
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background color */
 }
 </style>
