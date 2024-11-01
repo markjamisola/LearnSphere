@@ -40,6 +40,12 @@ onMounted(() => {
               <h3 class="text-white text-center mb-6">
                 Unlock your potential and start your learning journey today!
               </h3>
+              <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
+                <v-card-text class="text-justify text-white text-caption description">
+                  Please note: The program you select will determine the courses available to you.
+                  However, you can update your program at any time through your profile settings.
+                </v-card-text>
+              </v-card>
             </div>
 
             <!-- Sign-Up Form Card -->
@@ -79,6 +85,13 @@ onMounted(() => {
               <p class="text-white mb-6 description">
                 Unlock your potential and start your learning journey today!
               </p>
+
+              <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
+                <v-card-text class="text-justify text-white text-caption description">
+                  Please note: The program you select will determine the courses available to you.
+                  However, you can update your program at any time through your profile settings.
+                </v-card-text>
+              </v-card>
             </div>
           </v-col>
         </v-row>

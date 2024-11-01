@@ -12,7 +12,7 @@
               <v-btn
                 icon
                 class="ma-2"
-                :color="isStarred ? 'red' : '#FAEED1'"
+                :color="isStarred ? '#FFD700' : '#FAEED1'"
                 @click="toggleStar(courseDetails.id)"
                 v-if="courseDetails"
               >
@@ -27,22 +27,24 @@
       </v-container>
 
       <!-- Search for Topics -->
-      <v-row class="justify-center mb-8 mx-auto">
+      <v-row class="justify-center mb-4 mx-auto">
         <v-col cols="12" sm="8" md="6">
-          <v-text-field
-            v-model="searchQuery"
-            :loading="loading"
-            append-inner-icon="mdi-magnify"
-            prepend-inner-icon="mdi-lightbulb-on"
-            density="comfortable"
-            label="Search Topics"
-            variant="solo"
-            hide-details
-            single-line
-            elevation="10"
-            color="deep-purple-darken-3"
-            outlined
-          ></v-text-field>
+          <v-card class="pa-2" elevation="15" color="#803d3b">
+            <v-text-field
+              v-model="searchQuery"
+              :loading="loading"
+              append-inner-icon="mdi-magnify"
+              prepend-inner-icon="mdi-lightbulb-on"
+              density="comfortable"
+              label="Search Topics"
+              variant="solo"
+              hide-details
+              single-line
+              elevation="10"
+              color="deep-purple-darken-3"
+              outlined
+            ></v-text-field>
+          </v-card>
         </v-col>
       </v-row>
 
@@ -322,7 +324,7 @@ const showPdf = (pdfUrl) => {
 
 <style scoped>
 .background-color {
-  background-color: #803d3b;
+  background-color: #683130;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -339,11 +341,11 @@ const showPdf = (pdfUrl) => {
 
 .back-button {
   position: fixed;
-  bottom: 20px;
+  bottom: 18px;
   left: 18px;
   z-index: 2000;
   background-color: #faeed1;
-  color: #803d3b;
+  color: #000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

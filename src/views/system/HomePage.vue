@@ -17,7 +17,7 @@
             <!-- Search Course Bar -->
             <v-row class="justify-center mb-1 mx-auto">
               <v-col cols="12" sm="8" md="6">
-                <v-card class="pa-2" elevation="15" color="#803d3b" variant="elevated">
+                <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
                   <v-text-field
                     v-model="searchQuery"
                     :loading="loading"
@@ -41,7 +41,7 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedYearLevel === 0 ? 'white' : '#FAEED1'"
+                :color="selectedYearLevel === 0 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(0)"
               >
                 All
@@ -49,7 +49,7 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedYearLevel === 1 ? 'white' : '#FAEED1'"
+                :color="selectedYearLevel === 1 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(1)"
               >
                 Year 1
@@ -57,7 +57,7 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedYearLevel === 2 ? 'white' : '#FAEED1'"
+                :color="selectedYearLevel === 2 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(2)"
               >
                 Year 2
@@ -65,7 +65,7 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedYearLevel === 3 ? 'white' : '#FAEED1'"
+                :color="selectedYearLevel === 3 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(3)"
               >
                 Year 3
@@ -73,7 +73,7 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedYearLevel === 4 ? 'white' : '#FAEED1'"
+                :color="selectedYearLevel === 4 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(4)"
               >
                 Year 4
@@ -85,15 +85,15 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedSemester === 0 ? 'white' : '#FAEED1'"
+                :color="selectedSemester === 0 ? '#803d3b' : '#FAEED1'"
                 @click="selectSemester(0)"
               >
-                All Semesters
+                All Sem
               </v-btn>
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedSemester === 1 ? 'white' : '#FAEED1'"
+                :color="selectedSemester === 1 ? '#803d3b' : '#FAEED1'"
                 @click="selectSemester(1)"
               >
                 1st Sem
@@ -101,7 +101,7 @@
               <v-btn
                 elevation="15"
                 class="mx-1 mt-2"
-                :color="selectedSemester === 2 ? 'white' : '#FAEED1'"
+                :color="selectedSemester === 2 ? '#803d3b' : '#FAEED1'"
                 @click="selectSemester(2)"
               >
                 2nd Sem

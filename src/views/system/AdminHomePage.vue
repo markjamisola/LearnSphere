@@ -15,7 +15,7 @@
           <!-- Search Course Bar -->
           <v-row class="justify-center mb-1 mx-auto">
             <v-col cols="12" sm="8" md="6">
-              <v-card class="pa-2" elevation="15" color="#803d3b">
+              <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b">
                 <v-text-field
                   v-model="searchQuery"
                   :loading="loading"
@@ -24,6 +24,7 @@
                   density="comfortable"
                   label="Search Course"
                   hide-details
+                  rounded="lg"
                   variant="solo"
                   elevation="15"
                   single-line
@@ -34,27 +35,45 @@
             </v-col>
           </v-row>
           <v-row class="justify-center mt-3 mb-4">
-            <v-btn class="ma-1" color="#FAEED1" @click="openAddCourseModal">
+            <v-btn class="ma-1" color="#dd660d" @click="openAddCourseModal">
               <h4><v-icon>mdi-plus</v-icon> Add New Course</h4>
             </v-btn>
-            <v-btn class="ma-1" color="#FAEED1" @click="openAddTopicModal">
+            <v-btn class="ma-1" color="#dd660d" @click="openAddTopicModal">
               <h4><v-icon>mdi-plus</v-icon> Add New Topic</h4>
             </v-btn>
           </v-row>
 
           <!-- Program Filter Buttons -->
           <v-row class="justify-center mb-4">
-            <v-btn color="#FAEED1" class="mx-1" @click="setSelectedProgram(null)">
-              <h3 class="text-black">All</h3>
+            <v-btn
+              :color="selectedProgramId === null ? '#803D3B' : '#FAEED1'"
+              class="mx-1"
+              @click="setSelectedProgram(null)"
+            >
+              <h3
+                :class="{
+                  'text-white': selectedProgramId === null,
+                  'text-black': selectedProgramId !== null
+                }"
+              >
+                All
+              </h3>
             </v-btn>
             <v-btn
               v-for="program in programs"
               :key="program.id"
               @click="setSelectedProgram(program.id)"
-              color="#FAEED1"
+              :color="selectedProgramId === program.id ? '#803D3B' : '#FAEED1'"
               class="mx-1"
             >
-              <h3 class="text-black">{{ program.program_name }}</h3>
+              <h3
+                :class="{
+                  'text-white': selectedProgramId === program.id,
+                  'text-black': selectedProgramId !== program.id
+                }"
+              >
+                {{ program.program_name }}
+              </h3>
             </v-btn>
           </v-row>
 
@@ -74,8 +93,7 @@
                 color="#FAEED1"
                 block
                 height="150px"
-                @click="recordUserHistory(course.id)"
-                :to="{ name: 'CoursePage', params: { id: course.id } }"
+                :to="{ name: 'admincoursepage', params: { id: course.id } }"
               >
                 <div class="text-center">
                   <h1 class="mb-2">{{ course.course_name }}</h1>
@@ -229,14 +247,19 @@
 
       <!-- Success dialog for adding course -->
 
-      <v-dialog v-model="successDialogVisible" max-width="400px" persistent class="dialog-with-blur">
+      <v-dialog
+        v-model="successDialogVisible"
+        max-width="400px"
+        persistent
+        class="dialog-with-blur"
+      >
         <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
           <v-card-title class="text-center"><h4>Success!</h4></v-card-title>
           <v-card-text class="text-center"> Course has been successfully added.</v-card-text>
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="successDialogVisible = false">
+                <v-btn rounded="lg" elevation="10" block @click="refreshPage">
                   OK
                 </v-btn>
               </v-card>
@@ -245,14 +268,19 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog v-model="successTopicDialogVisible" max-width="400px" persistent class="dialog-with-blur">
+      <v-dialog
+        v-model="successTopicDialogVisible"
+        max-width="400px"
+        persistent
+        class="dialog-with-blur"
+      >
         <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
           <v-card-title class="text-center"><h4>Success!</h4></v-card-title>
           <v-card-text class="text-center"> Topic has been successfully added. </v-card-text>
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="successTopicDialogVisible = false">
+                <v-btn rounded="lg" elevation="10" block @click="refreshPage">
                   OK
                 </v-btn>
               </v-card>
@@ -447,6 +475,10 @@ const onSearchInput = () => {
   setTimeout(() => {
     loading.value = false
   }, 1000)
+}
+
+const refreshPage = () => {
+  location.reload() // Refresh the page
 }
 </script>
 
