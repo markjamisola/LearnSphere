@@ -1,5 +1,7 @@
 <template>
+  <!-- Main application wrapper -->
   <v-app class="background-color description">
+    <!-- Navigation bar with logout modal trigger -->
     <NavBar @triggerLogoutModal="openLogoutModal" />
 
     <v-main>
@@ -7,20 +9,23 @@
         <!-- Course Header -->
         <v-row class="mt-5">
           <v-col cols="12" class="text-center">
+            <!-- Display course name with star icon toggle -->
             <h1 class="text-white font-weight-black">
               {{ courseDetails?.course_name || '...' }}
               <v-btn
                 icon
                 class="ma-2"
-                :color="isStarred ? '#FFD700' : '#FAEED1'"
+                :color="isStarred ? '#dd660d' : '#FAEED1'"
                 @click="toggleStar(courseDetails.id)"
                 v-if="courseDetails"
               >
+                <!-- Conditional icon based on starred status -->
                 <v-icon>{{ isStarred ? 'mdi-star-check' : 'mdi-star-plus-outline' }}</v-icon>
               </v-btn>
             </h1>
           </v-col>
         </v-row>
+        <!-- Display course description -->
         <h3 class="text-white text-center">
           {{ courseDetails?.description || '......' }}
         </h3>
@@ -29,6 +34,7 @@
       <!-- Search for Topics -->
       <v-row class="justify-center mb-4 mx-auto">
         <v-col cols="12" sm="8" md="6">
+          <!-- Search bar card with styling -->
           <v-card class="pa-2" elevation="15" color="#803d3b">
             <v-text-field
               v-model="searchQuery"
@@ -60,6 +66,8 @@
               <v-card-text>
                 <v-row>
                   <v-col cols="6">
+
+                    <!-- Button to open videos related to the topic -->
                     <v-btn
                       elevation="10"
                       color="#803D3B"
@@ -70,6 +78,8 @@
                     </v-btn>
                   </v-col>
                   <v-col cols="6">
+
+                    <!-- Button to open the PDF for the topic -->
                     <v-btn elevation="10" color="#803D3B" block @click="showPdf(topic.pdf_url)">
                       Open PDF
                     </v-btn>
@@ -80,7 +90,7 @@
           </v-col>
         </v-row>
 
-        <!-- Video Dialog -->
+        <!-- Video Dialog for related videos display -->
         <v-dialog
           v-model="dialog"
           max-width="1400px"
@@ -88,6 +98,8 @@
           overlay="true"
           class="dialog-with-blur"
         >
+
+          <!-- Header for the video dialog -->
           <div class="d-flex justify-start mb-2 description">
             <v-card color="#FAEED1" elevation="10">
               <v-card-title class="headline text-center topic-title">
@@ -95,6 +107,8 @@
               </v-card-title>
             </v-card>
           </div>
+
+          <!-- List of videos displayed in the dialog -->
           <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
             <v-card-text color="#803D3B">
               <v-list class="colorist" rounded="lg">
@@ -120,6 +134,8 @@
               </v-list>
             </v-card-text>
           </v-card>
+
+          <!-- Close button for the video dialog -->
           <div class="d-flex justify-end description">
             <v-card color="#FAEED1" elevation="10">
               <v-btn color="#FAEED1" size="large" @click="dialog = false"><h5>Close</h5></v-btn>
@@ -128,10 +144,10 @@
         </v-dialog>
       </v-container>
 
-      <!-- Logout Modal -->
+      <!-- Logout Modal component -->
       <LogoutModal ref="logoutModalRef" />
 
-      <!-- Floating Back Button -->
+      <!-- Floating Back Button to navigate back -->
       <v-btn class="back-button" icon @click="$router.go(-1)">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -146,8 +162,10 @@ import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 
-// Modal and star state
+// Reference for logout modal component
 const logoutModalRef = ref(null)
+
+// State to track if course is starred
 const isStarred = ref(false)
 
 // Function to open the logout modal
@@ -155,7 +173,7 @@ const openLogoutModal = () => {
   logoutModalRef.value?.open()
 }
 
-// Reactive variables
+// Reactive variables for course and topic data
 const courseDetails = ref(null)
 const topics = ref([])
 const loading = ref(false)
@@ -163,26 +181,26 @@ const searchQuery = ref('')
 const dialog = ref(false)
 const videos = ref([])
 const selectedTopic = ref('')
-const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ'
+const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ' // YouTube API key
 
-// Use Vue Router's route object
+// Using Vue Router to access route parameters
 const route = useRoute()
 
-// Filtered topics based on the search query
+// Computed property to filter topics based on search query
 const filteredTopics = computed(() => {
   return topics.value.filter((topic) =>
     topic.topic_title.toLowerCase().includes(searchQuery.value.toLowerCase())
   )
 })
 
-// Fetch course data, related topics, and resources
+// Fetch course data and related topics when component is mounted
 onMounted(async () => {
   const courseId = route.params.id
   if (courseId) {
     try {
       loading.value = true
 
-      // Fetch course details
+      // Fetch course details from database
       const { data: courseData, error: courseError } = await supabase
         .from('courses')
         .select('*')
@@ -199,6 +217,7 @@ onMounted(async () => {
       if (userError) throw userError
 
       if (user) {
+        // Check if course is in starred courses
         const { data: starredData, error: starredError } = await supabase
           .from('starred_courses')
           .select('*')
@@ -216,6 +235,7 @@ onMounted(async () => {
         .eq('course_id', courseId)
       if (topicsError) throw topicsError
 
+      // Fetch resources linked to the topics
       const { data: resourcesData, error: resourcesError } = await supabase
         .from('resources')
         .select('*')
@@ -226,7 +246,7 @@ onMounted(async () => {
 
       if (resourcesError) throw resourcesError
 
-      // Combine topics with their resources
+      // Attach resources (e.g., PDFs) to corresponding topics
       topics.value = topicsData.map((topic) => {
         const topicResources = resourcesData.filter((resource) => resource.topic_id === topic.id)
         topic.pdf_url =
@@ -243,7 +263,7 @@ onMounted(async () => {
   }
 })
 
-// Toggle star status for the course
+// Toggle course starred status for the user
 async function toggleStar(courseId) {
   const {
     data: { user },
