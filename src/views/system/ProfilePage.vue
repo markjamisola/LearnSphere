@@ -100,7 +100,7 @@
 
           <!-- Warning Message for Changing Program -->
           <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
-            <v-card-text class="text-justify text-white text-caption description">
+            <v-card-text class="text-justify text-white description large-font">
               Warning: Changing your current PROGRAM will also change the COURSES that are available
               and displayed on the homepage.
             </v-card-text>
@@ -270,6 +270,11 @@ onMounted(fetchUserData)
 /* Styling for description font family */
 .description {
   font-family: 'Unbounded', sans-serif;
+}
+
+.large-font {
+  font-size: .9rem; /* Adjust the size as needed */
+  line-height: 1.5; /* Adjust the line height for better readability */
 }
 
 /* Animated background gradient */
