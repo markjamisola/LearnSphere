@@ -79,7 +79,7 @@
                   margin-right: 5px;
                 "
               >
-                Yes, Remove
+                Remove
               </v-btn>
               <!-- Button to cancel the removal -->
               <v-btn
