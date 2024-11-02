@@ -96,7 +96,8 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row class="justify-center mt-2 mb-4">
+
+      <v-row class="justify-center mt-2 mb-0">
         <v-btn class="ma-1" color="#dd660d" @click="openDeleteDialog">
           <h4>
             Delete {{ courseDetails?.course_name || '...' }}
@@ -111,7 +112,13 @@
           </h4>
         </v-btn>
       </v-row>
-      <v-row class="justify-center mt-2 mb-4">
+      <v-row class="mx-2">
+        <v-col>
+          <h2 class="text-white"><v-icon class="mr-2"> mdi-lightbulb-on </v-icon>Topics List</h2>
+        </v-col>
+      </v-row>
+
+      <v-row class="justify-center mt-0 mb-4">
         <v-dialog v-model="deleteDialog" max-width="500px" class="dialog-with-blur">
           <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
             <v-card-title class="font-weight-black text-center description"
@@ -172,58 +179,64 @@
                 {{ topic.description }}
               </v-card-subtitle>
 
-              <v-card-text>
+              <v-card-actions class="mx-2">
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="6" md="3">
                     <v-btn
                       elevation="10"
-                      color="#803D3B"
+                      color="white"
+                      style="background-color: #803d3b"
                       block
                       @click="openVideoDialog(topic.topic_title)"
                     >
                       Watch Videos
                     </v-btn>
                   </v-col>
-                  <v-col cols="6">
-                    <v-btn elevation="10" color="#803D3B" block @click="showPdf(topic.pdf_url)">
+                  <v-col cols="6" md="3">
+                    <v-btn
+                      elevation="10"
+                      color="white"
+                      style="background-color: #803d3b"
+                      block
+                      @click="showPdf(topic.pdf_url)"
+                    >
                       Open PDF
                     </v-btn>
                   </v-col>
-                </v-row>
-              </v-card-text>
-
-              <!-- Delete Topic Button -->
-
-              <v-card-actions>
-                <v-row class="d-flex justify-end mx-3 pb-1">
-                  <v-btn
-                    color="white"
-                    text
-                    class="confirm-btn font-weight-bold"
-                    @click="openTopicDeleteDialog(topic.id)"
-                    style="
-                      background-color: #dd660d;
-                      color: #803d3b;
-                      font-family: 'Unbounded', sans-serif;
-                      margin-right: 5px;
-                    "
-                  >
-                    Delete
-                  </v-btn>
-                  <v-btn
-                    color="#FAEED1"
-                    text
-                    class="cancel-btn font-weight-bold"
-                    @click="openEditModal(topic)"
-                    style="
-                      font-family: 'Unbounded', sans-serif;
-                      background-color: #dd660d;
-                      color: #faeed1;
-                      margin-left: 5px;
-                    "
-                  >
-                    Edit
-                  </v-btn>
+                  <v-col cols="6" md="3">
+                    <v-btn
+                      color="white"
+                      text
+                      block
+                      class="confirm-btn font-weight-bold"
+                      @click="openTopicDeleteDialog(topic.id)"
+                      style="
+                        background-color: #dd660d;
+                        color: #803d3b;
+                        font-family: 'Unbounded', sans-serif;
+                        margin-right: 5px;
+                      "
+                    >
+                      Delete
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="6" md="3">
+                    <v-btn
+                      color="white"
+                      text
+                      block
+                      class="cancel-btn font-weight-bold"
+                      @click="openEditModal(topic)"
+                      style="
+                        font-family: 'Unbounded', sans-serif;
+                        background-color: #dd660d;
+                        color: #faeed1;
+                        margin-left: 5px;
+                      "
+                    >
+                      Edit
+                    </v-btn>
+                  </v-col>
                 </v-row>
               </v-card-actions>
             </v-card>

@@ -14,6 +14,7 @@ import StarredCoursePage from '@/views/system/StarredCoursePage.vue'
 import AdminHomePage from '@/views/system/AdminHomePage.vue'
 import AdminProfile from '@/views/system/AdminProfile.vue'
 import AdminCoursePage from '@/views/system/AdminCoursePage.vue'
+import UsersPage from '@/views/system/UsersPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -104,6 +105,12 @@ const router = createRouter({
       name: 'adminprofile',
       component: AdminProfile,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: UsersPage,
+      meta: { requiresAuth: true }
     }
   ]
 })
@@ -121,7 +128,7 @@ router.beforeEach(async (to) => {
     return true
   }
 
-  if ((isAdmin && to.name === 'adminhome') || to.name === 'adminprofile') {
+  if ((isAdmin && to.name === 'adminhome'  || to.name === 'adminprofile'  || to.name === 'users') ) {
     return true
   }
 
