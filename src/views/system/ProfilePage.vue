@@ -1,5 +1,7 @@
 <template>
   <v-app class="animated-background description">
+    <!-- Geometric Overlay -->
+    <div class="geometric-overlay"></div>
     <!-- NavBar component with a logout trigger event -->
     <NavBar @triggerLogoutModal="openLogoutModal" />
 
@@ -13,7 +15,7 @@
               <v-icon large :color="textColor" style="margin-right: 10px;">
                 mdi-account
               </v-icon>
-                Profile
+              Profile
             </h1>
           </v-col>
         </v-row>
@@ -308,6 +310,7 @@ onMounted(fetchUserData)
     background-position: 0% 50%;
   }
 }
+
 .animated-background {
   background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;
@@ -317,6 +320,59 @@ onMounted(fetchUserData)
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Geometric overlay styles */
+.geometric-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Ensure clicks go through this overlay */
+  z-index: 0; /* Ensure this is behind other content */
+}
+
+/* Adding multiple geometric shapes with improved visibility */
+.geometric-overlay::before,
+.geometric-overlay::after {
+  content: '';
+  position: absolute;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background: rgba(255, 255, 255, 0.15); /* Slightly higher opacity for better clarity */
+  clip-path: polygon(20% 0%, 0% 20%, 20% 100%, 100% 20%, 80% 0%); /* First shape */
+  opacity: 0.5; /* Increased opacity for better visibility */
+}
+
+/* Layering different shapes with clarity */
+.geometric-overlay::after {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* Second shape */
+  opacity: 0.4; /* Slightly more transparent */
+}
+
+/* Additional smaller geometric shapes */
+.geometric-overlay div {
+  position: absolute;
+  width: 20%; /* Increased size for better visibility */
+  height: 20%; /* Increased size for better visibility */
+  background: rgba(255, 255, 255, 0.25); /* Higher opacity for clearer visibility */
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* Triangle shape */
+  opacity: 0.6; /* Increased opacity for clarity */
+}
+
+/* Random positioning for aesthetic */
+.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
+.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
+.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
+.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
+.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+
+/* Additional distinct geometric shapes */
+.geometric-overlay .shape {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3); /* Background for new shapes */
+  opacity: 0.5; /* Opacity for better visibility */
 }
 
 /* Mobile navigation drawer with blur effect */
