@@ -9,7 +9,12 @@
         <!-- Profile Title Section -->
         <v-row class="mt-5 justify-center">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black description">Profile</h1>
+            <h1 class="text-white font-weight-bold description d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px;">
+                mdi-account
+              </v-icon>
+                Profile
+            </h1>
           </v-col>
         </v-row>
 

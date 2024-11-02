@@ -8,15 +8,26 @@
         <!-- Display header for starred courses or a message if none exist -->
         <v-row class="mt-8" v-if="starredCourses.length">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">Starred Courses</h1>
+            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px;">
+                mdi-star
+              </v-icon>
+              Starred Courses
+            </h1>
           </v-col>
         </v-row>
 
         <v-row class="mt-8" v-else>
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">You have no Starred Courses</h1>
+            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px;">
+                mdi-alert-circle
+              </v-icon>
+              You have no Starred Courses
+            </h1>
           </v-col>
         </v-row>
+
 
         <v-row>
           <!-- Loop through starred courses and display each one -->
