@@ -6,9 +6,15 @@
       <v-container fluid>
         <v-row class="mt-8">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">History</h1>
+            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px;">
+                mdi-history
+              </v-icon>
+              History
+            </h1>
           </v-col>
         </v-row>
+
 
         <v-row v-if="recentCourses.length">
           <v-col>
