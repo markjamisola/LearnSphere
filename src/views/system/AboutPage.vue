@@ -7,9 +7,15 @@
       <v-container fluid>
         <v-row class="mt-2">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-black">About Us</h1>
+            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px;">
+                mdi-information-outline
+              </v-icon>
+              About Us
+            </h1>
           </v-col>
         </v-row>
+
 
         <v-col cols="12">
           <v-row class="mx-4">
@@ -34,7 +40,12 @@
         <!-- Mission and Vision Cards -->
         <v-row class="mx-4 mt-3" justify="center">
           <v-col cols="12" md="6">
-            <h1 class="text-white text-center font-weight-black">Mission</h1>
+            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px;">
+                mdi-bullseye
+              </v-icon>
+              Mission
+            </h1>
             <v-card class="pa-3" elevation="15" color="#803d3b" rounded="lg" variant="elevated">
               <v-card class="pa-5" elevation="15" rounded="lg" color="#FAEED1">
                 <v-card-text class="text-justify white--text">
@@ -50,7 +61,12 @@
           </v-col>
 
           <v-col cols="12" md="6">
-            <h1 class="text-white text-center font-weight-black">Vision</h1>
+            <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
+              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px;">
+                mdi-flag
+              </v-icon>
+              Vision
+            </h1>
             <v-card class="pa-3" elevation="15" color="#803d3b" rounded="lg" variant="elevated">
               <v-card class="pa-5" elevation="15" rounded="lg" color="#FAEED1">
                 <v-card-text class="text-justify white--text">

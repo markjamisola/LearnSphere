@@ -21,7 +21,7 @@
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
               <v-icon large :color="textColor" style="margin-right: 10px;">
-                mdi-alert-circle
+                mdi-alert-circle-outline
               </v-icon>
               You have no Starred Courses
             </h1>
