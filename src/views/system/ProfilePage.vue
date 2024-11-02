@@ -18,102 +18,121 @@
           </v-col>
         </v-row>
 
-        <!-- Personal Information and Password Reset -->
         <v-row class="justify-center pt-8">
-          <v-col cols="12" md="4" class="mb-5">
-            <h3 class="text-white pb-5 description">Personal Information</h3>
+  <v-col cols="12" md="4" class="mb-5">
+    <h3 class="text-white pb-5 description">Personal Information</h3>
 
-            <!-- First Name Field with Update Button -->
-            <v-text-field
-              label="First Name"
-              variant="solo"
-              hide-details
-              prepend-inner-icon="mdi-account-outline"
-              v-model="firstName"
-              class="description mb-4"
-            >
-              <template v-slot:append-inner>
-                <v-btn color="#803D3B" small elevation="15" @click="updateFirstName">Update</v-btn>
-              </template>
-            </v-text-field>
+    <!-- First Name Field in Separate Card -->
+    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+      <v-text-field
+        label="First Name"
+        variant="solo"
+        hide-details
+        prepend-inner-icon="mdi-account-outline"
+        v-model="firstName"
+        class="description"
+        outlined
+      >
+        <template v-slot:append-inner>
+          <v-btn color="#803d3b" small elevation="15" @click="updateFirstName">Update</v-btn>
+        </template>
+      </v-text-field>
+    </v-card>
 
-            <!-- Last Name Field with Update Button -->
-            <v-text-field
-              label="Last Name"
-              variant="solo"
-              hide-details
-              prepend-inner-icon="mdi-account-outline"
-              v-model="lastName"
-              class="description mb-4"
-            >
-              <template v-slot:append-inner>
-                <v-btn color="#803D3B" small elevation="15" @click="updateLastName">Update</v-btn>
-              </template>
-            </v-text-field>
+    <!-- Last Name Field in Separate Card -->
+    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+      <v-text-field
+        label="Last Name"
+        variant="solo"
+        hide-details
+        prepend-inner-icon="mdi-account-outline"
+        v-model="lastName"
+        class="description"
+        outlined
+      >
+        <template v-slot:append-inner>
+          <v-btn color="#803d3b" small elevation="15" @click="updateLastName">Update</v-btn>
+        </template>
+      </v-text-field>
+    </v-card>
 
-            <!-- ID Number Field with Update Button -->
-            <v-text-field
-              label="ID Number"
-              variant="solo"
-              hide-details
-              prepend-inner-icon="mdi-card-account-details-outline"
-              v-model="idNumber"
-              class="description mb-4"
-            >
-              <template v-slot:append-inner>
-                <v-btn color="#803D3B" small elevation="15" @click="updateIdNumber">Update</v-btn>
-              </template>
-            </v-text-field>
-          </v-col>
+    <!-- ID Number Field in Separate Card -->
+    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+      <v-text-field
+        label="ID Number"
+        variant="solo"
+        hide-details
+        prepend-inner-icon="mdi-card-account-details-outline"
+        v-model="idNumber"
+        class="description"
+        outlined
+      >
+        <template v-slot:append-inner>
+          <v-btn color="#803d3b" small elevation="15" @click="updateIdNumber">Update</v-btn>
+        </template>
+      </v-text-field>
+    </v-card>
+  </v-col>
 
-          <!-- Reset Password and Change Program Section -->
-          <v-col cols="12" md="4">
-            <h3 class="text-white pb-5 description">Reset Password</h3>
-            <v-text-field
-              label="New Password"
-              variant="solo"
-              elevation="15"
-              hide-details
-              prepend-inner-icon="mdi-lock-outline"
-              v-model="newPassword"
-              class="description"
-            >
-              <template v-slot:append-inner>
-                <v-btn color="#803D3B" small elevation="15" @click="updatePassword">Update</v-btn>
-              </template>
-            </v-text-field>
+  <!-- Reset Password and Change Program Section with Separate Cards -->
+  <v-col cols="12" md="4">
+    <h3 class="text-white pb-5 description">Reset Password</h3>
 
-            <!-- Program Select Dropdown and Update Button -->
-            <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
-            <v-select
-              :items="programs"
-              v-model="selectedProgram"
-              item-title="label"
-              item-value="value"
-              placeholder="Program"
-              prepend-inner-icon="mdi-laptop"
-              variant="solo"
-              class="description"
-            ></v-select>
+    <!-- New Password Field in Separate Card -->
+    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+      <v-text-field
+        label="New Password"
+        variant="solo"
+        elevation="15"
+        hide-details
+        prepend-inner-icon="mdi-lock-outline"
+        v-model="newPassword"
+        class="description"
+        outlined
+      >
+        <template v-slot:append-inner>
+          <v-btn color="#803d3b" small elevation="15" @click="updatePassword">Update</v-btn>
+        </template>
+      </v-text-field>
+    </v-card>
+
+        <!-- Program Select Dropdown and Update Button -->
+          <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
+            <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b">
+              <v-select
+                :items="programs"
+                v-model="selectedProgram"
+                item-title="label"
+                item-value="value"
+                placeholder="Program"
+                prepend-inner-icon="mdi-laptop"
+                variant="solo"
+                class="description"
+              ></v-select>
             <v-btn color="#803D3B" class="mt-0" block elevation="15" @click="updateProgram">Update</v-btn>
+          </v-card>
           </v-col>
 
-          <!-- Warning Message for Changing Program -->
-          <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
-            <v-card-text class="text-justify text-white description large-font">
-              Warning: Changing your current PROGRAM will also change the COURSES that are available
-              and displayed on the homepage.
-            </v-card-text>
-          </v-card>
-        </v-row>
+  <!-- Warning Message for Changing Program -->
+  <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
+  <v-card-text class="d-flex align-center text-justify text-white description large-font">
+    <v-icon class="mr-2" :color="'white'">mdi-alert-circle-outline</v-icon> 
+    Warning: Changing your current PROGRAM will also change the COURSES that are available
+    and displayed on the homepage.
+  </v-card-text>
+</v-card>
+</v-row>
+
       </v-container>
 
       <!-- Success Modal for User Feedback -->
       <v-dialog v-model="successDialog" max-width="448" class="dialog-with-blur">
         <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
-          <v-card-title>
-            <h3 class="font-weight-black text-center description">Success</h3>
-          </v-card-title>
+          <v-card-title class="d-flex justify-center align-center">
+  <h3 class="font-weight-black text-center description">Success</h3>
+  <v-icon class="ml-2" :color="'#803d3b'" size="28">mdi-check-circle</v-icon> 
+</v-card-title>
+
           <v-card-text class="text-center text-black text-caption description">
             <h3>Information Successfully Updated!</h3>
           </v-card-text>
