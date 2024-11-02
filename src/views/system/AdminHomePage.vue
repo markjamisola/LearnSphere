@@ -203,7 +203,7 @@
                   item-title="course_name"
                   item-value="id"
                   label="Course"
-                  prepend-inner-icon="mdi-cast-education"
+                  prepend-inner-icon="mdi-book-open-page-variant"
                   required
                 ></v-select>
                 <!-- Topic title and description -->

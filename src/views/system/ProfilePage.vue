@@ -115,7 +115,7 @@
 
   <!-- Warning Message for Changing Program -->
   <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
-  <v-card-text class="d-flex align-center text-justify text-white description large-font">
+  <v-card-text class="d-flex align-center text-justify text-white description">
     <v-icon class="mr-2" :color="'white'">mdi-alert-circle-outline</v-icon> 
     Warning: Changing your current PROGRAM will also change the COURSES that are available
     and displayed on the homepage.
@@ -289,11 +289,6 @@ onMounted(fetchUserData)
 /* Styling for description font family */
 .description {
   font-family: 'Unbounded', sans-serif;
-}
-
-.large-font {
-  font-size: .9rem; /* Adjust the size as needed */
-  line-height: 1.5; /* Adjust the line height for better readability */
 }
 
 /* Animated background gradient */

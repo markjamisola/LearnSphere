@@ -112,10 +112,24 @@
           <!-- Suggested Courses Section -->
           <v-row>
             <v-col>
-              <h2 class="text-white">Course List</h2>
+              <h2 class="text-white">
+                <v-icon class="mr-2">
+                  mdi-book-open-page-variant </v-icon
+                >Course List
+              </h2>
             </v-col>
+            <div class="d-flex justify-end mr-3 mt-3 mb-2">
+              <v-btn elevation="15" class="" color="#FAEED1" @click="openAddCourseModal">
+                Request
+              </v-btn>
+            </div>
           </v-row>
-
+          <RequestCourseModal
+            :isOpen="isAddCourseModalOpen"
+            :requestedCourses="requestedCourses"
+            @add-course="handleCourseRequest"
+            @close="isAddCourseModalOpen = false"
+          />
           <!-- Remaining page content -->
         </div>
 
@@ -152,6 +166,7 @@ import { ref, computed, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
+import RequestCourseModal from '@/components/layout/RequestCourseModal.vue'
 
 // Reference for the Logout Modal
 const logoutModalRef = ref(null)
@@ -175,6 +190,14 @@ const searchQuery = ref('')
 
 // Courses data
 const courses = ref([]) // Initialize as empty array
+
+const isAddCourseModalOpen = ref(false)
+const requestedCourses = ref([])
+
+const openAddCourseModal = () => {
+  isAddCourseModalOpen.value = true
+  fetchRequestedCourses()
+}
 
 // Fetch user information on mount
 onMounted(async () => {
@@ -254,6 +277,52 @@ async function recordUserHistory(courseId) {
   }
 }
 
+// Handle adding a new course request
+const handleCourseRequest = async (courseDetails) => {
+  try {
+    const { error } = await supabase.from('request_course').insert([
+      {
+        course_name: courseDetails.course_name,
+        program: courseDetails.program,
+        description: courseDetails.description,
+        user_id: userId.value,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      }
+    ])
+
+    if (error) throw error
+
+    // Re-fetch the requested courses to get the updated list
+    await fetchRequestedCourses()
+  } catch (error) {
+    console.error('Error adding course request:', error)
+  }
+}
+const fetchRequestedCourses = async () => {
+  if (!userId.value) {
+    console.error('User ID is not set.')
+    return
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('request_course')
+      .select('*')
+      .eq('user_id', userId.value)
+
+    if (error) throw error
+
+    requestedCourses.value = data
+    console.log('Fetched requested courses:', requestedCourses.value)
+  } catch (error) {
+    console.error('Error fetching requested courses:', error)
+  }
+}
+
+// Fetch requested courses when the component mounts
+onMounted(fetchRequestedCourses)
+
 // Computed property to filter courses based on the selected year level, semester, and user's program
 const filteredCourses = computed(() => {
   let filtered = courses.value
@@ -319,13 +388,13 @@ const onSearchInput = () => {
 }
 
 .text-center {
-  padding: 10px; 
+  padding: 10px;
 }
 .course-description {
   display: block;
   overflow-wrap: break-word;
   white-space: normal;
-  line-height: 1.4; 
+  line-height: 1.4;
   color: #803d3b;
 }
 .animated-background {
