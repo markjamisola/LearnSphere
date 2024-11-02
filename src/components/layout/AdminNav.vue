@@ -29,6 +29,13 @@
             >
           </v-list-item-icon>
         </v-list-item>
+        <v-list-item @click="$router.push('/users')" class="text-center">
+          <v-list-item-icon>
+            <v-icon large :color="$route.path === '/users' ? 'black' : 'white'"
+              >mdi-account-group</v-icon
+            >
+          </v-list-item-icon>
+        </v-list-item>
       </v-list-item-group>
 
       <v-list-item @click="$emit('triggerLogoutModal')" class="text-center">
@@ -48,12 +55,11 @@
     class="teal-darken-4"
     width="80"
   >
-    <v-list class="d-flex flex-column align-center justify-center fill-height">
+    <v-list class="d-flex flex-column justify-space-between fill-height">
+      <v-list-item @click="$router.push('/adminhome')" class="text-center">
+        <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
+      </v-list-item>
       <v-list-item-group>
-        <v-list-item @click="$router.push('/home')" class="text-center">
-          <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
-        </v-list-item>
-
         <v-list-item @click="$router.push('/adminhome')" class="text-center">
           <v-list-item-icon>
             <v-icon large :color="$route.path === '/adminhome' ? 'black' : 'white'"
@@ -70,12 +76,19 @@
           </v-list-item-icon>
         </v-list-item>
 
-        <v-list-item @click="$emit('triggerLogoutModal')" class="text-center">
+        <v-list-item @click="$router.push('/users')" class="text-center">
           <v-list-item-icon>
-            <v-icon large color="white">mdi-logout</v-icon>
+            <v-icon large :color="$route.path === '/users' ? 'black' : 'white'"
+              >mdi-account-group</v-icon
+            >
           </v-list-item-icon>
         </v-list-item>
       </v-list-item-group>
+      <v-list-item @click="$emit('triggerLogoutModal')" class="text-center">
+        <v-list-item-icon>
+          <v-icon large color="white">mdi-logout</v-icon>
+        </v-list-item-icon>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 

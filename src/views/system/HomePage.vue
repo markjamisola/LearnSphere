@@ -23,7 +23,7 @@
                     v-model="searchQuery"
                     :loading="loading"
                     append-inner-icon="mdi-magnify"
-                    prepend-inner-icon="mdi-cast-education"
+                    prepend-inner-icon="mdi-book-open-page-variant"
                     density="comfortable"
                     label="Search Course"
                     variant="solo"

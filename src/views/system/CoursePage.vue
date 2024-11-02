@@ -55,6 +55,24 @@
         </v-col>
       </v-row>
 
+      <v-row class="mx-2">
+        <v-col>
+          <h2 class="text-white"><v-icon class="mr-2"> mdi-lightbulb-on </v-icon>Topics List</h2>
+        </v-col>
+        <div class="d-flex justify-end mr-3 mt-3 mb-2">
+          <v-btn elevation="15" class="" color="#FAEED1" @click="openTopicRequestModal">
+            Request
+          </v-btn>
+        </div>
+      </v-row>
+
+      <RequestTopicModal
+        :isOpen="isTopicModalOpen"
+        :requestedTopics="requestedTopics"
+        @add-topic="handleAddTopic"
+        @close="closeTopicRequestModal"
+      />
+
       <!-- Topics Display (Videos and PDFs) -->
       <v-container fluid>
         <v-row>
@@ -67,7 +85,6 @@
               <v-card-text>
                 <v-row>
                   <v-col cols="6">
-
                     <!-- Button to open videos related to the topic -->
                     <v-btn
                       elevation="10"
@@ -79,7 +96,6 @@
                     </v-btn>
                   </v-col>
                   <v-col cols="6">
-
                     <!-- Button to open the PDF for the topic -->
                     <v-btn elevation="10" color="#803D3B" block @click="showPdf(topic.pdf_url)">
                       Open PDF
@@ -99,7 +115,6 @@
           overlay="true"
           class="dialog-with-blur"
         >
-
           <!-- Header for the video dialog -->
           <div class="d-flex justify-start mb-2 description">
             <v-card color="#FAEED1" elevation="10">
@@ -162,6 +177,7 @@ import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
+import RequestTopicModal from '@/components/layout/RequestTopicModal.vue'
 
 // Reference for logout modal component
 const logoutModalRef = ref(null)
@@ -183,7 +199,8 @@ const dialog = ref(false)
 const videos = ref([])
 const selectedTopic = ref('')
 const youtubeApiKey = 'AIzaSyBIkYvO2Coqq4wy6UDRvI-xFi3mHmAYOlQ' // YouTube API key
-
+const isTopicModalOpen = ref(false)
+const requestedTopics = ref([])
 // Using Vue Router to access route parameters
 const route = useRoute()
 
@@ -302,6 +319,91 @@ async function toggleStar(courseId) {
     }
   }
 }
+
+const openTopicRequestModal = () => {
+  isTopicModalOpen.value = true
+}
+
+const closeTopicRequestModal = () => {
+  isTopicModalOpen.value = false
+}
+const fetchRequestedTopics = async (courseId) => {
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser()
+  if (userError) {
+    console.error('Error fetching user:', userError.message)
+    return
+  }
+  if (!user) {
+    console.error('User is not authenticated')
+    return
+  }
+  const userId = user.id
+
+  try {
+    const { data, error } = await supabase
+      .from('request_topic')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('course_id', courseId) // Only fetch topics for the current course
+
+    if (error) throw error
+
+    requestedTopics.value = data
+    console.log('Fetched requested topics:', requestedTopics.value)
+  } catch (error) {
+    console.error('Error fetching requested topics:', error)
+  }
+}
+
+// Handle adding a new topic request
+const handleAddTopic = async (topicDetails) => {
+  const courseId = route.params.id
+  try {
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser()
+    if (userError) {
+      console.error('Error fetching user:', userError.message)
+      return
+    }
+    if (!user) {
+      console.error('User is not authenticated')
+      return
+    }
+    const userId = user.id
+
+    const { error } = await supabase.from('request_topic').insert([
+      {
+        topic_name: topicDetails.topic_name,
+        description: topicDetails.description,
+        course_id: courseId, // Current course ID
+        user_id: userId,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      }
+    ])
+
+    if (error) throw error
+
+    // Re-fetch the requested topics to get the updated list
+    await fetchRequestedTopics(courseId)
+  } catch (error) {
+    console.error('Error adding topic request:', error)
+  }
+}
+
+onMounted(() => {
+  const courseId = route.params.id
+  if (courseId) {
+    fetchRequestedTopics(courseId)
+  } else {
+    console.error('Course ID is undefined')
+  }
+})
 
 // Open video dialog and fetch related YouTube videos
 const openVideoDialog = (topicTitle) => {
@@ -422,11 +524,31 @@ const showPdf = (pdfUrl) => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {

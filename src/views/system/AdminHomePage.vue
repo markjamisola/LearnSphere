@@ -79,7 +79,9 @@
 
           <v-row>
             <v-col>
-              <h2 class="text-white">Course List</h2>
+              <h2 class="text-white">
+                <v-icon class="mr-2"> mdi-book-open-page-variant </v-icon>Course List
+              </h2>
             </v-col>
           </v-row>
         </div>
@@ -259,9 +261,7 @@
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="refreshPage">
-                  OK
-                </v-btn>
+                <v-btn rounded="lg" elevation="10" block @click="refreshPage"> OK </v-btn>
               </v-card>
             </v-col>
           </v-card-actions>
@@ -280,9 +280,7 @@
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="refreshPage">
-                  OK
-                </v-btn>
+                <v-btn rounded="lg" elevation="10" block @click="refreshPage"> OK </v-btn>
               </v-card>
             </v-col>
           </v-card-actions>
