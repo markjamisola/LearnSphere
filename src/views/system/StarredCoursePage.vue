@@ -1,5 +1,6 @@
 <template>
   <v-app class="animated-background description">
+    <div class="geometric-overlay"></div>
     <!-- Navbar component with logout functionality -->
     <NavBar @triggerLogoutModal="openLogoutModal" />
 
@@ -29,7 +30,7 @@
         <v-row>
           <!-- Loop through starred courses and display each one -->
           <v-col v-for="course in starredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3" elevation="15" color="#803d3b">
+            <v-card class="pa-3 position-relative" elevation="15" color="#803d3b">
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -45,17 +46,20 @@
                   </v-card>
                 </div>
               </v-btn>
-              <!-- Button to remove the course with confirmation -->
-              <v-btn
-                class="mb-1 mt-3 delete-button"
-                color="#FAEED1"
-                size="large"
-                elevation="15"
-                block
-                @click="confirmRemoveCourse(course.id)"
+
+              <!-- Remove Button Box -->
+              <div
+                class="remove-button-box position-absolute"
+                style="top: -10px; right: -10px; background-color: #803d3b; border-radius: 50%; padding: 5px;"
               >
-                REMOVE <v-icon color="black">mdi-delete</v-icon>
-              </v-btn>
+                <v-btn
+                  icon
+                  @click.stop="confirmRemoveCourse(course.id)"
+                  style="background: none; color: #fff;"
+                >
+                  <v-icon>mdi-close</v-icon> <!-- Close icon for remove button -->
+                </v-btn>
+              </div>
             </v-card>
           </v-col>
         </v-row>
@@ -122,10 +126,10 @@ import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 
 // References for state management
-const logoutModalRef = ref(null)
-const starredCourses = ref([])
-const showRemoveConfirm = ref(false)
-const courseIdToRemove = ref(null)
+const logoutModalRef = ref(null) // Reference to open the logout modal
+const starredCourses = ref([]) // Holds list of starred courses
+const showRemoveConfirm = ref(false) // Controls display of removal confirmation dialog
+const courseIdToRemove = ref(null) // Stores course ID to be removed
 
 // Function to open logout modal
 const openLogoutModal = () => {
@@ -134,8 +138,8 @@ const openLogoutModal = () => {
 
 // Open confirmation dialog before deleting a course
 const confirmRemoveCourse = (courseId) => {
-  courseIdToRemove.value = courseId
-  showRemoveConfirm.value = true
+  courseIdToRemove.value = courseId // Set the course ID to remove
+  showRemoveConfirm.value = true // Display the remove confirmation dialog
 }
 
 // Remove course function with confirmation
@@ -160,7 +164,7 @@ const removeCourse = async () => {
     starredCourses.value = starredCourses.value.filter(
       (course) => course.id !== courseIdToRemove.value
     )
-    showRemoveConfirm.value = false
+    showRemoveConfirm.value = false // Close confirmation dialog
   } catch (error) {
     console.error('Error deleting starred course:', error.message)
   }
@@ -192,9 +196,9 @@ const fetchStarredCourses = async () => {
 
       if (courseError) throw courseError
 
-      starredCourses.value = courses
+      starredCourses.value = courses // Set the fetched courses to starredCourses
     } else {
-      starredCourses.value = []
+      starredCourses.value = [] // Set to empty if no starred courses
     }
   } catch (error) {
     console.error('Error fetching starred courses:', error.message)
@@ -203,7 +207,7 @@ const fetchStarredCourses = async () => {
 
 // Fetch starred courses when component mounts
 onMounted(() => {
-  fetchStarredCourses()
+  fetchStarredCourses() // Trigger fetch on component mount
 })
 </script>
 
@@ -263,6 +267,59 @@ onMounted(() => {
   background: linear-gradient(270deg, #803d3b, #c7b793, #aa7154, #b54646);
   background-size: 800% 800%;
   animation: gradientBackground 15s ease infinite;
+}
+
+/* Geometric overlay styles */
+.geometric-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Ensure clicks go through this overlay */
+  z-index: 0; /* Ensure this is behind other content */
+}
+
+/* Adding multiple geometric shapes with improved visibility */
+.geometric-overlay::before,
+.geometric-overlay::after {
+  content: '';
+  position: absolute;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background: rgba(255, 255, 255, 0.15); /* Slightly higher opacity for better clarity */
+  clip-path: polygon(20% 0%, 0% 20%, 20% 100%, 100% 20%, 80% 0%); /* First shape */
+  opacity: 0.5; /* Increased opacity for better visibility */
+}
+
+/* Layering different shapes with clarity */
+.geometric-overlay::after {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* Second shape */
+  opacity: 0.4; /* Slightly more transparent */
+}
+
+/* Additional smaller geometric shapes */
+.geometric-overlay div {
+  position: absolute;
+  width: 20%; /* Increased size for better visibility */
+  height: 20%; /* Increased size for better visibility */
+  background: rgba(255, 255, 255, 0.25); /* Higher opacity for clearer visibility */
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* Triangle shape */
+  opacity: 0.6; /* Increased opacity for clarity */
+}
+
+/* Random positioning for aesthetic */
+.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
+.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
+.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
+.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
+.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+
+/* Additional distinct geometric shapes */
+.geometric-overlay .shape {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3); /* Background for new shapes */
+  opacity: 0.5; /* Opacity for better visibility */
 }
 
 /* Stack order and positioning for delete button */
