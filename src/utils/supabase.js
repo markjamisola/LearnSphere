@@ -6,8 +6,6 @@ export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 )
 
-
-
 export const formActionDefault = {
     formProcess: false,
     formStatus: 200,
@@ -25,7 +23,6 @@ export const isAuthenticated = async () => {
   
     return !!data.session
   }
-
 
   export const getUserInformation = async () => {
     const { data, error } = await supabase.auth.getUser()
