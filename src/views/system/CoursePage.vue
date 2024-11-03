@@ -70,6 +70,7 @@
         :isOpen="isTopicModalOpen"
         :requestedTopics="requestedTopics"
         @add-topic="handleAddTopic"
+        @delete-topic="handleDeleteTopic"
         @close="closeTopicRequestModal"
       />
 
@@ -77,7 +78,7 @@
       <v-container fluid>
         <v-row>
           <v-col cols="12" md="6" v-for="topic in filteredTopics" :key="topic.topic_title">
-            <v-card class="mb-5" color="#FAEED1" dark elevation="10">
+            <v-card class="mb-1 hover-zoom" color="#FAEED1" dark elevation="10">
               <v-card-title class="text-center font-weight-black">
                 {{ topic.topic_title }}
               </v-card-title>
@@ -444,6 +445,28 @@ const fetchRelatedVideos = async (topicTitle) => {
 const showPdf = (pdfUrl) => {
   window.open(pdfUrl, '_blank')
 }
+
+const handleDeleteTopic = async (topicId) => {
+  try {
+    // Delete the topic from the Supabase table
+    const { error } = await supabase
+      .from('request_topic') // Ensure this matches your Supabase table name
+      .delete()
+      .eq('id', topicId)
+
+    if (error) throw error // Handle any error from the deletion
+
+    // Remove the topic from the local requestedTopics array
+    const index = requestedTopics.value.findIndex((topic) => topic.id === topicId)
+    if (index !== -1) {
+      requestedTopics.value.splice(index, 1) // Update the local array
+    }
+
+    console.log('Topic deleted successfully')
+  } catch (error) {
+    console.error('Error deleting topic:', error.message)
+  }
+}
 </script>
 
 <style scoped>
@@ -561,5 +584,13 @@ const showPdf = (pdfUrl) => {
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

@@ -26,19 +26,34 @@
           <h4 v-if="requestedTopics.length" class="text-center">Your Requested Topics</h4>
           <h5 v-if="!requestedTopics.length" class="text-center">No Requested Topics</h5>
           <v-card color="#803D3B">
-            <v-list-item-group>
-              <v-list-item v-for="topic in requestedTopics" :key="topic.id" class="ma-2">
-                <v-list-item-content>
-                  <v-list-item-title>Topic Name: {{ topic.topic_name }}</v-list-item-title>
-                  <v-list-item-subtitle>Description: {{ topic.description }}</v-list-item-subtitle>
-                  <v-list-item-subtitle>Status: {{ topic.status }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
+            <v-card color="#FAEED1" class="mx-3 ma-3">
+              <div
+                v-for="topic in requestedTopics"
+                :key="topic.id"
+                class="ma-2 d-flex align-center justify-between"
+              >
+                <div style="flex-grow: 1">
+                  <h4>{{ topic.topic_name }}</h4>
+                  <h6>{{ topic.description }}</h6>
+                  <h6>{{ topic.status }}</h6>
+                </div>
+
+                <div class="remove-button-box" style="margin-left: 16px">
+                  <v-btn
+                    icon
+                    style="background-color: #803d3b; color: #FAEED1"
+                    @click="$emit('delete-topic', topic.id)"
+                  >
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </div>
+            </v-card>
           </v-card>
         </v-card>
       </v-card>
     </v-card>
+
     <div class="d-flex justify-end description">
       <v-row>
         <v-col cols="6">
@@ -90,7 +105,7 @@ const { isOpen, requestedTopics } = defineProps({
   isOpen: Boolean,
   requestedTopics: Array // Accept the requested topics as a prop
 })
-const emit = defineEmits(['add-topic', 'close'])
+const emit = defineEmits(['add-topic', 'close', 'delete-topic']) // Added 'delete-topic' emit
 
 // State for the new topic
 const newTopic = ref({
