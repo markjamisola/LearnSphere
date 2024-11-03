@@ -182,6 +182,11 @@ import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import AdminNav from '@/components/layout/AdminNav.vue'
 
+const logoutModalRef = ref(null)
+const openLogoutModal = () => {
+  logoutModalRef.value.open()
+}
+
 const courseRequests = ref([])
 const topicRequests = ref([])
 
