@@ -84,8 +84,8 @@
               <v-card-subtitle class="text-center">{{ topic.description }}</v-card-subtitle>
               <v-card-text>
                 <v-row>
-                  <v-col cols="6">
-                    <!-- Button to open videos related to the topic -->
+                  <!-- Watch Videos button with dynamic width based on the presence of pdf_url -->
+                  <v-col :cols="topic.pdf_url ? 6 : 12">
                     <v-btn
                       elevation="10"
                       color="#803D3B"
@@ -95,8 +95,9 @@
                       Watch Videos
                     </v-btn>
                   </v-col>
-                  <v-col cols="6">
-                    <!-- Button to open the PDF for the topic -->
+
+                  <!-- Conditionally render the Open PDF button if pdf_url exists -->
+                  <v-col cols="6" v-if="topic.pdf_url">
                     <v-btn elevation="10" color="#803D3B" block @click="showPdf(topic.pdf_url)">
                       Open PDF
                     </v-btn>

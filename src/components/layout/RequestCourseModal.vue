@@ -41,6 +41,25 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
+            <div
+              class="remove-button-box position-absolute"
+              style="
+                top: -10px;
+                right: -10px;
+                background-color: #faeed1;
+                border-radius: 50%;
+                padding: 5px;
+              "
+            >
+              <v-btn
+                icon
+                style="background: none; color: #803d3b"
+                @click="$emit('delete-course', course.id)"
+              >
+                <v-icon>mdi-close</v-icon>
+                <!-- Close icon for remove button -->
+              </v-btn>
+            </div>
           </v-card>
         </v-card>
       </v-card>

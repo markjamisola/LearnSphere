@@ -67,7 +67,7 @@
               variant="elevated"
               elevation="15"
               block
-              @click="refreshPage"
+              @click="successModal = false"
             >
               OK
             </v-btn>
@@ -180,7 +180,7 @@
               </v-card-subtitle>
 
               <v-card-actions class="mx-2">
-                <v-row>
+                <v-row class="d-flex justify-space-between">
                   <v-col cols="6" md="3">
                     <v-btn
                       elevation="10"
@@ -192,7 +192,9 @@
                       Watch Videos
                     </v-btn>
                   </v-col>
-                  <v-col cols="6" md="3">
+
+                  <!--  Open PDF button if pdf_url exists -->
+                  <v-col v-if="topic.pdf_url" cols="6" md="3">
                     <v-btn
                       elevation="10"
                       color="white"
@@ -203,6 +205,20 @@
                       Open PDF
                     </v-btn>
                   </v-col>
+
+                  <!-- Show Add PDF button if no pdf_url exists -->
+                  <v-col v-else cols="6" md="3">
+                    <v-btn
+                      elevation="10"
+                      color="white"
+                      style="background-color: #dd660d"
+                      block
+                      @click="openAddPdfModal(topic.id)"
+                    >
+                      Add PDF
+                    </v-btn>
+                  </v-col>
+
                   <v-col cols="6" md="3">
                     <v-btn
                       color="white"
@@ -220,6 +236,7 @@
                       Delete
                     </v-btn>
                   </v-col>
+
                   <v-col cols="6" md="3">
                     <v-btn
                       color="white"
@@ -242,6 +259,40 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <v-dialog v-model="isAddPdfModalOpen" max-width="500" class="dialog-with-blur description">
+          <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+            <v-card-title class="headline text-center"><h3>Add PDF</h3></v-card-title>
+            <v-card class="ma-6 mt-2 description" color="#FAEED1" elevation="10" rounded="lg">
+              <v-card-text>
+                <v-text-field
+                  label="PDF URL"
+                  v-model="newPdfUrl"
+                  prepend-inner-icon="mdi-file-pdf"
+                ></v-text-field>
+                <v-text-field
+                  label="Description"
+                  v-model="newPdfDescription"
+                  prepend-inner-icon="mdi-text"
+                ></v-text-field>
+              </v-card-text>
+            </v-card>
+          </v-card>
+          <div class="d-flex justify-end description">
+            <v-row>
+              <v-col cols="6">
+                <v-btn rounded="lg" elevation="10" color="#dd660d" block @click="addPdf">
+                  Save
+                </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="closeAddPdfModal">
+                  Cancel
+                </v-btn>
+              </v-col>
+            </v-row>
+          </div>
+        </v-dialog>
 
         <v-dialog v-model="deleteTopicDialog" max-width="500px" class="dialog-with-blur">
           <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
@@ -407,6 +458,10 @@ const isModalOpen = ref(false)
 const editModalOpen = ref(false)
 const topicToEdit = ref(null)
 const isEditModalOpen = ref(false)
+const isAddPdfModalOpen = ref(false)
+const newPdfUrl = ref('')
+const selectedTopicId = ref(null) // State for selected topic ID
+const newPdfDescription = ref('')
 // Use Vue Router's route object
 const route = useRoute()
 
@@ -515,25 +570,21 @@ const saveCourseDetails = async (updatedData) => {
       .from('courses')
       .update(updatedData)
       .eq('id', courseDetails.value.id)
+      .select() // Return the updated data from Supabase
 
     if (error) {
       console.error('Error updating course details:', error)
     } else if (data && data.length) {
-      // Update the course name and description with new data
+      // Update courseDetails with the new values to reflect changes
       courseDetails.value.course_name = data[0].course_name
       courseDetails.value.description = data[0].description
       console.log('Course details updated successfully:', data[0])
     }
 
-    successModal.value = true
+    successModal.value = true // Show success modal
+    isEditModalOpen.value = false // Close the edit modal
   } catch (error) {
     console.error('Failed to save changes:', error)
-  }
-  return {
-    isEditModalOpen,
-    courseDetails,
-    openCourseEditModal,
-    saveCourseDetails
   }
 }
 
@@ -559,11 +610,6 @@ const deleteCourse = async () => {
   } finally {
     deleteDialog.value = false // Close delete confirmation dialog
   }
-}
-
-// Refresh the page when the modal button is clicked
-const refreshPage = () => {
-  location.reload() // Refresh the page
 }
 
 const openCourseEditModal = () => {
@@ -676,6 +722,60 @@ const addTopic = async (newTopic) => {
   } finally {
     closeAddModal() // Close the modal after attempting to add the topic
   }
+}
+// Open the Add PDF modal
+const openAddPdfModal = (topicId) => {
+  selectedTopicId.value = topicId
+  isAddPdfModalOpen.value = true
+}
+
+// Function to handle adding a PDF
+const addPdf = async () => {
+  if (!newPdfUrl.value) {
+    console.error('No PDF URL provided')
+    return
+  }
+
+  // Check if the selectedTopicId is valid
+  if (!selectedTopicId.value) {
+    console.error('No topic ID provided for the PDF')
+    return
+  }
+
+  try {
+    const { error } = await supabase.from('resources').insert([
+      {
+        topic_id: selectedTopicId.value,
+        url: newPdfUrl.value,
+        description: newPdfDescription.value,
+        resource_type: 'pdf',
+        created_at: new Date().toISOString()
+      }
+    ])
+
+    if (error) throw error
+
+    // Update the local state to reflect the newly added PDF
+    const updatedTopic = topics.value.find((topic) => topic.id === selectedTopicId.value)
+    if (updatedTopic) {
+      updatedTopic.pdf_url = newPdfUrl.value // Update the PDF URL for the topic
+    }
+
+    console.log('PDF added successfully')
+    newPdfUrl.value = '' // Reset the PDF URL
+    newPdfDescription.value = '' // Reset the PDF description
+  } catch (error) {
+    console.error('Error adding PDF:', error.message)
+  } finally {
+    closeAddPdfModal() // Close the modal after adding
+  }
+}
+
+// Function to close the Add PDF modal and clear the forms
+const closeAddPdfModal = () => {
+  newPdfUrl.value = ''
+  newPdfDescription.value = ''
+  isAddPdfModalOpen.value = false
 }
 </script>
 
