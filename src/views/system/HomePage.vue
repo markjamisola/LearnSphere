@@ -114,9 +114,7 @@
           <v-row>
             <v-col>
               <h2 class="text-white">
-                <v-icon class="mr-2">
-                  mdi-book-open-page-variant </v-icon
-                >Course List
+                <v-icon class="mr-2"> mdi-book-open-page-variant </v-icon>Course List
               </h2>
             </v-col>
             <div class="d-flex justify-end mr-3 mt-3 mb-2">
@@ -129,6 +127,7 @@
             :isOpen="isAddCourseModalOpen"
             :requestedCourses="requestedCourses"
             @add-course="handleCourseRequest"
+            @delete-course="handleDeleteCourse"
             @close="isAddCourseModalOpen = false"
           />
           <!-- Remaining page content -->
@@ -360,7 +359,29 @@ const onSearchInput = () => {
     loading.value = false
   }, 1000)
 }
+
+const handleDeleteCourse = async (courseId) => {
+  try {
+    const { error } = await supabase
+      .from('requested_course') // Ensure this matches your Supabase table name
+      .delete()
+      .eq('id', courseId)
+
+    if (error) throw error // Handle any error from the deletion
+
+    // Remove the course from the local requestedCourses array
+    const index = requestedCourses.value.findIndex((course) => course.id === courseId)
+    if (index !== -1) {
+      requestedCourses.value.splice(index, 1) // Update the local array
+    }
+
+    console.log('Course deleted successfully')
+  } catch (error) {
+    console.error('Error deleting course:', error.message)
+  }
+}
 </script>
+
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/unbounded');
 .fill-height {
@@ -449,11 +470,31 @@ const onSearchInput = () => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {

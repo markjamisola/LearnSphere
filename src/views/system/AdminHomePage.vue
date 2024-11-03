@@ -261,7 +261,9 @@
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="refreshPage"> OK </v-btn>
+                <v-btn rounded="lg" elevation="10" block @click="successDialogVisible = false">
+                  OK
+                </v-btn>
               </v-card>
             </v-col>
           </v-card-actions>
@@ -280,7 +282,7 @@
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="refreshPage"> OK </v-btn>
+                <v-btn rounded="lg" elevation="10" block @click="successTopicDialogVisible = false"> OK </v-btn>
               </v-card>
             </v-col>
           </v-card-actions>
@@ -355,15 +357,18 @@ const addCourse = async () => {
   // Log the new course data being inserted
   console.log('Attempting to add course:', newCourse.value)
 
-  // Save the new course to Supabase
-  const { data, error } = await supabase.from('courses').insert({
-    program_id: newCourse.value.program_id,
-    course_name: newCourse.value.course_name,
-    description: newCourse.value.description,
-    year_level: newCourse.value.year_level,
-    semester: newCourse.value.semester,
-    created_at: new Date().toISOString()
-  })
+  // Save the new course to Supabase with `select()` to get the inserted row back
+  const { data, error } = await supabase
+    .from('courses')
+    .insert({
+      program_id: newCourse.value.program_id,
+      course_name: newCourse.value.course_name,
+      description: newCourse.value.description,
+      year_level: newCourse.value.year_level,
+      semester: newCourse.value.semester,
+      created_at: new Date().toISOString()
+    })
+    .select()  // Request the newly added row to be returned
 
   // Handle error case
   if (error) {
@@ -371,6 +376,11 @@ const addCourse = async () => {
   } else {
     // Log the successful addition of the course
     console.log('Course added:', data)
+
+    // Add the new course data to the local array immediately
+    if (Array.isArray(courses.value)) {
+      courses.value.unshift(...data) // Insert at the beginning of the array
+    }
 
     // Close the add course modal
     addCourseModalVisible.value = false
@@ -404,7 +414,8 @@ const saveTopic = async () => {
     topic_title: newTopic.value.title,
     created_at: new Date().toISOString()
   })
-
+  .select()
+  
   if (error) {
     console.error('Error adding topic:', error.message)
   } else {
@@ -475,9 +486,6 @@ const onSearchInput = () => {
   }, 1000)
 }
 
-const refreshPage = () => {
-  location.reload() // Refresh the page
-}
 </script>
 
 <style scoped>

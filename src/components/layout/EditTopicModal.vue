@@ -39,6 +39,30 @@
       </v-row>
     </div>
   </v-dialog>
+
+  <v-dialog v-model="successModal" max-width="448" class="dialog-with-blur">
+    <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
+      <v-card-title>
+        <h3 class="font-weight-black text-center description">Success</h3>
+      </v-card-title>
+      <v-card-text class="text-center text-black text-caption description">
+        <h3>Information Successfully Updated!</h3>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          class="description"
+          color="#803d3b"
+          size="large"
+          variant="elevated"
+          elevation="15"
+          block
+          @click="successModal = false"
+        >
+          OK
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -51,10 +75,10 @@ export default {
   },
   emits: ['update:topic', 'close'],
   setup(props, { emit }) {
-    // Internal copy of topic for editing within the modal
+    const successModal = ref(false)
     const localTopic = ref({ ...props.topic })
 
-    // Update localTopic whenever the prop changes
+    // Watch for changes in the prop and update local copy
     watch(
       () => props.topic,
       (newTopic) => {
@@ -71,10 +95,11 @@ export default {
     // Emit the updated topic to parent
     const saveChanges = () => {
       emit('update:topic', localTopic.value)
+      successModal.value = true // Show success modal after saving
       closeModal()
     }
 
-    return { localTopic, closeModal, saveChanges }
+    return { localTopic, closeModal, saveChanges, successModal }
   }
 }
 </script>
