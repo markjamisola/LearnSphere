@@ -30,36 +30,32 @@
         <v-card class="pa-3" color="#FAEED1">
           <h4 v-if="requestedCourses.length" class="text-center">Your Requested Courses</h4>
           <h5 v-if="!requestedCourses.length" class="text-center">No Requested Courses</h5>
+
           <v-card color="#803D3B">
-            <v-list-item-group>
-              <v-list-item v-for="course in requestedCourses" :key="course.id" class="ma-2">
-                <v-list-item-content>
-                  <v-list-item-title>Course Name: {{ course.course_name }}</v-list-item-title>
-                  <v-list-item-subtitle>Description: {{ course.description }}</v-list-item-subtitle>
-                  <v-list-item-subtitle>Program: {{ course.program }}</v-list-item-subtitle>
-                  <v-list-item-subtitle>Status: {{ course.status }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-            <div
-              class="remove-button-box position-absolute"
-              style="
-                top: -10px;
-                right: -10px;
-                background-color: #faeed1;
-                border-radius: 50%;
-                padding: 5px;
-              "
-            >
-              <v-btn
-                icon
-                style="background: none; color: #803d3b"
-                @click="$emit('delete-course', course.id)"
+            <v-card color="#FAEED1" class="mx-3 ma-3">
+              <div
+                v-for="course in requestedCourses"
+                :key="course.id"
+                class="ma-2 d-flex align-center justify-between"
               >
-                <v-icon>mdi-close</v-icon>
-                <!-- Close icon for remove button -->
-              </v-btn>
-            </div>
+                <div style="flex-grow: 1">
+                  <h4>{{ course.course_name }}</h4>
+                  <h6>{{ course.description }}</h6>
+                  <h6>{{ course.program }}</h6>
+                  <h6>{{ course.status }}</h6>
+                </div>
+
+                <div class="remove-button-box" style="margin-left: 16px">
+                  <v-btn
+                    icon
+                    style="background-color: #803d3b; color: #FAEED1"
+                    @click="$emit('delete-course', course.id)"
+                  >
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </div>
+            </v-card>
           </v-card>
         </v-card>
       </v-card>

@@ -168,7 +168,7 @@
       <v-container fluid>
         <v-row>
           <v-col cols="12" md="6" v-for="topic in filteredTopics" :key="topic.topic_title">
-            <v-card class="mb-5 pb-2" color="#FAEED1" dark elevation="10">
+            <v-card class="mb-1 hover-zoom  pb-2" color="#FAEED1" dark elevation="10">
               <!-- Topic Title -->
               <v-card-title class="text-center font-weight-black">
                 {{ topic.topic_title }}
@@ -821,5 +821,13 @@ const closeAddPdfModal = () => {
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

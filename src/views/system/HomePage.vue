@@ -135,7 +135,7 @@
 
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3" elevation="15" color="#803d3b" variant="elevated">
+            <v-card class="pa-3 hover-zoom" elevation="15" color="#803d3b" variant="elevated">
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -363,7 +363,7 @@ const onSearchInput = () => {
 const handleDeleteCourse = async (courseId) => {
   try {
     const { error } = await supabase
-      .from('requested_course') // Ensure this matches your Supabase table name
+      .from('request_course') // Ensure this matches your Supabase table name
       .delete()
       .eq('id', courseId)
 
@@ -517,5 +517,13 @@ const handleDeleteCourse = async (courseId) => {
   position: absolute;
   color: rgba(255, 255, 255, 0.5);
   animation: float infinite;
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

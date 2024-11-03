@@ -89,7 +89,7 @@
         <!-- Filtered Courses List -->
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3" elevation="15" color="#803d3b">
+            <v-card class="pa-3 hover-zoom " elevation="15" color="#803d3b">
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -555,5 +555,13 @@ const onSearchInput = () => {
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

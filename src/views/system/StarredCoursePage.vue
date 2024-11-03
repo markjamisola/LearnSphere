@@ -10,18 +10,16 @@
         <v-row class="mt-8 d-flex" v-if="starredCourses.length">
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black align-items-center justify-center">
-              <v-icon large :color="textColor" > mdi-star </v-icon>
+              <v-icon large :color="textColor"> mdi-star </v-icon>
               Starred Courses
             </h1>
           </v-col>
         </v-row>
 
-        <v-row class="mt-8  d-flex" v-else>
+        <v-row class="mt-8 d-flex" v-else>
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black align-items-center justify-center">
-              <v-icon large :color="textColor">
-                mdi-alert-circle-outline
-              </v-icon>
+              <v-icon large :color="textColor"> mdi-alert-circle-outline </v-icon>
               You have no Starred Courses
             </h1>
           </v-col>
@@ -30,7 +28,7 @@
         <v-row>
           <!-- Loop through starred courses and display each one -->
           <v-col v-for="course in starredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 position-relative" elevation="15" color="#803d3b">
+            <v-card class="pa-3 hover-zoom position-relative" elevation="15" color="#803d3b">
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -50,14 +48,21 @@
               <!-- Remove Button Box -->
               <div
                 class="remove-button-box position-absolute"
-                style="top: -10px; right: -10px; background-color: #803d3b; border-radius: 50%; padding: 5px;"
+                style="
+                  top: -10px;
+                  right: -10px;
+                  background-color: #803d3b;
+                  border-radius: 50%;
+                  padding: 5px;
+                "
               >
                 <v-btn
                   icon
                   @click.stop="confirmRemoveCourse(course.id)"
-                  style="background: none; color: #fff;"
+                  style="background: none; color: #fff"
                 >
-                  <v-icon>mdi-close</v-icon> <!-- Close icon for remove button -->
+                  <v-icon>mdi-close</v-icon>
+                  <!-- Close icon for remove button -->
                 </v-btn>
               </div>
             </v-card>
@@ -309,11 +314,31 @@ onMounted(() => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {
@@ -332,5 +357,13 @@ onMounted(() => {
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

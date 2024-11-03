@@ -35,7 +35,7 @@
         <v-row>
           <!-- Loop through each recent course -->
           <v-col v-for="course in recentCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 position-relative" elevation="15" color="#803d3b" variant="elevated">
+            <v-card class="pa-3 hover-zoom position-relative" elevation="15" color="#803d3b" variant="elevated">
               <!-- Course button linking to CoursePage -->
               <v-btn
                 class="pa-0"
@@ -279,4 +279,11 @@ onMounted(() => {
   opacity: 0.5; /* Opacity for better visibility */
 }
 
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
+}
 </style>
