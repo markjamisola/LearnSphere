@@ -200,15 +200,19 @@ onMounted(async () => {
     <v-card class="mb-3" color="#803d3b" variant="outlined">
       <v-card-text class="text-caption text-justify text-black description">
         Ensure that all information is correct before signing up. If you need assistance, please
-        <a @click.prevent="contactDialog = true" class="text-deep-orange-darken-4 font-weight-bold">
+        <span
+          @click.prevent="contactDialog = true"
+          class="text-deep-orange-darken-4 font-weight-bold"
+          style="cursor: pointer"
+        >
           contact support.
-        </a>
+        </span>
       </v-card-text>
     </v-card>
 
     <!-- Sign Up Button -->
     <v-btn
-      class="mb-8 description"
+      class="mb-8 description hover-zoom"
       color="#803d3b"
       size="large"
       variant="elevated"
@@ -223,10 +227,21 @@ onMounted(async () => {
 
     <!-- Dialog/Modal for Contact Support -->
     <v-dialog v-model="contactDialog" persistent max-width="400">
-      <v-card class="pa-0" color="#803d3b" block elevation="10">
-        <v-card-title class="headline text-center font-weight-black">Contact Us</v-card-title>
-
-        <v-card-text class="justify-content">
+      <div class="d-flex justify-center mb-2 description">
+        <v-row>
+          <v-col cols="12">
+            <v-card color="#803d3b" elevation="15" rounded="lg">
+              <v-card color="#FAEED1" class="ma-1" elevation="15" rounded="lg"
+                ><v-card-title class="headline text-center font-weight-black"
+                  >Contact Us</v-card-title
+                ></v-card
+              >
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+      <v-card class="pa-0" color="#803d3b" block elevation="10" rounded="lg">
+        <v-card-text class="justify-content text-center">
           <p class="mb-3">
             If you have any questions or need assistance, please contact us using the details below:
           </p>
@@ -253,21 +268,28 @@ onMounted(async () => {
             >
           </p>
         </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="#FAEED1"
-            block
-            variant="elevated"
-            elevation="15"
-            size="large"
-            class="mb-3"
-            @click="contactDialog = false"
-            >Close</v-btn
-          >
-        </v-card-actions>
       </v-card>
+      <div class="d-flex justify-center description">
+        <v-row>
+          <v-col cols="12">
+          <v-card color="#803d3b" class="hover-zoom mt-2" elevation="15" rounded="lg" >
+            <v-card class="ma-1" elevation="15" rounded="lg">
+              <v-btn
+                color="#FAEED1"
+                block
+                variant="elevated"
+                elevation="15"
+                size="large"
+                class=""
+                style="background-color: #faeed1"
+                @click="contactDialog = false"
+                >Close</v-btn
+              >
+            </v-card>
+          </v-card>
+          </v-col>
+        </v-row>
+      </div>
     </v-dialog>
   </v-form>
 </template>
@@ -284,5 +306,13 @@ onMounted(async () => {
 
 .description {
   font-family: 'Unbounded', sans-serif;
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

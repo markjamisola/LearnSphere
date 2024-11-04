@@ -25,10 +25,20 @@
           </v-col>
         </v-row>
 
+        <v-row class="d-flex justify-center">
+          <v-card class="mb-2 mx-3" color="white" variant="outlined" rounded="lg">
+            <v-card-text class="d-flex align-center text-justify text-white description">
+              <v-icon class="mr-2" :color="'white'">mdi-alert-circle-outline</v-icon>
+              Note: This page displays all the courses you've starred. Use this space to easily
+              access and keep track of your favorite courses.
+            </v-card-text>
+          </v-card>
+        </v-row>
+
         <v-row>
           <!-- Loop through starred courses and display each one -->
           <v-col v-for="course in starredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 hover-zoom position-relative" elevation="15" color="#803d3b">
+            <v-card class="pa-3 hover-zoom position-relative" elevation="15" color="#803d3b" rounded="lg">
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -47,7 +57,7 @@
 
               <!-- Remove Button Box -->
               <div
-                class="remove-button-box position-absolute"
+                class="remove-button-box position-absolute hover-zoom"
                 style="
                   top: -10px;
                   right: -10px;
@@ -59,6 +69,7 @@
                 <v-btn
                   icon
                   @click.stop="confirmRemoveCourse(course.id)"
+                  class="hover-zoom"
                   style="background: none; color: #fff"
                 >
                   <v-icon>mdi-close</v-icon>
@@ -87,7 +98,7 @@
               <v-btn
                 color="#FAEED1"
                 text
-                class="confirm-btn font-weight-bold"
+                class="confirm-btn font-weight-bold hover-zoom"
                 @click="removeCourse"
                 style="
                   background-color: white;
@@ -102,7 +113,7 @@
               <v-btn
                 color="#FAEED1"
                 text
-                class="cancel-btn font-weight-bold"
+                class="cancel-btn font-weight-bold hover-zoom"
                 @click="showRemoveConfirm = false"
                 style="
                   background-color: #803d3b;

@@ -1,9 +1,9 @@
 <template>
   <v-app class="animated-background description">
     <div class="geometric-overlay"></div>
-      <!-- Geometric Overlay -->
+    <!-- Geometric Overlay -->
     <div class="geometric-overlay"></div>
-      
+
     <AdminNav @triggerLogoutModal="openLogoutModal" />
 
     <!-- Main content area -->
@@ -32,8 +32,12 @@
                 elevation="10"
                 rounded="lg"
               >
-                <v-card-title
+                <v-card-title v-if="courseRequests.length"
                   ><v-icon class="mr-2"> mdi-book-open-page-variant </v-icon> Requested
+                  Courses</v-card-title
+                >
+                <v-card-title v-if="!courseRequests.length"
+                  ><v-icon class="mr-2"> mdi-book-open-page-variant </v-icon> No Requested
                   Courses</v-card-title
                 >
               </v-card>
@@ -64,12 +68,14 @@
                           <v-btn
                             color="white"
                             style="background-color: #dd660d"
+                            class="hover-zoom"
                             @click="updateStatus(request.id, 'approved')"
                             >Approve</v-btn
                           >
                           <v-btn
                             color="white"
                             style="background-color: #803d3b"
+                            class="hover-zoom"
                             @click="updateStatus(request.id, 'rejected')"
                             >Reject</v-btn
                           >
@@ -88,6 +94,7 @@
                         <v-btn
                           icon
                           style="background: none; color: #803d3b"
+                          class="hover-zoom"
                           @click="deleteRequest(request.id)"
                         >
                           <v-icon>mdi-close</v-icon>
@@ -114,8 +121,11 @@
                 elevation="10"
                 rounded="lg"
               >
-                <v-card-title>
+                <v-card-title v-if="topicRequests.length">
                   <v-icon class="mr-2"> mdi-lightbulb-on </v-icon>Requested Topics</v-card-title
+                >
+                <v-card-title v-if="!topicRequests.length">
+                  <v-icon class="mr-2"> mdi-lightbulb-on </v-icon>No Requested Topics</v-card-title
                 >
               </v-card>
 
@@ -138,12 +148,14 @@
                           <v-btn
                             color="white"
                             style="background-color: #dd660d"
+                            class="hover-zoom"
                             @click="updateTopicStatus(request.id, 'approved')"
                             >Approve</v-btn
                           >
                           <v-btn
                             color="white"
                             style="background-color: #803d3b"
+                            class="hover-zoom"
                             @click="updateTopicStatus(request.id, 'rejected')"
                             >Reject</v-btn
                           >
@@ -162,6 +174,7 @@
                         <v-btn
                           icon
                           style="background: none; color: #803d3b"
+                          class="hover-zoom"
                           @click="deleteTopic(request.id)"
                         >
                           <v-icon>mdi-close</v-icon>
@@ -368,11 +381,31 @@ onMounted(() => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {
@@ -388,5 +421,13 @@ onMounted(() => {
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

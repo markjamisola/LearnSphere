@@ -25,7 +25,7 @@
                     append-inner-icon="mdi-magnify"
                     prepend-inner-icon="mdi-book-open-page-variant"
                     density="comfortable"
-                    label="Search Course"
+                    label="Search Course Details" 
                     variant="solo"
                     hide-details
                     single-line
@@ -41,7 +41,7 @@
             <v-row class="mb-3 justify-center">
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedYearLevel === 0 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(0)"
               >
@@ -49,7 +49,7 @@
               </v-btn>
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedYearLevel === 1 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(1)"
               >
@@ -57,7 +57,7 @@
               </v-btn>
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedYearLevel === 2 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(2)"
               >
@@ -65,7 +65,7 @@
               </v-btn>
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedYearLevel === 3 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(3)"
               >
@@ -73,7 +73,7 @@
               </v-btn>
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedYearLevel === 4 ? '#803d3b' : '#FAEED1'"
                 @click="selectYearLevel(4)"
               >
@@ -85,7 +85,7 @@
             <v-row class="mb-8 justify-center" v-if="selectedYearLevel > 0">
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedSemester === 0 ? '#803d3b' : '#FAEED1'"
                 @click="selectSemester(0)"
               >
@@ -93,7 +93,7 @@
               </v-btn>
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedSemester === 1 ? '#803d3b' : '#FAEED1'"
                 @click="selectSemester(1)"
               >
@@ -101,7 +101,7 @@
               </v-btn>
               <v-btn
                 elevation="15"
-                class="mx-1 mt-2"
+                class="mx-1 mt-2 hover-zoom"
                 :color="selectedSemester === 2 ? '#803d3b' : '#FAEED1'"
                 @click="selectSemester(2)"
               >
@@ -112,16 +112,16 @@
 
           <!-- Suggested Courses Section -->
           <v-row>
-            <v-col>
+            <v-col cols="6" class="d-flex justify-start">
               <h2 class="text-white">
-                <v-icon class="mr-2"> mdi-book-open-page-variant </v-icon>Course List
+                <v-icon class="mr-2"> mdi-book-open-page-variant </v-icon>Courses
               </h2>
             </v-col>
-            <div class="d-flex justify-end mr-3 mt-3 mb-2">
-              <v-btn elevation="15" class="" color="#FAEED1" @click="openAddCourseModal">
+            <v-col cols="6" class="d-flex justify-end">
+              <v-btn elevation="15" class="hover-zoom" color="#FAEED1" @click="openAddCourseModal">
                 Request
               </v-btn>
-            </div>
+            </v-col>
           </v-row>
           <RequestCourseModal
             :isOpen="isAddCourseModalOpen"
@@ -135,7 +135,13 @@
 
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 hover-zoom" elevation="15" color="#803d3b" variant="elevated">
+            <v-card
+              class="pa-3 hover-zoom"
+              elevation="15"
+              color="#803d3b"
+              variant="elevated"
+              rounded="lg"
+            >
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -341,8 +347,10 @@ const filteredCourses = computed(() => {
 
   // Filter by search query
   if (searchQuery.value) {
-    filtered = filtered.filter((course) =>
-      course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    filtered = filtered.filter(
+      (course) =>
+        course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
   }
 

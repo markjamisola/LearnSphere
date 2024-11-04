@@ -9,7 +9,7 @@
         <v-row class="mt-2">
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px;">
+              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px">
                 mdi-information-outline
               </v-icon>
               About Us
@@ -17,10 +17,15 @@
           </v-col>
         </v-row>
 
-
         <v-col cols="12">
           <v-row class="mx-4">
-            <v-card class="pa-3" elevation="15" color="#803d3b" rounded="lg" variant="elevated">
+            <v-card
+              class="pa-3 hover-zoom"
+              elevation="15"
+              color="#803d3b"
+              rounded="lg"
+              variant="elevated"
+            >
               <v-card class="mx-auto pa-5" elevation="15" rounded="lg" color="#FAEED1">
                 <v-card-text class="text-justify">
                   <span>
@@ -42,12 +47,18 @@
         <v-row class="mx-4 mt-3" justify="center">
           <v-col cols="12" md="6">
             <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px;">
+              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px">
                 mdi-bullseye
               </v-icon>
               Mission
             </h1>
-            <v-card class="pa-3" elevation="15" color="#803d3b" rounded="lg" variant="elevated">
+            <v-card
+              class="pa-3 hover-zoom"
+              elevation="15"
+              color="#803d3b"
+              rounded="lg"
+              variant="elevated"
+            >
               <v-card class="pa-5" elevation="15" rounded="lg" color="#FAEED1">
                 <v-card-text class="text-justify white--text">
                   <span>
@@ -63,12 +74,18 @@
 
           <v-col cols="12" md="6">
             <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px;">
-                mdi-flag
+              <v-icon large :color="textColor" style="margin-right: 10px; font-size: 45px">
+                mdi-eye
               </v-icon>
               Vision
             </h1>
-            <v-card class="pa-3" elevation="15" color="#803d3b" rounded="lg" variant="elevated">
+            <v-card
+              class="pa-3 hover-zoom"
+              elevation="15"
+              color="#803d3b"
+              rounded="lg"
+              variant="elevated"
+            >
               <v-card class="pa-5" elevation="15" rounded="lg" color="#FAEED1">
                 <v-card-text class="text-justify white--text">
                   <span>
@@ -83,21 +100,15 @@
           </v-col>
         </v-row>
 
-        <v-row class="mt-4">
-          <v-col cols="12" class="text-center">
-            <h1 class="text-white"></h1>
-          </v-col>
-        </v-row>
-
         <v-col cols="12">
-          <v-row class="mx-4">
-            <v-card class="mx-auto pa-3" rounded="lg" color="transparent" width="100%" flat>
+          <v-row>
+            <v-card class="mt-1 pa-3" rounded="lg" color="transparent" width="100%" flat>
               <template v-slot:title>
-                <h3 class="font-weight-black text-white text-center">Contact Us</h3>
+                <h4 class="font-weight-black text-white text-center">Contact Us</h4>
               </template>
 
               <!-- Team Members Section -->
-              <v-row class="mb-2">
+              <v-row class="mb-0">
                 <v-col
                   v-for="(member, index) in teamMembers"
                   :key="index"
@@ -105,7 +116,9 @@
                   sm="4"
                   class="text-center"
                 >
-                  <h4 class="text-white pb-2">{{ member.name }}</h4>
+                  <h4 class="text-white pb-1">{{ member.name }}</h4>
+                  <p class="text-white pb-2">{{ member.role }}</p>
+                  <!-- Display the role here -->
                   <v-row class="justify-center">
                     <v-col
                       v-for="(link, linkIndex) in member.socialLinks"
@@ -141,6 +154,7 @@ const openLogoutModal = () => {
 const teamMembers = ref([
   {
     name: 'Mark Jamisola',
+    role: 'Front-End Developer',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/mdjamisola/' },
       { icon: 'mdi-email-arrow-right', url: 'mailto:markdaniel.jamisola@carsu.edu.ph' },
@@ -149,6 +163,7 @@ const teamMembers = ref([
   },
   {
     name: 'Ushyne Esclamado',
+    role: 'System Analyst',
     socialLinks: [
       {
         icon: 'mdi-facebook-messenger',
@@ -160,6 +175,7 @@ const teamMembers = ref([
   },
   {
     name: 'Jusalyn Gimao',
+    role: 'Front-End Developer',
     socialLinks: [
       { icon: 'mdi-facebook-messenger', url: 'https://www.facebook.com/jusalyn.gimao' },
       { icon: 'mdi-email-arrow-right', url: 'mailto:jusalyn.gimao@carsu.edu.ph' },
@@ -238,11 +254,31 @@ const teamMembers = ref([
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {
@@ -257,5 +293,13 @@ const teamMembers = ref([
 
 .description {
   font-family: 'Unbounded', sans-serif;
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

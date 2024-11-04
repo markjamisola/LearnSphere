@@ -8,7 +8,7 @@
           <v-col cols="12" class="text-center">
             <h1 class="text-white align-center text-center font-weight-black d-inline">
               {{ courseDetails?.course_name || '...' }}
-              <v-btn class="ml-2" icon @click="openCourseEditModal" color="#dd660d">
+              <v-btn class="ml-2 hover-zoom" icon @click="openCourseEditModal" color="#dd660d">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </h1>
@@ -99,14 +99,14 @@
       </v-row>
 
       <v-row class="justify-center mt-2 mb-0">
-        <v-btn class="ma-1" color="#dd660d" @click="openDeleteDialog">
+        <v-btn class="ma-1 hover-zoom" color="#dd660d" @click="openDeleteDialog">
           <h4>
             Delete {{ courseDetails?.course_name || '...' }}
             <v-icon>mdi-delete</v-icon>
           </h4>
         </v-btn>
 
-        <v-btn class="ma-1" color="#dd660d" @click="openAddModal">
+        <v-btn class="ma-1 hover-zoom" color="#dd660d" @click="openAddModal">
           <h4>
             Add Topic
             <v-icon>mdi-plus</v-icon>
@@ -169,7 +169,7 @@
       <v-container fluid>
         <v-row>
           <v-col cols="12" md="6" v-for="topic in filteredTopics" :key="topic.topic_title">
-            <v-card class="mb-1 hover-zoom  pb-2" color="#FAEED1" dark elevation="10">
+            <v-card class="mb-1 hover-zoom pb-2" color="#FAEED1" dark elevation="10">
               <!-- Topic Title -->
               <v-card-title class="text-center font-weight-black">
                 {{ topic.topic_title }}
@@ -182,77 +182,80 @@
 
               <v-card-actions class="mx-2">
                 <v-row class="d-flex justify-space-between">
-                  <v-col cols="6" md="3">
+                  <v-col cols="6" md="2">
                     <v-btn
                       elevation="10"
                       color="white"
+                      class="hover-zoom"
                       style="background-color: #803d3b"
                       block
                       @click="openVideoDialog(topic.topic_title)"
                     >
-                      Watch Videos
+                      <h5>Watch</h5>
                     </v-btn>
                   </v-col>
 
-                  <!--  Open PDF button if pdf_url exists -->
-                  <v-col v-if="topic.pdf_url" cols="6" md="3">
+                  <!-- Open PDF button -->
+                  <v-col cols="6" md="2">
                     <v-btn
                       elevation="10"
                       color="white"
+                      class="hover-zoom"
                       style="background-color: #803d3b"
                       block
                       @click="showPdf(topic.pdf_url)"
                     >
-                      Open PDF
+                      <h5>Open PDF</h5>
                     </v-btn>
                   </v-col>
 
-                  <!-- Show Add PDF button if no pdf_url exists -->
-                  <v-col v-else cols="6" md="3">
+                  <!-- Add PDF button -->
+                  <v-col cols="6" md="2">
                     <v-btn
                       elevation="10"
-                      color="white"
-                      style="background-color: #dd660d"
+                      color="white hover-zoom"
+                      style="background-color: #dd660d "
+                      class="hover-zoom"
                       block
                       @click="openAddPdfModal(topic.id)"
                     >
-                      Add PDF
+                      <h5>Add PDF</h5>
                     </v-btn>
                   </v-col>
 
-                  <v-col cols="6" md="3">
+                  <!-- Delete button -->
+                  <v-col cols="6" md="2">
                     <v-btn
                       color="white"
                       text
                       block
-                      class="confirm-btn font-weight-bold"
+                      class="confirm-btn font-weight-bold hover-zoom"
                       @click="openTopicDeleteDialog(topic.id)"
                       style="
                         background-color: #dd660d;
                         color: #803d3b;
                         font-family: 'Unbounded', sans-serif;
-                        margin-right: 5px;
                       "
                     >
-                      Delete
+                      <h5>Delete</h5>
                     </v-btn>
                   </v-col>
 
-                  <v-col cols="6" md="3">
+                  <!-- Edit button -->
+                  <v-col cols="6" md="2">
                     <v-btn
                       color="white"
                       text
                       block
-                      class="cancel-btn font-weight-bold"
+                      class="cancel-btn font-weight-bold hover-zoom"
                       @click="openEditModal(topic)"
                       style="
                         font-family: 'Unbounded', sans-serif;
                         background-color: #dd660d;
                         color: #faeed1;
-                        margin-left: 5px;
                       "
                     >
-                      Edit
+                      <h5>Edit</h5>
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -819,10 +822,7 @@ const closeAddPdfModal = () => {
   color: #803d3b;
 }
 
-.dialog-with-blur {
-  backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.3);
-}
+
 
 .hover-zoom {
   transition: transform 0.3s ease; /* Smooth transition */
@@ -872,11 +872,31 @@ const closeAddPdfModal = () => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {
@@ -884,5 +904,4 @@ const closeAddPdfModal = () => {
   background: rgba(255, 255, 255, 0.3); /* Background for new shapes */
   opacity: 0.5; /* Opacity for better visibility */
 }
-
 </style>

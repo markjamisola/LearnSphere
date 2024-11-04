@@ -15,7 +15,7 @@
               {{ courseDetails?.course_name || '...' }}
               <v-btn
                 icon
-                class="ma-2"
+                class="ma-2 hover-zoom"
                 :color="isStarred ? '#dd660d' : '#FAEED1'"
                 @click="toggleStar(courseDetails.id)"
                 v-if="courseDetails"
@@ -55,15 +55,41 @@
         </v-col>
       </v-row>
 
-      <v-row class="mx-2">
-        <v-col>
-          <h2 class="text-white"><v-icon class="mr-2"> mdi-lightbulb-on </v-icon>Topics List</h2>
+      <v-row class="mx-2 align-center">
+        <v-col cols="4" xs="12">
+          <h2 class="text-white"><v-icon class="mr-2">mdi-lightbulb-on</v-icon>Topics</h2>
         </v-col>
-        <div class="d-flex justify-end mr-3 mt-3 mb-2">
-          <v-btn elevation="15" class="" color="#FAEED1" @click="openTopicRequestModal">
+
+        <!-- Centered Buttons Column -->
+        <v-col class="d-flex justify-center" cols="4" xs="6">
+          <v-btn
+            v-if="previousCourseId"
+            @click="goToCourse(previousCourseId)"
+            color="#FAEED1"
+            elevation="15"
+            class="mr-2 hover-zoom"
+            icon
+          >
+            <v-icon>mdi-chevron-double-left </v-icon>
+          </v-btn>
+          <v-btn
+            v-if="nextCourseId"
+            @click="goToCourse(nextCourseId)"
+            color="#FAEED1"
+            elevation="15"
+            class="ml-2 hover-zoom"
+            icon
+          >
+            <v-icon>mdi-chevron-double-right</v-icon>
+          </v-btn>
+        </v-col>
+
+        <!-- Request Button Column -->
+        <v-col class="d-flex justify-end" cols="4" xs="6">
+          <v-btn elevation="15" class="hover-zoom" color="#FAEED1" @click="openTopicRequestModal">
             Request
           </v-btn>
-        </div>
+        </v-col>
       </v-row>
 
       <RequestTopicModal
@@ -79,14 +105,14 @@
         <v-row>
           <v-col cols="12" md="6" v-for="topic in filteredTopics" :key="topic.topic_title">
             <v-card class="mb-1 hover-zoom" color="#FAEED1" dark elevation="10">
-              <v-card-title class="text-center font-weight-black">
+              <v-card-title class="text-center font-weight-black topic-title">
                 {{ topic.topic_title }}
               </v-card-title>
               <v-card-subtitle class="text-center">{{ topic.description }}</v-card-subtitle>
               <v-card-text>
                 <v-row>
-                  <!-- Watch Videos button with dynamic width based on the presence of pdf_url -->
-                  <v-col :cols="topic.pdf_url ? 6 : 12">
+                  <!-- Watch Videos button -->
+                  <v-col :cols="topic.resources && topic.resources.length > 0 ? 6 : 12">
                     <v-btn
                       elevation="10"
                       color="#803D3B"
@@ -97,10 +123,15 @@
                     </v-btn>
                   </v-col>
 
-                  <!-- Conditionally render the Open PDF button if pdf_url exists -->
-                  <v-col cols="6" v-if="topic.pdf_url">
-                    <v-btn elevation="10" color="#803D3B" block @click="showPdf(topic.pdf_url)">
-                      Open PDF
+                  <!-- Open PDF button for the modal -->
+                  <v-col v-if="topic.resources && topic.resources.length > 0" cols="6">
+                    <v-btn
+                      elevation="10"
+                      color="#803D3B"
+                      block
+                      @click="openPdfDialog(topic.resources, topic.topic_title)"
+                    >
+                      View PDF
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -108,6 +139,45 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <v-dialog v-model="pdfDialog" max-width="600">
+          <div class="d-flex justify-start mb-2 description">
+            <v-card color="#FAEED1" elevation="10">
+              <v-card-title class="headline text-center topic-title">
+                <h4>{{ pdfTitle }}</h4>
+              </v-card-title>
+            </v-card>
+          </div>
+          <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+            <v-card-text>
+              <div v-if="pdfResources.length > 0">
+                <h4 class="text-center mb-2">Available PDF</h4>
+                <v-card class="ma-1 mt-2 description" color="#FAEED1" elevation="10" rounded="lg">
+                  <ul>
+                    <li class="mt-3" v-for="resource in pdfResources" :key="resource.id">
+                      <v-row class="d-flex justify-start ma-1">
+                        <v-col cols="8">
+                          <p>{{ resource.description }}</p>
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                          <v-btn :href="resource.url" target="_blank" color="#803D3B">Open</v-btn>
+                        </v-col>
+                      </v-row>
+                    </li>
+                  </ul>
+                </v-card>
+              </div>
+              <div v-else>
+                <p>No PDFs are available for this topic.</p>
+              </div>
+            </v-card-text>
+          </v-card>
+          <div class="d-flex justify-end description">
+            <v-card color="#FAEED1" elevation="10">
+              <v-btn color="#FAEED1" size="large" @click="pdfDialog = false"><h5>Close</h5></v-btn>
+            </v-card>
+          </div>
+        </v-dialog>
 
         <!-- Video Dialog for related videos display -->
         <v-dialog
@@ -164,18 +234,13 @@
 
       <!-- Logout Modal component -->
       <LogoutModal ref="logoutModalRef" />
-
-      <!-- Floating Back Button to navigate back -->
-      <v-btn class="back-button" icon @click="$router.go(-1)">
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 import LogoutModal from '@/components/auth/LogoutModal.vue'
 import NavBar from '@/components/layout/NavBar.vue'
@@ -206,6 +271,16 @@ const requestedTopics = ref([])
 // Using Vue Router to access route parameters
 const route = useRoute()
 
+const courses = ref([]) // Add this line to store all courses
+const router = useRouter() // Initialize the router here
+const currentCourseIndex = ref(-1) // To keep track of the current course index
+
+const pdfDialog = ref(false)
+const pdfResources = ref([]) // Add this line to define pdfResources
+const pdfTitle = ref('')
+
+// Method to open PDF dialog
+
 // Computed property to filter topics based on search query
 const filteredTopics = computed(() => {
   return topics.value.filter((topic) =>
@@ -214,8 +289,7 @@ const filteredTopics = computed(() => {
 })
 
 // Fetch course data and related topics when component is mounted
-onMounted(async () => {
-  const courseId = route.params.id
+const fetchCourseData = async (courseId) => {
   if (courseId) {
     try {
       loading.value = true
@@ -237,7 +311,6 @@ onMounted(async () => {
       if (userError) throw userError
 
       if (user) {
-        // Check if course is in starred courses
         const { data: starredData, error: starredError } = await supabase
           .from('starred_courses')
           .select('*')
@@ -266,13 +339,18 @@ onMounted(async () => {
 
       if (resourcesError) throw resourcesError
 
+      console.log('Fetched resources:', resourcesData)
       // Attach resources (e.g., PDFs) to corresponding topics
       topics.value = topicsData.map((topic) => {
         const topicResources = resourcesData.filter((resource) => resource.topic_id === topic.id)
+        topic.resources = topicResources // Ensure the resources are attached to the topic
         topic.pdf_url =
           topicResources.find((resource) => resource.resource_type === 'pdf')?.url || null
         return topic
       })
+
+      // Update current course index
+      currentCourseIndex.value = courses.value.findIndex((course) => course.id === courseId)
     } catch (error) {
       console.error('Error fetching course data:', error.message)
     } finally {
@@ -281,8 +359,56 @@ onMounted(async () => {
   } else {
     console.error('Course ID is undefined')
   }
+}
+console.log(topics.value)
+
+console.log(selectedTopic.value.resources)
+
+function openPdfDialog(resources, title) {
+  pdfResources.value = resources // Set the resources
+  console.log('Opening PDF dialog with resources:', resources) // Debug output
+  pdfTitle.value = title // Set the title
+  pdfDialog.value = true // Open the dialog
+}
+
+watch(
+  () => route.params.id,
+  (newCourseId) => {
+    fetchCourseData(newCourseId)
+  }
+)
+
+// Fetch all courses on component mount
+onMounted(async () => {
+  try {
+    const { data: allCourses, error: allCoursesError } = await supabase.from('courses').select('*')
+
+    if (allCoursesError) throw allCoursesError
+
+    courses.value = allCourses // Store all courses
+    const courseId = route.params.id
+    await fetchCourseData(courseId) // Fetch data for the initial course
+  } catch (error) {
+    console.error('Error fetching all courses:', error.message)
+  }
 })
 
+const previousCourseId = computed(() => {
+  const index = currentCourseIndex.value
+  return index > 0 ? courses.value[index - 1].id : null
+})
+
+const nextCourseId = computed(() => {
+  const index = currentCourseIndex.value
+  return index < courses.value.length - 1 ? courses.value[index + 1].id : null
+})
+
+const goToCourse = (courseId) => {
+  if (courseId) {
+    // Navigate to the course page
+    router.push({ name: 'CoursePage', params: { id: courseId } })
+  }
+}
 // Toggle course starred status for the user
 async function toggleStar(courseId) {
   const {
@@ -441,11 +567,6 @@ const fetchRelatedVideos = async (topicTitle) => {
   }
 }
 
-// Show PDF in a new tab
-const showPdf = (pdfUrl) => {
-  window.open(pdfUrl, '_blank')
-}
-
 const handleDeleteTopic = async (topicId) => {
   try {
     // Delete the topic from the Supabase table
@@ -486,16 +607,6 @@ const handleDeleteTopic = async (topicId) => {
   font-family: 'Unbounded', sans-serif;
 }
 
-.back-button {
-  position: fixed;
-  bottom: 18px;
-  left: 18px;
-  z-index: 2000;
-  background-color: #faeed1;
-  color: #000000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 .colorist {
   background-color: #803d3b;
 }
@@ -505,7 +616,7 @@ const handleDeleteTopic = async (topicId) => {
   overflow-wrap: break-word;
   white-space: normal;
   line-height: 1.4;
-  color: #803d3b;
+  color: black;
 }
 
 /* Geometric overlay styles */
