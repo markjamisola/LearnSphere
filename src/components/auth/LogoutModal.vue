@@ -16,7 +16,7 @@
         <v-btn
           color="#FAEED1"
           text
-          class="confirm-btn font-weight-bold"
+          class="confirm-btn font-weight-bold hover-zoom"
           @click="logout"
           style="
             background-color: white;
@@ -30,7 +30,7 @@
         <v-btn
           color="#FAEED1"
           text
-          class="cancel-btn font-weight-bold"
+          class="cancel-btn font-weight-bold hover-zoom"
           @click="cancelLogout"
           style="
             font-family: 'Unbounded', sans-serif;
@@ -98,5 +98,12 @@ defineExpose({
 .dialog-with-blur {
   backdrop-filter: blur(10px); /* Adjust the blur strength as needed */
   background-color: rgba(0, 0, 0, 0.3); /* Adds a slight dark overlay with blur */
+}
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

@@ -57,12 +57,12 @@
     <div class="d-flex justify-end description">
       <v-row>
         <v-col cols="6">
-          <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="addTopic">
+          <v-btn rounded="lg" class="hover-zoom" elevation="10" color="#FAEED1" block @click="addTopic">
             Request
           </v-btn>
         </v-col>
         <v-col cols="6">
-          <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="closeModal">
+          <v-btn rounded="lg" class="hover-zoom" elevation="10" color="#FAEED1" block @click="closeModal">
             Cancel
           </v-btn>
         </v-col>
@@ -81,7 +81,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
-            class="description"
+            class="description hover-zoom"
             color="#803d3b"
             size="large"
             variant="elevated"
@@ -166,4 +166,11 @@ const resetForm = () => {
   font-family: 'Unbounded', sans-serif;
 }
 
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
+}
 </style>

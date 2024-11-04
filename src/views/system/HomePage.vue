@@ -25,7 +25,7 @@
                     append-inner-icon="mdi-magnify"
                     prepend-inner-icon="mdi-book-open-page-variant"
                     density="comfortable"
-                    label="Search Course"
+                    label="Search Course Details" 
                     variant="solo"
                     hide-details
                     single-line
@@ -135,7 +135,13 @@
 
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 hover-zoom" elevation="15" color="#803d3b" variant="elevated" rounded="lg">
+            <v-card
+              class="pa-3 hover-zoom"
+              elevation="15"
+              color="#803d3b"
+              variant="elevated"
+              rounded="lg"
+            >
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -341,8 +347,10 @@ const filteredCourses = computed(() => {
 
   // Filter by search query
   if (searchQuery.value) {
-    filtered = filtered.filter((course) =>
-      course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    filtered = filtered.filter(
+      (course) =>
+        course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
   }
 

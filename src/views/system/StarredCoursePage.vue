@@ -57,7 +57,7 @@
 
               <!-- Remove Button Box -->
               <div
-                class="remove-button-box position-absolute"
+                class="remove-button-box position-absolute hover-zoom"
                 style="
                   top: -10px;
                   right: -10px;
@@ -69,6 +69,7 @@
                 <v-btn
                   icon
                   @click.stop="confirmRemoveCourse(course.id)"
+                  class="hover-zoom"
                   style="background: none; color: #fff"
                 >
                   <v-icon>mdi-close</v-icon>
@@ -97,7 +98,7 @@
               <v-btn
                 color="#FAEED1"
                 text
-                class="confirm-btn font-weight-bold"
+                class="confirm-btn font-weight-bold hover-zoom"
                 @click="removeCourse"
                 style="
                   background-color: white;
@@ -112,7 +113,7 @@
               <v-btn
                 color="#FAEED1"
                 text
-                class="cancel-btn font-weight-bold"
+                class="cancel-btn font-weight-bold hover-zoom"
                 @click="showRemoveConfirm = false"
                 style="
                   background-color: #803d3b;

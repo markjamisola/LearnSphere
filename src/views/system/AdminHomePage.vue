@@ -23,7 +23,7 @@
                   append-inner-icon="mdi-magnify"
                   prepend-inner-icon="mdi-cast-education"
                   density="comfortable"
-                  label="Search Course"
+                  label="Search Course Details"
                   hide-details
                   rounded="lg"
                   variant="solo"
@@ -36,10 +36,10 @@
             </v-col>
           </v-row>
           <v-row class="justify-center mt-3 mb-4">
-            <v-btn class="ma-1" color="#dd660d" @click="openAddCourseModal">
+            <v-btn class="ma-1 hover-zoom" color="#dd660d" @click="openAddCourseModal">
               <h4><v-icon>mdi-plus</v-icon> Add New Course</h4>
             </v-btn>
-            <v-btn class="ma-1" color="#dd660d" @click="openAddTopicModal">
+            <v-btn class="ma-1 hover-zoom" color="#dd660d" @click="openAddTopicModal">
               <h4><v-icon>mdi-plus</v-icon> Add New Topic</h4>
             </v-btn>
           </v-row>
@@ -48,7 +48,7 @@
           <v-row class="justify-center mb-4">
             <v-btn
               :color="selectedProgramId === null ? '#803D3B' : '#FAEED1'"
-              class="mx-1"
+              class="mx-1 hover-zoom"
               @click="setSelectedProgram(null)"
             >
               <h3
@@ -65,7 +65,7 @@
               :key="program.id"
               @click="setSelectedProgram(program.id)"
               :color="selectedProgramId === program.id ? '#803D3B' : '#FAEED1'"
-              class="mx-1"
+              class="mx-1 hover-zoom"
             >
               <h3
                 :class="{
@@ -90,7 +90,7 @@
         <!-- Filtered Courses List -->
         <v-row>
           <v-col v-for="course in filteredCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 hover-zoom " elevation="15" color="#803d3b">
+            <v-card class="pa-3 hover-zoom" elevation="15" color="#803d3b" rounded="lg">
               <v-btn
                 class="pa-0"
                 color="#FAEED1"
@@ -283,7 +283,9 @@
           <v-card-actions class="justify-center mb-2">
             <v-col cols="12" color="#FAEED1">
               <v-card color="#FAEED1">
-                <v-btn rounded="lg" elevation="10" block @click="successTopicDialogVisible = false"> OK </v-btn>
+                <v-btn rounded="lg" elevation="10" block @click="successTopicDialogVisible = false">
+                  OK
+                </v-btn>
               </v-card>
             </v-col>
           </v-card-actions>
@@ -369,7 +371,7 @@ const addCourse = async () => {
       semester: newCourse.value.semester,
       created_at: new Date().toISOString()
     })
-    .select()  // Request the newly added row to be returned
+    .select() // Request the newly added row to be returned
 
   // Handle error case
   if (error) {
@@ -409,14 +411,16 @@ const setSelectedProgram = (programId) => {
 
 // Function to save new topic
 const saveTopic = async () => {
-  const { data, error } = await supabase.from('topics').insert({
-    course_id: newTopic.value.course_id,
-    description: newTopic.value.description,
-    topic_title: newTopic.value.title,
-    created_at: new Date().toISOString()
-  })
-  .select()
-  
+  const { data, error } = await supabase
+    .from('topics')
+    .insert({
+      course_id: newTopic.value.course_id,
+      description: newTopic.value.description,
+      topic_title: newTopic.value.title,
+      created_at: new Date().toISOString()
+    })
+    .select()
+
   if (error) {
     console.error('Error adding topic:', error.message)
   } else {
@@ -470,8 +474,10 @@ const filteredCourses = computed(() => {
   }
 
   if (searchQuery.value) {
-    filtered = filtered.filter((course) =>
-      course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    filtered = filtered.filter(
+      (course) =>
+        course.course_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchQuery.value.toLowerCase())
     )
   }
 
@@ -486,7 +492,6 @@ const onSearchInput = () => {
     loading.value = false
   }, 1000)
 }
-
 </script>
 
 <style scoped>
@@ -577,11 +582,31 @@ const onSearchInput = () => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {

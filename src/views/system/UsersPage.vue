@@ -68,12 +68,14 @@
                           <v-btn
                             color="white"
                             style="background-color: #dd660d"
+                            class="hover-zoom"
                             @click="updateStatus(request.id, 'approved')"
                             >Approve</v-btn
                           >
                           <v-btn
                             color="white"
                             style="background-color: #803d3b"
+                            class="hover-zoom"
                             @click="updateStatus(request.id, 'rejected')"
                             >Reject</v-btn
                           >
@@ -92,6 +94,7 @@
                         <v-btn
                           icon
                           style="background: none; color: #803d3b"
+                          class="hover-zoom"
                           @click="deleteRequest(request.id)"
                         >
                           <v-icon>mdi-close</v-icon>
@@ -145,12 +148,14 @@
                           <v-btn
                             color="white"
                             style="background-color: #dd660d"
+                            class="hover-zoom"
                             @click="updateTopicStatus(request.id, 'approved')"
                             >Approve</v-btn
                           >
                           <v-btn
                             color="white"
                             style="background-color: #803d3b"
+                            class="hover-zoom"
                             @click="updateTopicStatus(request.id, 'rejected')"
                             >Reject</v-btn
                           >
@@ -169,6 +174,7 @@
                         <v-btn
                           icon
                           style="background: none; color: #803d3b"
+                          class="hover-zoom"
                           @click="deleteTopic(request.id)"
                         >
                           <v-icon>mdi-close</v-icon>
@@ -415,5 +421,13 @@ onMounted(() => {
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

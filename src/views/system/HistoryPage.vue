@@ -68,7 +68,7 @@
 
               <!-- Remove Button Box -->
               <div
-                class="remove-button-box position-absolute"
+                class="remove-button-box position-absolute hover-zoom"
                 style="
                   top: -10px;
                   right: -10px;
@@ -80,6 +80,7 @@
                 <v-btn
                   icon
                   @click.stop="removeCourseFromHistory(course.id)"
+                  class="hover-zoom"
                   style="background: none; color: #fff"
                 >
                   <v-icon>mdi-close</v-icon>

@@ -21,7 +21,7 @@
   <v-col cols="12" md="4" class="mb-5">
     <h3 class="text-white pb-5 description">Personal Information</h3>
 
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+    <v-card class="pa-2 mb-4 hover-zoom" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
       <v-text-field
         label="First Name"
         variant="solo"
@@ -32,12 +32,12 @@
         outlined
       >
         <template v-slot:append-inner>
-          <v-btn color="#803D3B" small elevation="15" @click="updateFirstName">Update</v-btn>
+          <v-btn color="#803D3B" small class="hover-zoom" elevation="15" @click="updateFirstName">Update</v-btn>
         </template>
       </v-text-field>
     </v-card>
 
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+    <v-card class="pa-2 mb-4 hover-zoom" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
       <v-text-field
         label="Last Name"
         variant="solo"
@@ -48,12 +48,12 @@
         outlined
       >
         <template v-slot:append-inner>
-          <v-btn color="#803D3B" small elevation="15" @click="updateLastName">Update</v-btn>
+          <v-btn color="#803D3B" small class="hover-zoom" elevation="15" @click="updateLastName">Update</v-btn>
         </template>
       </v-text-field>
     </v-card>
 
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+    <v-card class="pa-2 mb-4 hover-zoom" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
       <v-text-field
         label="ID Number"
         variant="solo"
@@ -64,7 +64,7 @@
         outlined
       >
         <template v-slot:append-inner>
-          <v-btn color="#803D3B" small elevation="15" @click="updateIdNumber">Update</v-btn>
+          <v-btn color="#803D3B" class="hover-zoom" small elevation="15" @click="updateIdNumber">Update</v-btn>
         </template>
       </v-text-field>
     </v-card>
@@ -72,7 +72,7 @@
 
   <v-col cols="12" md="4">
     <h3 class="text-white pb-5 description">Reset Password</h3>
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+    <v-card class="pa-2 mb-4 hover-zoom" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
       <v-text-field
         label="New Password"
         variant="solo"
@@ -83,7 +83,7 @@
         outlined
       >
         <template v-slot:append-inner>
-          <v-btn color="#803D3B" small elevation="15" @click="updatePassword">Update</v-btn>
+          <v-btn color="#803D3B" class="hover-zoom" small elevation="15" @click="updatePassword">Update</v-btn>
         </template>
       </v-text-field>
     </v-card>
@@ -104,7 +104,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
-              class="description"
+              class="description hover-zoom"
               color="#803d3b"
               size="large"
               variant="elevated"
@@ -316,5 +316,12 @@ onMounted(fetchUserData)
 .dialog-with-blur {
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.3);
+}
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

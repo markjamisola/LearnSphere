@@ -8,7 +8,7 @@
           <v-col cols="12" class="text-center">
             <h1 class="text-white align-center text-center font-weight-black d-inline">
               {{ courseDetails?.course_name || '...' }}
-              <v-btn class="ml-2" icon @click="openCourseEditModal" color="#dd660d">
+              <v-btn class="ml-2 hover-zoom" icon @click="openCourseEditModal" color="#dd660d">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </h1>
@@ -99,14 +99,14 @@
       </v-row>
 
       <v-row class="justify-center mt-2 mb-0">
-        <v-btn class="ma-1" color="#dd660d" @click="openDeleteDialog">
+        <v-btn class="ma-1 hover-zoom" color="#dd660d" @click="openDeleteDialog">
           <h4>
             Delete {{ courseDetails?.course_name || '...' }}
             <v-icon>mdi-delete</v-icon>
           </h4>
         </v-btn>
 
-        <v-btn class="ma-1" color="#dd660d" @click="openAddModal">
+        <v-btn class="ma-1 hover-zoom" color="#dd660d" @click="openAddModal">
           <h4>
             Add Topic
             <v-icon>mdi-plus</v-icon>
@@ -186,6 +186,7 @@
                     <v-btn
                       elevation="10"
                       color="white"
+                      class="hover-zoom"
                       style="background-color: #803d3b"
                       block
                       @click="openVideoDialog(topic.topic_title)"
@@ -199,6 +200,7 @@
                     <v-btn
                       elevation="10"
                       color="white"
+                      class="hover-zoom"
                       style="background-color: #803d3b"
                       block
                       @click="showPdf(topic.pdf_url)"
@@ -211,8 +213,9 @@
                   <v-col cols="6" md="2">
                     <v-btn
                       elevation="10"
-                      color="white"
-                      style="background-color: #dd660d"
+                      color="white hover-zoom"
+                      style="background-color: #dd660d "
+                      class="hover-zoom"
                       block
                       @click="openAddPdfModal(topic.id)"
                     >
@@ -226,7 +229,7 @@
                       color="white"
                       text
                       block
-                      class="confirm-btn font-weight-bold"
+                      class="confirm-btn font-weight-bold hover-zoom"
                       @click="openTopicDeleteDialog(topic.id)"
                       style="
                         background-color: #dd660d;
@@ -244,7 +247,7 @@
                       color="white"
                       text
                       block
-                      class="cancel-btn font-weight-bold"
+                      class="cancel-btn font-weight-bold hover-zoom"
                       @click="openEditModal(topic)"
                       style="
                         font-family: 'Unbounded', sans-serif;

@@ -26,7 +26,7 @@
 
             <!-- First Name Field in Separate Card -->
             <v-card
-              class="pa-2 mb-4"
+              class="pa-2 mb-4 hover-zoom"
               elevation="15"
               rounded="lg"
               color="#803d3b"
@@ -42,7 +42,7 @@
                 outlined
               >
                 <template v-slot:append-inner>
-                  <v-btn color="#803d3b" small elevation="15" @click="updateFirstName"
+                  <v-btn color="#803d3b" class="hover-zoom" small elevation="15" @click="updateFirstName"
                     >Update</v-btn
                   >
                 </template>
@@ -51,7 +51,7 @@
 
             <!-- Last Name Field in Separate Card -->
             <v-card
-              class="pa-2 mb-4"
+              class="pa-2 mb-4 hover-zoom"
               elevation="15"
               rounded="lg"
               color="#803d3b"
@@ -67,14 +67,14 @@
                 outlined
               >
                 <template v-slot:append-inner>
-                  <v-btn color="#803d3b" small elevation="15" @click="updateLastName">Update</v-btn>
+                  <v-btn color="#803d3b" class="hover-zoom" small elevation="15" @click="updateLastName">Update</v-btn>
                 </template>
               </v-text-field>
             </v-card>
 
             <!-- ID Number Field in Separate Card -->
             <v-card
-              class="pa-2 mb-4"
+              class="pa-2 mb-4 hover-zoom"
               elevation="15"
               rounded="lg"
               color="#803d3b"
@@ -90,7 +90,7 @@
                 outlined
               >
                 <template v-slot:append-inner>
-                  <v-btn color="#803d3b" small elevation="15" @click="updateIdNumber">Update</v-btn>
+                  <v-btn color="#803d3b" class="hover-zoom" small elevation="15" @click="updateIdNumber">Update</v-btn>
                 </template>
               </v-text-field>
             </v-card>
@@ -102,7 +102,7 @@
 
             <!-- New Password Field in Separate Card -->
             <v-card
-              class="pa-2 mb-4"
+              class="pa-2 mb-4 hover-zoom"
               elevation="15"
               rounded="lg"
               color="#803d3b"
@@ -119,14 +119,14 @@
                 outlined
               >
                 <template v-slot:append-inner>
-                  <v-btn color="#803d3b" small elevation="15" @click="updatePassword">Update</v-btn>
+                  <v-btn color="#803d3b" class="hover-zoom" small elevation="15" @click="updatePassword">Update</v-btn>
                 </template>
               </v-text-field>
             </v-card>
 
             <!-- Program Select Dropdown and Update Button -->
             <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
-            <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b">
+            <v-card class="pa-2 hover-zoom" elevation="15" rounded="lg" color="#803d3b">
               <v-select
                 :items="programs"
                 v-model="selectedProgram"
@@ -137,7 +137,7 @@
                 variant="solo"
                 class="description"
               ></v-select>
-              <v-btn color="#803D3B" class="mt-0" block elevation="15" @click="updateProgram"
+              <v-btn color="#803D3B" class="mt-0 hover-zoom" block elevation="15" @click="updateProgram"
                 >Update</v-btn
               >
             </v-card>
@@ -167,7 +167,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
-              class="description"
+              class="description hover-zoom"
               color="#803d3b"
               size="large"
               variant="elevated"
@@ -421,4 +421,13 @@ onMounted(fetchUserData)
 .dialog-with-blur::v-global(.v-overlay) {
   backdrop-filter: blur(3px);
 }
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
+}
+
 </style>

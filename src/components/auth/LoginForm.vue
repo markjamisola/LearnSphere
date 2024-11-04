@@ -8,6 +8,7 @@ import AlertNotification from './AlertNotification.vue'
 const visible = ref(false)
 const refVForm = ref()
 const forgotPasswordDialog = ref(false)
+const successDialog = ref(false)
 const emailForReset = ref('')
 const emailSent = ref(false)
 
@@ -67,6 +68,7 @@ const onForgotPassword = async () => {
 
     emailSent.value = true
     forgotPasswordDialog.value = false
+    successDialog.value = true
   } catch (error) {
     formAction.value.formErrorMessage = error.message
     console.error('Password reset error:', error)
@@ -130,7 +132,7 @@ const onForgotPassword = async () => {
 
     <!-- Log In Button -->
     <v-btn
-      class="mb-5 description"
+      class="mb-5 description hover-zoom"
       color="#803d3b"
       size="large"
       variant="elevated"
@@ -186,16 +188,7 @@ const onForgotPassword = async () => {
     <div class="d-flex justify-space-between description">
       <v-row>
         <v-col cols="6">
-          <v-card color="#FAEED1" elevation="15" rounded="lg">
-            <v-card class="ma-1" elevation="15" rounded="lg">
-              <v-btn block style="background-color: #803d3b" @click="forgotPasswordDialog = false"
-                ><h4 class="text-white">Cancel</h4></v-btn
-              >
-            </v-card>
-          </v-card>
-        </v-col>
-        <v-col cols="6">
-          <v-card color="#FAEED1" elevation="15" rounded="lg">
+          <v-card color="#FAEED1" class="hover-zoom" elevation="15" rounded="lg">
             <v-card class="ma-1" elevation="10">
               <v-btn block style="background-color: #803d3b" @click="onForgotPassword">
                 <h4 class="text-white">Send Reset Link</h4></v-btn
@@ -203,8 +196,43 @@ const onForgotPassword = async () => {
             </v-card>
           </v-card>
         </v-col>
+        <v-col cols="6">
+          <v-card color="#FAEED1" class="hover-zoom" elevation="15" rounded="lg">
+            <v-card class="ma-1" elevation="15" rounded="lg">
+              <v-btn block style="background-color: #803d3b" @click="forgotPasswordDialog = false"
+                ><h4 class="text-white">Cancel</h4></v-btn
+              >
+            </v-card>
+          </v-card>
+        </v-col>
       </v-row>
     </div>
+  </v-dialog>
+
+  <v-dialog v-model="successDialog" max-width="448" class="dialog-with-blur">
+    <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
+      <v-card-title class="d-flex justify-center align-center">
+        <h3 class="font-weight-black text-center description">Success</h3>
+        <v-icon class="ml-2" :color="'#803d3b'" size="28">mdi-check-circle</v-icon>
+      </v-card-title>
+
+      <v-card-text class="text-center text-black text-caption description">
+        <h3>Email Sent Successfully!</h3>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          class="description hover-zoom"
+          color="#803d3b"
+          size="large"
+          variant="elevated"
+          elevation="15"
+          block
+          @click="successDialog = false"
+        >
+          OK
+        </v-btn>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -213,5 +241,13 @@ const onForgotPassword = async () => {
 
 .description {
   font-family: 'Unbounded', sans-serif;
+}
+
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>
