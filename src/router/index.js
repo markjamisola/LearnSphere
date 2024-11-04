@@ -46,7 +46,7 @@ const router = createRouter({
       path: '/reset',
       name: 'reset',
       component: ResetPassword,
-      meta: { requiresAuth: false }
+      props: (route) => ({ access_token: route.query.access_token })
     },
     {
       path: '/register',
@@ -128,7 +128,7 @@ router.beforeEach(async (to) => {
     return true
   }
 
-  if ((isAdmin && to.name === 'adminhome'  || to.name === 'adminprofile'  || to.name === 'users') ) {
+  if ((isAdmin && to.name === 'adminhome') || to.name === 'adminprofile' || to.name === 'users') {
     return true
   }
 

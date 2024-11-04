@@ -5,12 +5,12 @@
         <v-icon large color="#803d3b">mdi-emoticon-sad-outline</v-icon>
       </v-card-title>
       <v-card-text class="font-weight-black text-center mt-0">
-        <h2
-          class="text-h5 font-weight-black"
+        <h4
+          class="font-weight-black"
           style="color: #803d3b; font-family: 'Unbounded', sans-serif"
         >
           Are you sure you want to Log Out?
-        </h2>
+        </h4>
       </v-card-text>
       <v-card-actions class="justify-center dialog-actions mb-2">
         <v-btn

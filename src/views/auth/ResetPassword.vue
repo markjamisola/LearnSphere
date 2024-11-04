@@ -1,66 +1,92 @@
 <script setup>
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
 
-const isMounted = ref(false)
 const dialog = ref(false)
 const newPassword = ref('')
 const confirmPassword = ref('')
 const visible = ref(false)
 const router = useRouter()
-const route = useRoute()
+const errorMessage = ref('')
 
 // Function to go back to login after reset
-const goToLogin = () => {
+const goToLogin = async () => {
+  await supabase.auth.signOut() // Ensure the user is logged out from Supabase
   dialog.value = false
-  router.push('/login')
+  router.push('/login') // Redirect to the login page
+}
+
+// Function to extract access token from URL hash
+const getAccessToken = () => {
+  const hash = window.location.hash.substr(1) // Remove the leading '#'
+  const params = new URLSearchParams(hash)
+  return params.get('access_token') // Retrieve the access_token
+}
+
+const validatePasswords = () => {
+  if (newPassword.value.length < 8) {
+    errorMessage.value = 'Password must be at least 8 characters long.'
+    dialog.value = true
+    return false
+  }
+
+  if (newPassword.value !== confirmPassword.value) {
+    errorMessage.value = 'Passwords do not match.'
+    dialog.value = true
+    return false
+  }
+
+  return true
 }
 
 const handlePasswordUpdate = async () => {
-  if (newPassword.value !== confirmPassword.value) {
-    alert('Passwords do not match.')
+  // Validate passwords
+  if (!validatePasswords()) return
+
+  const accessToken = getAccessToken() // Get the access token from the URL
+
+  console.log('Access Token:', accessToken) // Log the token to verify
+
+  if (!accessToken) {
+    errorMessage.value = 'Invalid or expired token. Please request a new password reset.'
+    dialog.value = true // Show modal for invalid token
     return
   }
 
   try {
-    const accessToken = route.query.access_token // Ensure this matches your token name
-    if (!accessToken) {
-      alert('Invalid or expired token. Please request a new password reset.')
-      return
-    }
-
     // Update the user's password using the access token
-    const { error } = await supabase.auth.updateUser({
-      password: newPassword.value,
-      accessToken: accessToken // Include the access token
-    })
+    const { error } = await supabase.auth.updateUser(
+      {
+        password: newPassword.value
+      },
+      {
+        accessToken: accessToken
+      }
+    )
 
     if (error) {
-      alert(`Error: ${error.message}`)
+      console.error('Update Error:', error)
+      errorMessage.value = error.message // Set error message for modal
+      dialog.value = true // Show error dialog
     } else {
-      // Success! Show the dialog and redirect
-      dialog.value = true
+      dialog.value = true // Show success dialog
       setTimeout(() => {
-        goToLogin() // Redirect after showing the success message
-      }, 2000) // Delay for the dialog to be visible
+        goToLogin() // Call the updated goToLogin function
+      }, 2000)
     }
   } catch (error) {
-    alert(`An unexpected error occurred: ${error.message}`)
+    errorMessage.value = `An unexpected error occurred: ${error.message}`
+    dialog.value = true // Show error dialog
   }
 }
 
-onMounted(() => {
-  isMounted.value = true
-})
-
+// Sign out any currently logged-in user
 onMounted(async () => {
   const { user } = await supabase.auth.getUser()
   if (user) {
-    // User is logged in, log them out
-    await supabase.auth.signOut()
+    await supabase.auth.signOut() // Ensure the user is logged out
   }
-  isMounted.value = true
 })
 </script>
 
@@ -84,6 +110,9 @@ onMounted(async () => {
           <i :class="icon"></i>
         </div>
       </div>
+      <v-alert v-if="errorMessage" type="error" class="mt-4">
+        {{ errorMessage }}
+      </v-alert>
 
       <v-container fluid>
         <v-row class="align-center justify-center" align="center" justify="center">
@@ -95,7 +124,6 @@ onMounted(async () => {
               max-width="448"
               rounded="lg"
               color="#FAEED1"
-              :class="{ 'slide-in': isMounted }"
             >
               <template v-slot:title>
                 <h3 class="font-weight-black text-center description">Reset Password</h3>

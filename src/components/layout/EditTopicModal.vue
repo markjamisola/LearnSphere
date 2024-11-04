@@ -109,8 +109,5 @@ export default {
 .description {
   font-family: 'Unbounded', sans-serif;
 }
-.dialog-with-blur {
-  backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.3);
-}
+
 </style>

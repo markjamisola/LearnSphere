@@ -24,7 +24,7 @@
 
         <v-card class="pa-3" color="#FAEED1">
           <h4 v-if="requestedTopics.length" class="text-center">Your Requested Topics</h4>
-          <h5 v-if="!requestedTopics.length" class="text-center">No Requested Topics</h5>
+          <h4 v-if="!requestedTopics.length" class="text-center">You have NO Requested Topics</h4>
           <v-card color="#803D3B">
             <v-card color="#FAEED1" class="mx-3 ma-3">
               <div
@@ -57,7 +57,7 @@
     <div class="d-flex justify-end description">
       <v-row>
         <v-col cols="6">
-          <v-btn rounded="lg" elevation="10" color="#803D3B" block @click="addTopic">
+          <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="addTopic">
             Request
           </v-btn>
         </v-col>
@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref} from 'vue'
 
 // Define props and emits
 const { isOpen, requestedTopics } = defineProps({
@@ -165,8 +165,5 @@ const resetForm = () => {
 .description {
   font-family: 'Unbounded', sans-serif;
 }
-.dialog-with-blur {
-  backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.3);
-}
+
 </style>

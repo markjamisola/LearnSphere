@@ -10,9 +10,7 @@
           <v-col cols="12" class="text-center">
             <h1 class="text-white font-weight-black d-flex align-items-center justify-center">
               <!-- Icon for history -->
-              <v-icon large :color="textColor" style="margin-right: 10px;">
-                mdi-history
-              </v-icon>
+              <v-icon large :color="textColor" style="margin-right: 10px"> mdi-history </v-icon>
               History
             </h1>
           </v-col>
@@ -31,11 +29,26 @@
             <h2 class="text-center text-white">No recently viewed courses.</h2>
           </v-col>
         </v-row>
+        <v-row class="d-flex justify-center">
+          <v-card class="mb-2 mx-3" color="white" variant="outlined" rounded="lg">
+            <v-card-text class="d-flex align-center text-justify text-white description">
+              <v-icon class="mr-2" :color="'white'">mdi-alert-circle-outline</v-icon>
+              Note: You can only view up to your most recent 6 courses. If you've accessed fewer, only
+              those will be displayed.
+            </v-card-text>
+          </v-card>
+        </v-row>
 
         <v-row>
           <!-- Loop through each recent course -->
           <v-col v-for="course in recentCourses" :key="course.id" cols="12" sm="6" md="4">
-            <v-card class="pa-3 hover-zoom position-relative" elevation="15" color="#803d3b" variant="elevated">
+            <v-card
+              class="pa-3 hover-zoom position-relative"
+              elevation="15"
+              color="#803d3b"
+              variant="elevated"
+              rounded="lg"
+            >
               <!-- Course button linking to CoursePage -->
               <v-btn
                 class="pa-0"
@@ -56,14 +69,21 @@
               <!-- Remove Button Box -->
               <div
                 class="remove-button-box position-absolute"
-                style="top: -10px; right: -10px; background-color: #803d3b; border-radius: 50%; padding: 5px;"
+                style="
+                  top: -10px;
+                  right: -10px;
+                  background-color: #803d3b;
+                  border-radius: 50%;
+                  padding: 5px;
+                "
               >
                 <v-btn
                   icon
                   @click.stop="removeCourseFromHistory(course.id)"
-                  style="background: none; color: #fff;" 
+                  style="background: none; color: #fff"
                 >
-                  <v-icon>mdi-close</v-icon> <!-- Close icon for remove button -->
+                  <v-icon>mdi-close</v-icon>
+                  <!-- Close icon for remove button -->
                 </v-btn>
               </div>
             </v-card>
@@ -92,7 +112,6 @@ const openLogoutModal = () => {
   logoutModalRef.value?.open()
 }
 
-// Fetch recent courses viewed by the user
 const fetchRecentCourses = async () => {
   try {
     // Get current user
@@ -122,8 +141,11 @@ const fetchRecentCourses = async () => {
         }
       }
 
+      // Limit to 6 courses
+      const limitedCourses = uniqueCourses.slice(0, 6)
+
       // Map unique course_ids to fetch course details
-      const courseIds = uniqueCourses.map((item) => item.course_id)
+      const courseIds = limitedCourses.map((item) => item.course_id)
       const { data: courses, error: courseError } = await supabase
         .from('courses')
         .select('*')
@@ -137,8 +159,8 @@ const fetchRecentCourses = async () => {
         courseMap[course.id] = course
       })
 
-      // Map the uniqueCourses array to retrieve courses in the correct order
-      recentCourses.value = uniqueCourses.map((item) => courseMap[item.course_id])
+      // Map the limitedCourses array to retrieve courses in the correct order
+      recentCourses.value = limitedCourses.map((item) => courseMap[item.course_id])
     } else {
       recentCourses.value = [] // No recent courses found
     }
@@ -151,7 +173,10 @@ const fetchRecentCourses = async () => {
 const removeCourseFromHistory = async (courseId) => {
   try {
     // Get current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser()
     if (userError) throw userError
 
     // Delete course from user history
@@ -266,11 +291,31 @@ onMounted(() => {
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {

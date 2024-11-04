@@ -4,7 +4,7 @@
     @update:model-value="closeModal"
     persistent
     max-width="600px"
-    class="dialog-with-blur description"
+    class="description"
   >
     <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
       <v-card-title class="headline text-center"><h3>Request Course</h3></v-card-title>
@@ -29,7 +29,7 @@
 
         <v-card class="pa-3" color="#FAEED1">
           <h4 v-if="requestedCourses.length" class="text-center">Your Requested Courses</h4>
-          <h5 v-if="!requestedCourses.length" class="text-center">No Requested Courses</h5>
+          <h4 v-if="!requestedCourses.length" class="text-center">You have NO Requested Courses</h4>
 
           <v-card color="#803D3B">
             <v-card color="#FAEED1" class="mx-3 ma-3">
@@ -48,7 +48,7 @@
                 <div class="remove-button-box" style="margin-left: 16px">
                   <v-btn
                     icon
-                    style="background-color: #803d3b; color: #FAEED1"
+                    style="background-color: #803d3b; color: #faeed1"
                     @click="$emit('delete-course', course.id)"
                   >
                     <v-icon>mdi-close</v-icon>
@@ -63,7 +63,7 @@
     <div class="d-flex justify-end description">
       <v-row>
         <v-col cols="6">
-          <v-btn rounded="lg" elevation="10" color="#803D3B" block @click="addCourse">
+          <v-btn rounded="lg" elevation="10" color="#FAEED1" block @click="addCourse">
             Request
           </v-btn>
         </v-col>
@@ -76,7 +76,7 @@
     </div>
 
     <!-- Success/Error Notification Modal -->
-    <v-dialog v-model="showMessageModal" max-width="448" class="dialog-with-blur">
+    <v-dialog v-model="showMessageModal" max-width="448">
       <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
         <v-card-title class="d-flex justify-center align-center">
           <h3 class="font-weight-black text-center description">{{ messageTitle }}</h3>
@@ -173,9 +173,5 @@ const resetForm = () => {
 @import url('https://fonts.cdnfonts.com/css/unbounded');
 .description {
   font-family: 'Unbounded', sans-serif;
-}
-.dialog-with-blur {
-  backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>

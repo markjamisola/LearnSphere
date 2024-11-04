@@ -11,95 +11,121 @@
         <!-- Profile Title Section -->
         <v-row class="mt-5 justify-center">
           <v-col cols="12" class="text-center">
-            <h1 class="text-white font-weight-bold description d-flex align-items-center justify-center">
-              <v-icon large :color="textColor" style="margin-right: 10px;">
-                mdi-account
-              </v-icon>
+            <h1
+              class="text-white font-weight-bold description d-flex align-items-center justify-center"
+            >
+              <v-icon large :color="textColor" style="margin-right: 10px"> mdi-account </v-icon>
               Profile
             </h1>
           </v-col>
         </v-row>
 
         <v-row class="justify-center pt-8">
-  <v-col cols="12" md="4" class="mb-5">
-    <h3 class="text-white pb-5 description">Personal Information</h3>
+          <v-col cols="12" md="4" class="mb-5">
+            <h3 class="text-white pb-5 description">Personal Information</h3>
 
-    <!-- First Name Field in Separate Card -->
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
-      <v-text-field
-        label="First Name"
-        variant="solo"
-        hide-details
-        prepend-inner-icon="mdi-account-outline"
-        v-model="firstName"
-        class="description"
-        outlined
-      >
-        <template v-slot:append-inner>
-          <v-btn color="#803d3b" small elevation="15" @click="updateFirstName">Update</v-btn>
-        </template>
-      </v-text-field>
-    </v-card>
+            <!-- First Name Field in Separate Card -->
+            <v-card
+              class="pa-2 mb-4"
+              elevation="15"
+              rounded="lg"
+              color="#803d3b"
+              variant="elevated"
+            >
+              <v-text-field
+                label="First Name"
+                variant="solo"
+                hide-details
+                prepend-inner-icon="mdi-account-outline"
+                v-model="firstName"
+                class="description"
+                outlined
+              >
+                <template v-slot:append-inner>
+                  <v-btn color="#803d3b" small elevation="15" @click="updateFirstName"
+                    >Update</v-btn
+                  >
+                </template>
+              </v-text-field>
+            </v-card>
 
-    <!-- Last Name Field in Separate Card -->
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
-      <v-text-field
-        label="Last Name"
-        variant="solo"
-        hide-details
-        prepend-inner-icon="mdi-account-outline"
-        v-model="lastName"
-        class="description"
-        outlined
-      >
-        <template v-slot:append-inner>
-          <v-btn color="#803d3b" small elevation="15" @click="updateLastName">Update</v-btn>
-        </template>
-      </v-text-field>
-    </v-card>
+            <!-- Last Name Field in Separate Card -->
+            <v-card
+              class="pa-2 mb-4"
+              elevation="15"
+              rounded="lg"
+              color="#803d3b"
+              variant="elevated"
+            >
+              <v-text-field
+                label="Last Name"
+                variant="solo"
+                hide-details
+                prepend-inner-icon="mdi-account-outline"
+                v-model="lastName"
+                class="description"
+                outlined
+              >
+                <template v-slot:append-inner>
+                  <v-btn color="#803d3b" small elevation="15" @click="updateLastName">Update</v-btn>
+                </template>
+              </v-text-field>
+            </v-card>
 
-    <!-- ID Number Field in Separate Card -->
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
-      <v-text-field
-        label="ID Number"
-        variant="solo"
-        hide-details
-        prepend-inner-icon="mdi-card-account-details-outline"
-        v-model="idNumber"
-        class="description"
-        outlined
-      >
-        <template v-slot:append-inner>
-          <v-btn color="#803d3b" small elevation="15" @click="updateIdNumber">Update</v-btn>
-        </template>
-      </v-text-field>
-    </v-card>
-  </v-col>
+            <!-- ID Number Field in Separate Card -->
+            <v-card
+              class="pa-2 mb-4"
+              elevation="15"
+              rounded="lg"
+              color="#803d3b"
+              variant="elevated"
+            >
+              <v-text-field
+                label="ID Number"
+                variant="solo"
+                hide-details
+                prepend-inner-icon="mdi-card-account-details-outline"
+                v-model="idNumber"
+                class="description"
+                outlined
+              >
+                <template v-slot:append-inner>
+                  <v-btn color="#803d3b" small elevation="15" @click="updateIdNumber">Update</v-btn>
+                </template>
+              </v-text-field>
+            </v-card>
+          </v-col>
 
-  <!-- Reset Password and Change Program Section with Separate Cards -->
-  <v-col cols="12" md="4">
-    <h3 class="text-white pb-5 description">Reset Password</h3>
+          <!-- Reset Password and Change Program Section with Separate Cards -->
+          <v-col cols="12" md="4">
+            <h3 class="text-white pb-5 description">Reset Password</h3>
 
-    <!-- New Password Field in Separate Card -->
-    <v-card class="pa-2 mb-4" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
-      <v-text-field
-        label="New Password"
-        variant="solo"
-        elevation="15"
-        hide-details
-        prepend-inner-icon="mdi-lock-outline"
-        v-model="newPassword"
-        class="description"
-        outlined
-      >
-        <template v-slot:append-inner>
-          <v-btn color="#803d3b" small elevation="15" @click="updatePassword">Update</v-btn>
-        </template>
-      </v-text-field>
-    </v-card>
+            <!-- New Password Field in Separate Card -->
+            <v-card
+              class="pa-2 mb-4"
+              elevation="15"
+              rounded="lg"
+              color="#803d3b"
+              variant="elevated"
+            >
+              <v-text-field
+                label="New Password"
+                variant="solo"
+                elevation="15"
+                hide-details
+                prepend-inner-icon="mdi-lock-outline"
+                v-model="newPassword"
+                class="description"
+                outlined
+              >
+                <template v-slot:append-inner>
+                  <v-btn color="#803d3b" small elevation="15" @click="updatePassword">Update</v-btn>
+                </template>
+              </v-text-field>
+            </v-card>
 
-        <!-- Program Select Dropdown and Update Button -->
-          <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
+            <!-- Program Select Dropdown and Update Button -->
+            <h3 class="text-white mt-3 pb-3 description">Change Program</h3>
             <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b">
               <v-select
                 :items="programs"
@@ -111,29 +137,30 @@
                 variant="solo"
                 class="description"
               ></v-select>
-            <v-btn color="#803D3B" class="mt-0" block elevation="15" @click="updateProgram">Update</v-btn>
-          </v-card>
+              <v-btn color="#803D3B" class="mt-0" block elevation="15" @click="updateProgram"
+                >Update</v-btn
+              >
+            </v-card>
           </v-col>
 
-  <!-- Warning Message for Changing Program -->
-  <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined">
-  <v-card-text class="d-flex align-center text-justify text-white description">
-    <v-icon class="mr-2" :color="'white'">mdi-alert-circle-outline</v-icon> 
-    Warning: Changing your current PROGRAM will also change the COURSES that are available
-    and displayed on the homepage.
-  </v-card-text>
-</v-card>
-</v-row>
-
+          <!-- Warning Message for Changing Program -->
+          <v-card class="mb-6 mt-4 mx-3" color="white" variant="outlined" rounded="lg">
+            <v-card-text class="d-flex align-center text-justify text-white description">
+              <v-icon class="mr-2" :color="'white'">mdi-alert-circle-outline</v-icon>
+              Warning: Changing your current PROGRAM will also change the COURSES that are available
+              and displayed on the homepage.
+            </v-card-text>
+          </v-card>
+        </v-row>
       </v-container>
 
       <!-- Success Modal for User Feedback -->
       <v-dialog v-model="successDialog" max-width="448" class="dialog-with-blur">
         <v-card class="mx-auto pa-3" elevation="15" rounded="lg" color="#FAEED1">
           <v-card-title class="d-flex justify-center align-center">
-  <h3 class="font-weight-black text-center description">Success</h3>
-  <v-icon class="ml-2" :color="'#803d3b'" size="28">mdi-check-circle</v-icon> 
-</v-card-title>
+            <h3 class="font-weight-black text-center description">Success</h3>
+            <v-icon class="ml-2" :color="'#803d3b'" size="28">mdi-check-circle</v-icon>
+          </v-card-title>
 
           <v-card-text class="text-center text-black text-caption description">
             <h3>Information Successfully Updated!</h3>
@@ -357,11 +384,31 @@ onMounted(fetchUserData)
 }
 
 /* Random positioning for aesthetic */
-.geometric-overlay div:nth-child(1) { top: 10%; left: 5%; transform: rotate(15deg); }
-.geometric-overlay div:nth-child(2) { top: 30%; left: 25%; transform: rotate(30deg); }
-.geometric-overlay div:nth-child(3) { top: 50%; left: 60%; transform: rotate(-15deg); }
-.geometric-overlay div:nth-child(4) { top: 70%; left: 75%; transform: rotate(45deg); }
-.geometric-overlay div:nth-child(5) { top: 20%; left: 80%; transform: rotate(10deg); }
+.geometric-overlay div:nth-child(1) {
+  top: 10%;
+  left: 5%;
+  transform: rotate(15deg);
+}
+.geometric-overlay div:nth-child(2) {
+  top: 30%;
+  left: 25%;
+  transform: rotate(30deg);
+}
+.geometric-overlay div:nth-child(3) {
+  top: 50%;
+  left: 60%;
+  transform: rotate(-15deg);
+}
+.geometric-overlay div:nth-child(4) {
+  top: 70%;
+  left: 75%;
+  transform: rotate(45deg);
+}
+.geometric-overlay div:nth-child(5) {
+  top: 20%;
+  left: 80%;
+  transform: rotate(10deg);
+}
 
 /* Additional distinct geometric shapes */
 .geometric-overlay .shape {

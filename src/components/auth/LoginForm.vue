@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 import { requiredValidator, emailValidator } from '@/utils/validators'
 import { supabase } from '@/utils/supabase'
-import { formActionDefault } from '@/utils/supabase'
 import { useRouter } from 'vue-router'
 import AlertNotification from './AlertNotification.vue'
 
 const visible = ref(false)
 const refVForm = ref()
+const forgotPasswordDialog = ref(false)
+const emailForReset = ref('')
+const emailSent = ref(false)
 
 const formDataDefault = {
   email: '',
@@ -21,23 +23,23 @@ const formData = ref({
 })
 
 const formAction = ref({
-  ...formActionDefault
+  formSuccessMessage: '',
+  formErrorMessage: '',
+  formProcess: false
 })
 
 const onLogin = async () => {
-  formAction.value = { formActionDefault }
   formAction.value.formProcess = true
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email: formData.value.email,
     password: formData.value.password
   })
+
   if (error) {
-    console.log(error)
     formAction.value.formErrorMessage = error.message
-    formAction.value.formStatus = error.status
-  } else if (data) {
-    console.log(data)
+    console.error('Login error:', error)
+  } else {
     formAction.value.formSuccessMessage = 'Successfully Logged In!'
     router.replace('/home')
   }
@@ -51,12 +53,33 @@ const onFormSubmit = () => {
     if (valid) onLogin()
   })
 }
+
+const onForgotPassword = async () => {
+  formAction.value.formErrorMessage = ''
+  emailSent.value = false
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(emailForReset.value, {
+      redirectTo: 'https://learnspheres.vercel.app/reset'
+    })
+
+    if (error) throw error
+
+    emailSent.value = true
+    forgotPasswordDialog.value = false
+  } catch (error) {
+    formAction.value.formErrorMessage = error.message
+    console.error('Password reset error:', error)
+  }
+}
 </script>
+
 <template>
   <AlertNotification
     :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMessage"
   ></AlertNotification>
+
   <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="mt-5">
     <!-- Account Input -->
     <div class="text-subtitle-1 text-medium-emphasis">
@@ -65,7 +88,7 @@ const onFormSubmit = () => {
     <v-text-field
       v-model="formData.email"
       density="compact"
-      placeholder="Email or ID Number"
+      placeholder="Registered Email"
       color="#803d3b"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
@@ -93,12 +116,15 @@ const onFormSubmit = () => {
 
     <v-card class="mb-6" color="#803d3b" variant="outlined">
       <v-card-text class="text-justify text-black text-caption description">
-        Warning: If you try to log in with the wrong password three times, your account will be
-        locked for three hours. To regain access, you can either wait for the lock to expire or
-        click
-        <RouterLink class="text-deep-orange-darken-4 text-decoration-none description" to="/forgot">
-          Forgot Password </RouterLink
-        >to create a new password and log in right away.
+        Warning: If you forgot your password, please click
+        <span
+          class="text-deep-orange-darken-4 text-decoration-none description"
+          @click="forgotPasswordDialog = true"
+          style="cursor: pointer"
+        >
+          Forgot Password
+        </span>
+        to create a new password and regain access to your account.
       </v-card-text>
     </v-card>
 
@@ -115,7 +141,73 @@ const onFormSubmit = () => {
       Log In
     </v-btn>
   </v-form>
+
+  <!-- Forgot Password Modal -->
+  <v-dialog v-model="forgotPasswordDialog" max-width="500" elevation="10">
+    <div class="d-flex justify-center mb-2 description">
+      <v-row>
+        <v-col cols="12">
+          <v-card color="#FAEED1" elevation="15" rounded="lg">
+            <v-card class="ma-1" color="#803D3B" elevation="15" rounded="lg">
+              <v-card-title class="headline text-center topic-title"
+                ><h4>Forgot Password</h4></v-card-title
+              >
+            </v-card>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
+    <v-card class="mb-2 description" color="#FAEED1" elevation="10" rounded="lg">
+      <v-card-text>
+        <v-form lazy-validation>
+          <v-text-field
+            class="mt-2"
+            v-model="emailForReset"
+            :rules="[requiredValidator, emailValidator]"
+            label="Registered Email"
+            prepend-inner-icon="mdi-email-outline"
+            required
+          ></v-text-field>
+          <v-alert v-if="emailSent" type="success" class="mt-2">
+            A password reset link has been sent to your email.
+          </v-alert>
+          <v-alert v-if="formAction.formErrorMessage" type="error" class="mt-2">
+            {{ formAction.formErrorMessage }}
+          </v-alert>
+        </v-form>
+      </v-card-text>
+
+      <v-card class="mb-5 mx-5" color="#803D3B" variant="outlined">
+        <v-card-text class="text-center text-black text-caption description">
+          Instructions to reset your password will be sent to your registered email.
+        </v-card-text>
+      </v-card>
+    </v-card>
+    <div class="d-flex justify-space-between description">
+      <v-row>
+        <v-col cols="6">
+          <v-card color="#FAEED1" elevation="15" rounded="lg">
+            <v-card class="ma-1" elevation="15" rounded="lg">
+              <v-btn block style="background-color: #803d3b" @click="forgotPasswordDialog = false"
+                ><h4 class="text-white">Cancel</h4></v-btn
+              >
+            </v-card>
+          </v-card>
+        </v-col>
+        <v-col cols="6">
+          <v-card color="#FAEED1" elevation="15" rounded="lg">
+            <v-card class="ma-1" elevation="10">
+              <v-btn block style="background-color: #803d3b" @click="onForgotPassword">
+                <h4 class="text-white">Send Reset Link</h4></v-btn
+              >
+            </v-card>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
+  </v-dialog>
 </template>
+
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/unbounded');
 
