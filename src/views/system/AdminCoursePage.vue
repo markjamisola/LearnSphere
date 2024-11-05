@@ -196,16 +196,16 @@
                   </v-col>
 
                   <!-- Open PDF button -->
-                  <v-col cols="6" md="2">
+                  <v-col v-if="topic.resources && topic.resources.length > 0" cols="6" md="2">
                     <v-btn
                       elevation="10"
                       color="white"
+                      block
                       class="hover-zoom"
                       style="background-color: #803d3b"
-                      block
-                      @click="showPdf(topic.pdf_url)"
+                      @click="openPdfDialog(topic.resources, topic.topic_title)"
                     >
-                      <h5>Open PDF</h5>
+                      <h5>View PDF</h5>
                     </v-btn>
                   </v-col>
 
@@ -214,7 +214,7 @@
                     <v-btn
                       elevation="10"
                       color="white hover-zoom"
-                      style="background-color: #dd660d "
+                      style="background-color: #dd660d"
                       class="hover-zoom"
                       block
                       @click="openAddPdfModal(topic.id)"
@@ -263,6 +263,45 @@
             </v-card>
           </v-col>
         </v-row>
+
+        <v-dialog v-model="pdfDialog" max-width="600">
+          <div class="d-flex justify-start mb-2 description">
+            <v-card color="#FAEED1" elevation="10">
+              <v-card-title class="headline text-center topic-title">
+                <h4>{{ pdfTitle }}</h4>
+              </v-card-title>
+            </v-card>
+          </div>
+          <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
+            <v-card-text>
+              <div v-if="pdfResources.length > 0">
+                <h4 class="text-center mb-2">Available PDF</h4>
+                <v-card class="ma-1 mt-2 description" color="#FAEED1" elevation="10" rounded="lg">
+                  <ul>
+                    <li class="mt-3" v-for="resource in pdfResources" :key="resource.id">
+                      <v-row class="d-flex justify-start ma-1">
+                        <v-col cols="8">
+                          <p>{{ resource.description }}</p>
+                        </v-col>
+                        <v-col cols="4" class="text-right">
+                          <v-btn :href="resource.url" target="_blank" color="#803D3B">Open</v-btn>
+                        </v-col>
+                      </v-row>
+                    </li>
+                  </ul>
+                </v-card>
+              </div>
+              <div v-else>
+                <p>No PDFs are available for this topic.</p>
+              </div>
+            </v-card-text>
+          </v-card>
+          <div class="d-flex justify-end description">
+            <v-card color="#FAEED1" elevation="10">
+              <v-btn color="#FAEED1" size="large" @click="pdfDialog = false"><h5>Close</h5></v-btn>
+            </v-card>
+          </div>
+        </v-dialog>
 
         <v-dialog v-model="isAddPdfModalOpen" max-width="500" class="dialog-with-blur description">
           <v-card class="mb-2 description" color="#803D3B" elevation="10" rounded="lg">
@@ -468,6 +507,9 @@ const selectedTopicId = ref(null) // State for selected topic ID
 const newPdfDescription = ref('')
 // Use Vue Router's route object
 const route = useRoute()
+const pdfDialog = ref(false)
+const pdfResources = ref([]) // Add this line to define pdfResources
+const pdfTitle = ref('')
 
 // Filtered topics based on the search query
 const filteredTopics = computed(() => {
@@ -514,6 +556,7 @@ onMounted(async () => {
       // Combine topics with their resources
       topics.value = topicsData.map((topic) => {
         const topicResources = resourcesData.filter((resource) => resource.topic_id === topic.id)
+        topic.resources = topicResources // Ensure the resources are attached to the topic
         topic.pdf_url =
           topicResources.find((resource) => resource.resource_type === 'pdf')?.url || null
         return topic
@@ -527,6 +570,13 @@ onMounted(async () => {
     console.error('Course ID is undefined')
   }
 })
+
+function openPdfDialog(resources, title) {
+  pdfResources.value = resources // Set the resources
+  console.log('Opening PDF dialog with resources:', resources) // Debug output
+  pdfTitle.value = title // Set the title
+  pdfDialog.value = true // Open the dialog
+}
 
 // Open video dialog and fetch related YouTube videos
 const openVideoDialog = (topicTitle) => {
@@ -560,11 +610,6 @@ const fetchRelatedVideos = async (topicTitle) => {
   } catch (error) {
     console.error('Error fetching YouTube videos:', error.message)
   }
-}
-
-// Show PDF in a new tab
-const showPdf = (pdfUrl) => {
-  window.open(pdfUrl, '_blank')
 }
 
 // Save updated course details to Supabase
@@ -821,8 +866,6 @@ const closeAddPdfModal = () => {
   line-height: 1.4;
   color: #803d3b;
 }
-
-
 
 .hover-zoom {
   transition: transform 0.3s ease; /* Smooth transition */
