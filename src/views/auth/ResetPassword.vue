@@ -3,17 +3,21 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/utils/supabase'
 
-const dialog = ref(false)
 const newPassword = ref('')
 const confirmPassword = ref('')
 const visible = ref(false)
 const router = useRouter()
 const errorMessage = ref('')
+const contactDialog = ref(false)
+const successDialog = ref(false)
+const passnotlongDialog = ref(false)
+const passnotmatchDialog = ref(false)
+const invalidTokenDialog = ref(false)
+const unexpectedErrorDialog = ref(false)
 
 // Function to go back to login after reset
 const goToLogin = async () => {
   await supabase.auth.signOut() // Ensure the user is logged out from Supabase
-  dialog.value = false
   router.push('/login') // Redirect to the login page
 }
 
@@ -26,14 +30,12 @@ const getAccessToken = () => {
 
 const validatePasswords = () => {
   if (newPassword.value.length < 8) {
-    errorMessage.value = 'Password must be at least 8 characters long.'
-    dialog.value = true
+    passnotlongDialog.value = true
     return false
   }
 
   if (newPassword.value !== confirmPassword.value) {
-    errorMessage.value = 'Passwords do not match.'
-    dialog.value = true
+    passnotmatchDialog.value = true
     return false
   }
 
@@ -49,8 +51,7 @@ const handlePasswordUpdate = async () => {
   console.log('Access Token:', accessToken) // Log the token to verify
 
   if (!accessToken) {
-    errorMessage.value = 'Invalid or expired token. Please request a new password reset.'
-    dialog.value = true // Show modal for invalid token
+    invalidTokenDialog.value = true // Show invalid token dialog
     return
   }
 
@@ -67,17 +68,16 @@ const handlePasswordUpdate = async () => {
 
     if (error) {
       console.error('Update Error:', error)
-      errorMessage.value = error.message // Set error message for modal
-      dialog.value = true // Show error dialog
+      unexpectedErrorDialog.value = true // Show unexpected error dialog
     } else {
-      dialog.value = true // Show success dialog
+      successDialog.value = true // Show success dialog
       setTimeout(() => {
         goToLogin() // Call the updated goToLogin function
       }, 2000)
     }
   } catch (error) {
     errorMessage.value = `An unexpected error occurred: ${error.message}`
-    dialog.value = true // Show error dialog
+    unexpectedErrorDialog.value = true // Show unexpected error dialog
   }
 }
 
@@ -161,12 +161,13 @@ onMounted(async () => {
                 <v-card-text class="text-caption text-justify text-black description">
                   Please remember your password to avoid being restricted. If you need assistance,
                   please
-                  <a
+                  <span
                     @click.prevent="contactDialog = true"
                     class="text-deep-orange-darken-4 font-weight-bold"
+                    style="cursor: pointer"
                   >
                     contact support.
-                  </a>
+                  </span>
                 </v-card-text>
               </v-card>
 
@@ -188,7 +189,7 @@ onMounted(async () => {
       </v-container>
 
       <!-- Success Modal -->
-      <v-dialog v-model="dialog" max-width="400">
+      <v-dialog v-model="successDialog" persistent max-width="400">
         <v-card
           class="mx-auto pa-8 pb-5"
           elevation="15"
@@ -216,6 +217,198 @@ onMounted(async () => {
             </v-btn>
           </v-card-actions>
         </v-card>
+      </v-dialog>
+
+      <!-- Password not long enough modal -->
+      <v-dialog v-model="passnotlongDialog" persistent max-width="400">
+        <v-card
+          class="mx-auto pa-8 pb-5"
+          elevation="15"
+          max-width="448"
+          rounded="lg"
+          color="#803d3b"
+        >
+          <v-card-title>
+            <h3 class="font-weight-black text-center description">Password Too Short!</h3>
+          </v-card-title>
+          <v-card-text class="text-center text-white text-caption description">
+            Your password must be at least 8 characters long.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="description"
+              color="#FAEED1"
+              size="large"
+              variant="elevated"
+              elevation="15"
+              block
+              @click="passnotlongDialog = false"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Password does not match modal -->
+      <v-dialog v-model="passnotmatchDialog" persistent max-width="400">
+        <v-card
+          class="mx-auto pa-8 pb-5"
+          elevation="15"
+          max-width="448"
+          rounded="lg"
+          color="#803d3b"
+        >
+          <v-card-title>
+            <h3 class="font-weight-black text-center description">Passwords Do Not Match!</h3>
+          </v-card-title>
+          <v-card-text class="text-center text-white text-caption description">
+            Please make sure both passwords match.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="description"
+              color="#FAEED1"
+              size="large"
+              variant="elevated"
+              elevation="15"
+              block
+              @click="passnotmatchDialog = false"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Invalid or expired token modal -->
+      <v-dialog v-model="invalidTokenDialog" max-width="400" @click:outside="goToLogin">
+        <v-card
+          class="mx-auto pa-8 pb-5"
+          elevation="15"
+          max-width="448"
+          rounded="lg"
+          color="#803d3b"
+        >
+          <v-card-title>
+            <h3 class="font-weight-black text-center description">Invalid Token</h3>
+          </v-card-title>
+          <v-card-text class="text-center text-white text-caption description">
+            The token is invalid or has expired. Please request a new password reset.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="description"
+              color="#FAEED1"
+              size="large"
+              variant="elevated"
+              elevation="15"
+              block
+              @click="goToLogin"
+            >
+              Back to Log In
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Unexptected error modal -->
+      <v-dialog v-model="unexpectedErrorDialog" max-width="400" @click:outside="goToLogin">
+        <v-card
+          class="mx-auto pa-8 pb-5"
+          elevation="15"
+          max-width="448"
+          rounded="lg"
+          color="#803d3b"
+        >
+          <v-card-title>
+            <h3 class="font-weight-black text-center description">Unexpected Error</h3>
+          </v-card-title>
+          <v-card-text class="text-center text-white text-caption description">
+            {{ errorMessage }}
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              class="description"
+              color="#FAEED1"
+              size="large"
+              variant="elevated"
+              elevation="15"
+              block
+              @click="goToLogin"
+            >
+              Back to Log In
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <!-- Dialog/Modal for Contact Support -->
+      <v-dialog v-model="contactDialog" persistent max-width="400">
+        <div class="d-flex justify-center mb-2 description">
+          <v-row>
+            <v-col cols="12">
+              <v-card color="#FAEED1" elevation="15" rounded="lg">
+                <v-card color="#803d3b" class="ma-1" elevation="15" rounded="lg"
+                  ><v-card-title class="headline text-center font-weight-black"
+                    >Contact Us</v-card-title
+                  ></v-card
+                >
+              </v-card>
+            </v-col>
+          </v-row>
+        </div>
+        <v-card class="pa-0" color="#FAEED1" block elevation="10" rounded="lg">
+          <v-card-text class="justify-content text-center">
+            <p class="mb-3">
+              If you have any questions or need assistance, please contact us using the details
+              below:
+            </p>
+
+            <p>
+              <strong>MJ:</strong>
+              <a
+                class="text-decoration-none text-red"
+                href="mailto:markdaniel.jamisola@carsu.edu.ph"
+              >
+                markdaniel.jamisola@carsu.edu.ph</a
+              >
+            </p>
+            <p>
+              <strong>UE:</strong>
+              <a class="text-decoration-none text-red" href="mailto:ushyne.esclamado.carsu.edu.ph">
+                ushyne.esclamado.carsu.edu.ph</a
+              >
+            </p>
+            <p>
+              <strong>JG:</strong>
+              <a class="text-decoration-none text-red" href="mailto:jusalyn.gimao@carsu.edu.ph">
+                jusalyn.gimao@carsu.edu.ph</a
+              >
+            </p>
+          </v-card-text>
+        </v-card>
+        <div class="d-flex justify-center description">
+          <v-row>
+            <v-col cols="12">
+              <v-card color="#FAEED1" class="hover-zoom mt-2" elevation="15" rounded="lg">
+                <v-card class="ma-1" elevation="15" rounded="lg">
+                  <v-btn
+                    color="#803d3b"
+                    block
+                    variant="elevated"
+                    elevation="15"
+                    size="large"
+                    class=""
+                    style="background-color: #803d3b"
+                    @click="contactDialog = false"
+                    >Close</v-btn
+                  >
+                </v-card>
+              </v-card>
+            </v-col>
+          </v-row>
+        </div>
       </v-dialog>
     </v-app>
   </v-responsive>

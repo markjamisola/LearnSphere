@@ -230,8 +230,8 @@ onMounted(async () => {
       <div class="d-flex justify-center mb-2 description">
         <v-row>
           <v-col cols="12">
-            <v-card color="#803d3b" elevation="15" rounded="lg">
-              <v-card color="#FAEED1" class="ma-1" elevation="15" rounded="lg"
+            <v-card color="#FAEED1" elevation="15" rounded="lg">
+              <v-card color="#803d3b" class="ma-1" elevation="15" rounded="lg"
                 ><v-card-title class="headline text-center font-weight-black"
                   >Contact Us</v-card-title
                 ></v-card
@@ -240,7 +240,7 @@ onMounted(async () => {
           </v-col>
         </v-row>
       </div>
-      <v-card class="pa-0" color="#803d3b" block elevation="10" rounded="lg">
+      <v-card class="pa-0" color="#FAEED1" block elevation="10" rounded="lg">
         <v-card-text class="justify-content text-center">
           <p class="mb-3">
             If you have any questions or need assistance, please contact us using the details below:
@@ -249,7 +249,7 @@ onMounted(async () => {
           <p>
             <strong>MJ:</strong>
             <a
-              class="text-decoration-none text-white"
+              class="text-decoration-none text-red"
               href="mailto:markdaniel.jamisola@carsu.edu.ph"
             >
               markdaniel.jamisola@carsu.edu.ph</a
@@ -257,13 +257,13 @@ onMounted(async () => {
           </p>
           <p>
             <strong>UE:</strong>
-            <a class="text-decoration-none text-white" href="mailto:ushyne.esclamado.carsu.edu.ph">
+            <a class="text-decoration-none text-red" href="mailto:ushyne.esclamado.carsu.edu.ph">
               ushyne.esclamado.carsu.edu.ph</a
             >
           </p>
           <p>
             <strong>JG:</strong>
-            <a class="text-decoration-none text-white" href="mailto:jusalyn.gimao@carsu.edu.ph">
+            <a class="text-decoration-none text-red" href="mailto:jusalyn.gimao@carsu.edu.ph">
               jusalyn.gimao@carsu.edu.ph</a
             >
           </p>
@@ -272,16 +272,16 @@ onMounted(async () => {
       <div class="d-flex justify-center description">
         <v-row>
           <v-col cols="12">
-          <v-card color="#803d3b" class="hover-zoom mt-2" elevation="15" rounded="lg" >
+          <v-card color="#FAEED1" class="hover-zoom mt-2" elevation="15" rounded="lg" >
             <v-card class="ma-1" elevation="15" rounded="lg">
               <v-btn
-                color="#FAEED1"
+                color="#803d3b"
                 block
                 variant="elevated"
                 elevation="15"
                 size="large"
                 class=""
-                style="background-color: #faeed1"
+                style="background-color: #803d3b"
                 @click="contactDialog = false"
                 >Close</v-btn
               >
