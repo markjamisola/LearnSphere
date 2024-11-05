@@ -191,7 +191,7 @@ const onForgotPassword = async () => {
           <v-card color="#FAEED1" class="hover-zoom" elevation="15" rounded="lg">
             <v-card class="ma-1" elevation="10">
               <v-btn block style="background-color: #803d3b" @click="onForgotPassword">
-                <h4 class="text-white">Send Reset Link</h4></v-btn
+                <h4 class="text-white">Send Email</h4></v-btn
               >
             </v-card>
           </v-card>
