@@ -35,7 +35,7 @@ onMounted(() => {
           <v-col cols="12" md="6" lg="4">
             <!-- Logo and Description for Mobile -->
             <div class="text-center d-md-none description">
-              <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
+              <v-img src="/newlogo.png" max-width="300px" class="mx-auto mb-0"></v-img>
               <h2 class="text-white description mb-2">Learn Smarter, Succeed Faster</h2>
               <h3 class="text-white text-center mb-6">
                 Unlock your potential and start your learning journey today!
@@ -80,7 +80,7 @@ onMounted(() => {
           <v-col cols="12" md="4" class="d-none d-md-flex flex-column justify-center align-center">
             <!-- Logo and Description for Desktop -->
             <div class="text-center description-section">
-              <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
+              <v-img src="/newlogo.png" max-width="300px" class="mx-auto mb-4"></v-img>
               <h2 class="text-white description mb-2">Learn Smarter, Succeed Faster</h2>
               <p class="text-white mb-6 description">
                 Unlock your potential and start your learning journey today!

@@ -117,7 +117,7 @@
                   class="text-center"
                 >
                   <h4 class="text-white pb-1">{{ member.name }}</h4>
-                  <p class="text-white pb-2">{{ member.role }}</p>
+                  <h5 class="text-black pb-2">{{ member.role }}</h5>
                   <!-- Display the role here -->
                   <v-row class="justify-center">
                     <v-col

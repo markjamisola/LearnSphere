@@ -11,7 +11,7 @@
     <v-list class="d-flex flex-column justify-space-between fill-height">
       <!-- Logo at the Top -->
       <v-list-item class="text-center">
-        <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
+        <v-img max-width="50" src="/logonew.png" alt="Logo"></v-img>
       </v-list-item>
 
       <v-list-item-group>
@@ -126,7 +126,7 @@
     <v-list class="d-flex flex-column justify-space-between fill-height">
       <!-- Top Section with Logo -->
       <v-list-item class="text-center">
-        <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
+        <v-img max-width="50" src="/logonew.png" alt="Logo"></v-img>
       </v-list-item>
 
       <!-- Center Section with Navigation Icons -->

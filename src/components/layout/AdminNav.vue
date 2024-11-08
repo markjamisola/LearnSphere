@@ -10,7 +10,7 @@
   >
     <v-list class="d-flex flex-column justify-space-between fill-height">
       <v-list-item class="text-center">
-        <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
+        <v-img max-width="50" src="/logonew.png" alt="Logo"></v-img>
       </v-list-item>
 
       <v-list-item-group>
@@ -57,7 +57,7 @@
   >
     <v-list class="d-flex flex-column justify-space-between fill-height">
       <v-list-item @click="$router.push('/adminhome')" class="text-center">
-        <v-img max-width="50" src="/logo6.png" alt="Logo"></v-img>
+        <v-img max-width="50" src="/logonew.png" alt="Logo"></v-img>
       </v-list-item>
       <v-list-item-group>
         <v-list-item @click="$router.push('/adminhome')" class="text-center">

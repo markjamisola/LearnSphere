@@ -36,7 +36,7 @@ onMounted(() => {
           <v-col cols="12" md="4" class="d-flex flex-column justify-center align-center">
             <div class="text-center">
               <!-- Logo -->
-              <v-img src="/logo5.png" max-width="300px" class="mx-auto mb-4"></v-img>
+              <v-img src="/newlogo.png" max-width="300px" class="mx-auto mb-0"></v-img>
 
               <!-- Title and Tagline -->
               <h2 class="text-white description mb-2">Learn Smarter, Succeed Faster</h2>

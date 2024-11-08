@@ -117,7 +117,7 @@ onMounted(async () => {
       <v-container fluid>
         <v-row class="align-center justify-center" align="center" justify="center">
           <v-col>
-            <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/logo5.png"></v-img>
+            <v-img class="mx-auto mb-0 mt-1" max-width="228" src="/newlogo.png"></v-img>
             <v-card
               class="mx-auto pa-8 pb-5"
               elevation="15"
