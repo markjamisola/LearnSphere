@@ -182,7 +182,7 @@
 
               <v-card-actions class="mx-2">
                 <v-row class="d-flex justify-space-between">
-                  <v-col cols="6" md="2">
+                  <v-col cols="6" md="3">
                     <v-btn
                       elevation="10"
                       color="white"
@@ -196,7 +196,7 @@
                   </v-col>
 
                   <!-- Open PDF button -->
-                  <v-col v-if="topic.resources && topic.resources.length > 0" cols="6" md="2">
+                  <v-col v-if="topic.resources && topic.resources.length > 0" cols="6" md="3">
                     <v-btn
                       elevation="10"
                       color="white"
@@ -210,7 +210,7 @@
                   </v-col>
 
                   <!-- Add PDF button -->
-                  <v-col cols="6" md="2">
+                  <v-col cols="6" md="3">
                     <v-btn
                       elevation="10"
                       color="white hover-zoom"
@@ -224,25 +224,9 @@
                   </v-col>
 
                   <!-- Delete button -->
-                  <v-col cols="6" md="2">
-                    <v-btn
-                      color="white"
-                      text
-                      block
-                      class="confirm-btn font-weight-bold hover-zoom"
-                      @click="openTopicDeleteDialog(topic.id)"
-                      style="
-                        background-color: #dd660d;
-                        color: #803d3b;
-                        font-family: 'Unbounded', sans-serif;
-                      "
-                    >
-                      <h5>Delete</h5>
-                    </v-btn>
-                  </v-col>
 
                   <!-- Edit button -->
-                  <v-col cols="6" md="2">
+                  <v-col cols="6" md="3">
                     <v-btn
                       color="white"
                       text
@@ -260,6 +244,26 @@
                   </v-col>
                 </v-row>
               </v-card-actions>
+              <div
+                class="remove-button-box position-absolute hover-zoom"
+                style="
+                  top: -10px;
+                  right: -10px;
+                  background-color: #dd660d;
+                  border-radius: 50%;
+                  padding: 5px;
+                "
+              >
+                <v-btn
+                  icon
+                  @click="openTopicDeleteDialog(topic.id)"
+                  class="hover-zoom"
+                  style="background: none; color: #fff"
+                >
+                  <v-icon>mdi-close</v-icon>
+                  <!-- Close icon for remove button -->
+                </v-btn>
+              </div>
             </v-card>
           </v-col>
         </v-row>

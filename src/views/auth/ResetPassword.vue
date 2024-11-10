@@ -173,7 +173,7 @@ onMounted(async () => {
 
               <!-- Update Password Button -->
               <v-btn
-                class="mb-5 description"
+                class="mb-5 description hover-zoom"
                 color="#803d3b"
                 size="large"
                 variant="elevated"
@@ -511,5 +511,12 @@ export default {
 /* Slide-in class */
 .slide-in {
   animation: slide-in 0.5s ease forwards; /* Apply slide-in animation */
+}
+.hover-zoom {
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05); /* Scale up on hover */
 }
 </style>

@@ -125,7 +125,7 @@
                       :key="linkIndex"
                       cols="auto"
                     >
-                      <v-btn icon :href="link.url" target="_blank">
+                      <v-btn color="#FAEED1" icon :href="link.url" target="_blank">
                         <v-icon>{{ link.icon }}</v-icon>
                       </v-btn>
                     </v-col>
