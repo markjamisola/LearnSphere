@@ -15,6 +15,7 @@ import AdminHomePage from '@/views/system/AdminHomePage.vue'
 import AdminProfile from '@/views/system/AdminProfile.vue'
 import AdminCoursePage from '@/views/system/AdminCoursePage.vue'
 import UsersPage from '@/views/system/UsersPage.vue'
+import NotFoundView from '@/views/errors/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -111,6 +112,12 @@ const router = createRouter({
       name: 'users',
       component: UsersPage,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFoundView',
+      component: NotFoundView,
+      meta: { isDefault: true }
     }
   ]
 })
@@ -126,6 +133,19 @@ router.beforeEach(async (to) => {
   // Allow access to loading and load pages for all users, regardless of auth status
   if (to.name === 'load') {
     return true
+  }
+
+  if (to.name === 'reset') {
+    // If the user is logged in, redirect to the home page
+    if (isLoggedIn) {
+      return { name: 'home' } // Redirect logged-in users to home
+    }
+
+    if (!to.query.access_token) {
+      return { name: 'login' } // Redirect to login if no token is present
+    }
+
+    return true // Allow access if the token exists and the user is not logged in
   }
 
   if ((isAdmin && to.name === 'adminhome') || to.name === 'adminprofile' || to.name === 'users') {
