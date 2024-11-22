@@ -457,11 +457,6 @@
 
       <!-- Logout Modal -->
       <LogoutModal ref="logoutModalRef" />
-
-      <!-- Floating Back Button -->
-      <v-btn class="back-button" icon @click="$router.go(-1)">
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
     </v-main>
   </v-app>
 </template>
@@ -847,16 +842,6 @@ const closeAddPdfModal = () => {
 
 .description {
   font-family: 'Unbounded', sans-serif;
-}
-
-.back-button {
-  position: fixed;
-  bottom: 20px;
-  left: 18px;
-  z-index: 2000;
-  background-color: #faeed1;
-  color: #000000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .colorist {
