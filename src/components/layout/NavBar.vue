@@ -112,95 +112,103 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-navigation-drawer
-    v-if="$vuetify.display.smAndDown"
-    v-model="drawer"
-    temporary
-    app
-    fixed
-    clipped
-    color="transparent"
-    class="mobile-nav-drawer"
-    width="80"
-  >
-    <v-list class="d-flex flex-column justify-space-between fill-height">
-      <!-- Top Section with Logo -->
-      <v-list-item class="text-center">
-        <v-img max-width="50" src="/logonew.png" alt="Logo"></v-img>
-      </v-list-item>
-
-      <!-- Center Section with Navigation Icons -->
-      <v-list-item-group>
-        <v-spacer></v-spacer>
-        <!-- Spacer to push items down to center -->
-
-        <v-list-item @click="$router.push('/home')" class="text-center">
-          <v-list-item-icon>
-            <v-icon large :color="$route.path === '/home' ? 'black' : 'white'">mdi-home</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-list-item @click="$router.push('/profile')" class="text-center">
-          <v-list-item-icon>
-            <v-icon large :color="$route.path === '/profile' ? 'black' : 'white'"
-              >mdi-account</v-icon
-            >
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-list-item @click="$router.push('/starred')" class="text-center">
-          <v-list-item-icon>
-            <v-icon large :color="$route.path === '/starred' ? 'black' : 'white'">mdi-star</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-list-item @click="$router.push('/history')" class="text-center">
-          <v-list-item-icon>
-            <v-icon large :color="$route.path === '/history' ? 'black' : 'white'"
-              >mdi-history</v-icon
-            >
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-list-item @click="$router.push('/about')" class="text-center">
-          <v-list-item-icon>
-            <v-icon large :color="$route.path === '/about' ? 'black' : 'white'"
-              >mdi-information</v-icon
-            >
-          </v-list-item-icon>
-        </v-list-item>
-
-        <v-spacer></v-spacer>
-      </v-list-item-group>
-
-      <!-- Bottom Section with Logout Icon -->
-      <v-list-item @click="$emit('triggerLogoutModal')" class="text-center">
-        <v-list-item-icon>
-          <v-icon large color="white">mdi-logout</v-icon>
-        </v-list-item-icon>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
-
+  <div>
+  <!-- App Bar -->
   <v-app-bar
-    v-if="$vuetify.display.smAndDown"
+    v-if="$vuetify.display.mdAndDown"
     app
     color="transparent"
     class="topname mobile-nav-drawer"
+    style="backdrop-filter: blur(15px); background-color: rgba(255, 255, 255, 0.5);"
   >
-    <v-app-bar-nav-icon
-      class="topname pl-6"
-      @click="drawer = !drawer"
-      color="white"
-    ></v-app-bar-nav-icon>
-    <v-toolbar-title class="text-white font-weight-black ml-8">LearnSphere</v-toolbar-title>
+  <v-img class="ml-2" max-width="50" src="/logonew.png" alt="Logo"></v-img>
+    <v-toolbar-title class=" description text-white font-weight-black ml-4">LearnSphere</v-toolbar-title>
+
+    <!-- Logout Button -->
+    <v-btn
+      icon
+      @click="$emit('triggerLogoutModal')"
+      class="logout-btn"
+    >
+      <v-icon color="white">mdi-logout</v-icon>
+    </v-btn>
   </v-app-bar>
+
+  <!-- Bottom Navigation -->
+  <v-bottom-navigation
+    v-if="$vuetify.display.mdAndDown"
+    v-model="activeTab"
+    app
+    class="bottom-nav"
+    grow
+    color="transparent"
+    mode="shift"
+
+  >
+    <!-- Home Button -->
+    <v-btn
+      :to="{ name: 'home' }"
+      :class="{ active: $route.path === '/home' }"
+      @click="activeTab = 'home'"
+      class="nav-btn"
+    >
+      <v-icon small>mdi-home</v-icon>
+      <span>Home</span>
+    </v-btn>
+
+    <!-- Profile Button -->
+    <v-btn
+      :to="{ name: 'profile' }"
+      :class="{ active: $route.path === '/profile' }"
+      @click="activeTab = 'profile'"
+      class="nav-btn"
+    >
+      <v-icon small>mdi-account</v-icon>
+      <span>Profile</span>
+    </v-btn>
+
+    <!-- Starred Button -->
+    <v-btn
+      :to="{ name: 'starred' }"
+      :class="{ active: $route.path === '/starred' }"
+      @click="activeTab = 'starred'"
+      class="nav-btn"
+    >
+      <v-icon small>mdi-star</v-icon>
+      <span>Starred</span>
+    </v-btn>
+
+    <!-- History Button -->
+    <v-btn
+      :to="{ name: 'history' }"
+      :class="{ active: $route.path === '/history' }"
+      @click="activeTab = 'history'"
+      class="nav-btn"
+    >
+      <v-icon small>mdi-history</v-icon>
+      <span>History</span>
+    </v-btn>
+
+    <!-- About Button -->
+    <v-btn
+      :to="{ name: 'about' }"
+      :class="{ active: $route.path === '/about' }"
+      @click="activeTab = 'about'"
+      class="nav-btn"
+    >
+      <v-icon small>mdi-information</v-icon>
+      <span>About</span>
+    </v-btn>
+  </v-bottom-navigation>
+</div>
+
+
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
-const drawer = ref(false)
+const activeTab = ref('home') // Default active tab
 </script>
 
 <style scoped>
@@ -230,5 +238,30 @@ const drawer = ref(false)
 .description {
   font-family: 'Unbounded', sans-serif;
 }
+
+
+/* Active tab styling */
+.active {
+  color: #ffffff !important;
+  background-color: #803d3b !important;
+  border-radius: 10px;
+}
+
+
+
+.nav-btn {
+  min-width: 30px; /* Ensure all buttons are small enough to fit */
+  height: 48px; /* Adjust button height */
+  padding: 0; /* Remove extra padding */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-nav{
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+}
+
 
 </style>
