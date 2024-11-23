@@ -137,9 +137,6 @@ router.beforeEach(async (to) => {
 
   if (to.name === 'reset') {
     // If the user is logged in, redirect to the home page
-    if (isLoggedIn) {
-      return { name: 'home' } // Redirect logged-in users to home
-    }
 
     if (!to.query.access_token) {
       return { name: 'login' } // Redirect to login if no token is present
