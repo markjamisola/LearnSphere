@@ -377,7 +377,7 @@ onMounted(async () => {
             <p>
               <strong>UE:</strong>
               <a class="text-decoration-none text-red" href="mailto:ushyne.esclamado.carsu.edu.ph">
-                ushyne.esclamado.carsu.edu.ph</a
+                ushyne.esclamado@carsu.edu.ph</a
               >
             </p>
             <p>
