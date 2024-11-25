@@ -21,15 +21,15 @@
                   v-model="searchQuery"
                   :loading="loading"
                   append-inner-icon="mdi-magnify"
-                  prepend-inner-icon="mdi-cast-education"
+                  prepend-inner-icon="mdi-book-open-page-variant"
                   density="comfortable"
                   label="Search Course Details"
+                  outlined
+                  variant="outlined"
                   hide-details
-                  rounded="lg"
-                  variant="solo"
                   elevation="15"
                   single-line
-                  outlined
+                  color="#FAEED1"
                   @input="onSearchInput"
                 ></v-text-field>
               </v-card>

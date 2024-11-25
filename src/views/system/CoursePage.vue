@@ -33,10 +33,9 @@
       </v-container>
 
       <!-- Search for Topics -->
-      <v-row class="justify-center mb-4 mx-auto">
+      <v-row class="justify-center mb-1 mx-auto">
         <v-col cols="12" sm="8" md="6">
-          <!-- Search bar card with styling -->
-          <v-card class="pa-2" elevation="15" color="#803d3b">
+          <v-card class="pa-2" elevation="15" rounded="lg" color="#FAEED1">
             <v-text-field
               v-model="searchQuery"
               :loading="loading"
@@ -44,12 +43,13 @@
               prepend-inner-icon="mdi-lightbulb-on"
               density="comfortable"
               label="Search Topics"
-              variant="solo"
-              hide-details
-              single-line
-              elevation="10"
-              color="deep-purple-darken-3"
               outlined
+              variant="outlined"
+              hide-details
+              elevation="15"
+              single-line
+              color="#803d3b"
+              @input="onSearchInput"
             ></v-text-field>
           </v-card>
         </v-col>
