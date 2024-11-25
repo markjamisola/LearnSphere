@@ -88,7 +88,8 @@ const router = createRouter({
     {
       path: '/course/:id',
       name: 'CoursePage',
-      component: CoursePage
+      component: CoursePage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/admincourse/:id',

@@ -18,20 +18,20 @@
             <!-- Search Course Bar -->
             <v-row class="justify-center mb-1 mx-auto">
               <v-col cols="12" sm="8" md="6">
-                <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b" variant="elevated">
+                <v-card class="pa-2" elevation="15" rounded="lg" color="#803d3b">
                   <v-text-field
                     v-model="searchQuery"
                     :loading="loading"
                     append-inner-icon="mdi-magnify"
                     prepend-inner-icon="mdi-book-open-page-variant"
                     density="comfortable"
-                    label="Search Course Details" 
-                    variant="solo"
-                    hide-details
-                    single-line
-                    elevation="15"
-                    color="deep-purple-darken-3"
+                    label="Search Course Details"
                     outlined
+                    variant="outlined"
+                    hide-details
+                    elevation="15"
+                    single-line
+                    color="#FAEED1"
                     @input="onSearchInput"
                   ></v-text-field>
                 </v-card>
@@ -533,5 +533,9 @@ const handleDeleteCourse = async (courseId) => {
 
 .hover-zoom:hover {
   transform: scale(1.05); /* Scale up on hover */
+}
+
+.v-input input {
+  caret-color: black; /* Ensures the caret uses the default or color specified */
 }
 </style>
