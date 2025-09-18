@@ -243,50 +243,45 @@ onMounted(async () => {
       <v-card class="pa-0" color="#FAEED1" block elevation="10" rounded="lg">
         <v-card-text class="justify-content text-center">
           <p class="mb-3">
-            If you have any questions or need assistance, please contact us using the details below:
+            If you have any questions or need assistance, please contact me using the details below:
           </p>
 
           <p>
-            <strong>MJ:</strong>
-            <a
-              class="text-decoration-none text-red"
-              href="mailto:markdaniel.jamisola@carsu.edu.ph"
-            >
+            <strong>Email:</strong>
+            <a class="text-decoration-none text-red" href="mailto:markdaniel.jamisola@carsu.edu.ph">
               markdaniel.jamisola@carsu.edu.ph</a
             >
           </p>
           <p>
-            <strong>UE:</strong>
-            <a class="text-decoration-none text-red" href="mailto:ushyne.esclamado@carsu.edu.ph">
-              ushyne.esclamado@carsu.edu.ph</a
+            <strong>Facebook:</strong>
+            <a class="text-decoration-none text-red" href="https://www.facebook.com/mdjamisola">
+              Mark Jamisola</a
             >
           </p>
           <p>
-            <strong>JG:</strong>
-            <a class="text-decoration-none text-red" href="mailto:jusalyn.gimao@carsu.edu.ph">
-              jusalyn.gimao@carsu.edu.ph</a
-            >
+            <strong>Contact #:</strong>
+            09282402911
           </p>
         </v-card-text>
       </v-card>
       <div class="d-flex justify-center description">
         <v-row>
           <v-col cols="12">
-          <v-card color="#FAEED1" class="hover-zoom mt-2" elevation="15" rounded="lg" >
-            <v-card class="ma-1" elevation="15" rounded="lg">
-              <v-btn
-                color="#803d3b"
-                block
-                variant="elevated"
-                elevation="15"
-                size="large"
-                class=""
-                style="background-color: #803d3b"
-                @click="contactDialog = false"
-                >Close</v-btn
-              >
+            <v-card color="#FAEED1" class="hover-zoom mt-2" elevation="15" rounded="lg">
+              <v-card class="ma-1" elevation="15" rounded="lg">
+                <v-btn
+                  color="#803d3b"
+                  block
+                  variant="elevated"
+                  elevation="15"
+                  size="large"
+                  class=""
+                  style="background-color: #803d3b"
+                  @click="contactDialog = false"
+                  >Close</v-btn
+                >
+              </v-card>
             </v-card>
-          </v-card>
           </v-col>
         </v-row>
       </div>
