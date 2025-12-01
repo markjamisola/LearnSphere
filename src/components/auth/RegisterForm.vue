@@ -32,7 +32,7 @@ const formAction = ref({
 })
 
 const onSignup = async () => {
-  formAction.value = { formActionDefault }
+  formAction.value = { ...formActionDefault }
   formAction.value.formProcess = true
 
   const { data, error } = await supabase.auth.signUp({
